@@ -22,7 +22,13 @@
     <ClInclude Include="header.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="add_word.cpp" />
+    <ClCompile Include="class.cpp" />
+    <ClCompile Include="log_in.cpp" />
+    <ClCompile Include="log_out.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="sign_up.cpp" />
+    <ClCompile Include="start_game.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

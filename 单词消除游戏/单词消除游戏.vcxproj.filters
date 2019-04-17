@@ -23,5 +23,23 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="sign_up.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="log_in.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="log_out.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="start_game.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="add_word.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="class.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
