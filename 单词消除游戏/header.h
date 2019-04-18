@@ -89,6 +89,7 @@ public:
 	test_maker(string s);
 	~test_maker();
 	//friend bool equal_name(test_maker &A, test_maker &B);
+	void inc_word_num();
 private:
 	int word_num;
 };

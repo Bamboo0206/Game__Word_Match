@@ -100,3 +100,8 @@ inline test_maker::test_maker(string s)
 test_maker::~test_maker()
 {
 }
+void test_maker::inc_word_num()
+{
+	++word_num;
+	return;
+}

@@ -25,6 +25,10 @@ void add_word()
 		{
 			cout << "该单词已存在\n";
 		}
+		/*出题者属性修改：单词数、经验值、等级*/
+		it_user_test_maker->inc_word_num();
+
+
 
 		cout << "请选择：继续输入单词0/退出1\n";
 		cin >> finish;
