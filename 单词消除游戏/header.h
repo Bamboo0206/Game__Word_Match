@@ -90,6 +90,8 @@ public:
 	~test_maker();
 	//friend bool equal_name(test_maker &A, test_maker &B);
 	void inc_word_num();
+	void update_EXP(string word);
+	void update_level();
 private:
 	int word_num;
 };
@@ -110,3 +112,5 @@ private:
 //{
 //}
 
+/*宏定义*/
+#define EXP_BASIC_MAKER 100 //出题者成功出一个单词的最低经验值

@@ -20,13 +20,15 @@ void add_word()
 		if (insert_result.second)//插入成功检验
 		{
 			cout << "成功添加单词：" << *insert_result.first << endl;
+
+			/*出题者属性修改：单词数、经验值、等级*/
+			it_user_test_maker->inc_word_num();
+
 		}
 		else
 		{
 			cout << "该单词已存在\n";
 		}
-		/*出题者属性修改：单词数、经验值、等级*/
-		it_user_test_maker->inc_word_num();
 
 
 
