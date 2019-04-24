@@ -27,6 +27,10 @@ public:
 	int show_level() const{ return level; }
 	long show_EXP() const{ return EXP; }
 
+	//void set_name(string n){  name=n; }
+	//void set_level(int n) { level=n; }
+	//void set_EXP(long n) {  EXP=n; }
+
 	//virtual void sign_up() = 0;//×¢²á //????
 	//void log_in();//µÇÂ½
 	//friend bool equal_name(participant &A, string &name);
@@ -44,6 +48,7 @@ public:
 	player();
 	player(const player &p1);
 	player(string s);
+	player(string n,int l,long e,int r);
 	~player();
 
 	bool operator<(const player &p1);//°´Ãû×Ö×ÖµäÐò±È´óÐ¡//???

@@ -72,6 +72,14 @@ player::player(const player & p1)
 	round = 0;
 }
 
+ player::player(string n, int l, long e, int r)
+ {
+	 name = n;
+	 level = l;
+	 EXP = e;
+	 round = r;
+ }
+
 player::~player()
 {
 }

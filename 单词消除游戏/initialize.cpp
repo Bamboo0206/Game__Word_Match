@@ -14,4 +14,29 @@ void read_wordlib()
 		word_set.push_back(word);
 	}
 }
-void read_
+void read_player()
+{
+	fstream inFile("player.csv", ios::in);
+	if (!inFile) { cerr<<"无法打开文件player.csv" << endl; return; }
+	inFile.seekg(0, fstream::beg);
+	
+	while (!inFile.eof())
+	{
+		int level, round;
+		long EXP;
+		string name;
+		getline(inFile, name, ',');
+		cin >> level;
+		getchar();
+		cin >> EXP;
+		getchar();
+		cin >> round;
+		getchar();
+		player temp(name, level, EXP, round);
+		v_player.push_back(temp);
+	}
+}
+void read_test_maker()
+{
+
+}
