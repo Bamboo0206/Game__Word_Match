@@ -2,7 +2,7 @@
 
 /*全局变量*/
 extern vector<test_maker>::iterator it_user_test_maker;//当前系统用户
-extern set<string> word_set;//单词集合
+extern set<string, my_shorter> word_set;//单词集合
 
 void add_word()
 {

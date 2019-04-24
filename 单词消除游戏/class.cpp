@@ -1,5 +1,5 @@
 #include"header.h"
-extern set<string> word_set;//单词集合
+extern set<string, my_shorter> word_set;//单词集合
 
 
 //
@@ -45,7 +45,7 @@ participant::~participant()
 {
 }
 
-inline bool participant::operator==(participant const &A)
+ bool participant::operator==(participant const &A)
 {
 	return A.name == name;
 }
@@ -95,7 +95,7 @@ player::player(const player & p1)
 	round = p1.round;
 }
 
-inline player::player(string s)
+ player::player(string s)
 {
 	name = s;
 	level = 0;
@@ -123,7 +123,7 @@ player & player::operator=(const player & p1)
 	return *this;
 }
 
-//inline void player::sign_up()
+// void player::sign_up()
 //{
 //	cout << "请输入用户名：\n";
 //	getline(cin, name);
@@ -160,7 +160,7 @@ test_maker::test_maker(const test_maker & t1)
 	word_num = t1.word_num;
 }
 
-inline test_maker::test_maker(string s)
+ test_maker::test_maker(string s)
 {
 	name = s;
 	level = 0;

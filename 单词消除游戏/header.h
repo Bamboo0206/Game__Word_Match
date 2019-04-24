@@ -74,13 +74,14 @@ private:
 
 /*函数类*/
 /*自定义比较大小方式：按字符串长度比较（函数类）*/
-struct shorter
+struct my_shorter
 {
-	bool operator()(const string & a1, const string & a2)
+	bool operator()(const string & a1, const string & a2) const
 	{
 		return a1.size() < a2.size();
 	}
 };
+
 
 /*宏定义*/
 #define EXP_BASIC_MAKER 100 //出题者成功出一个单词的最低经验值

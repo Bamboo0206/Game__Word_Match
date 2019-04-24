@@ -5,7 +5,7 @@ vector<player> v_player;//所有player
 vector<test_maker> v_test_maker;//所有test_maker
 vector<player>::iterator it_user_player;//当前系统用户
 vector<test_maker>::iterator it_user_test_maker;
-set<string,shorter> word_set;//单词集合//使用自定义shorter比较大小
+set<string,my_shorter> word_set;//单词集合//使用自定义my_shorter比较大小
 
 /*函数*/
 void sign_up();
@@ -16,8 +16,10 @@ void start_game();
 
 int main()
 {
-	//it_user_player == v_player.end();
-	//it_user_test_maker == v_test_maker.end();
+	/*初始化*/
+	//it_user_player == v_player.();
+	it_user_test_maker == v_test_maker.begin();
+	/*运行*/
 	string option;
 	while (true)
 	{
