@@ -4,6 +4,7 @@
 #include<algorithm>
 #include<iterator>
 #include<set>
+#include<cmath>
 using namespace std;
 
 //基类
@@ -22,7 +23,7 @@ protected://为了能被派生类成员函数访问到
 	string name;
 	//要不要password
 	int level;
-	int EXP;//经验值experience point
+	long EXP;//经验值experience point
 };
 //
 //participant::participant()
@@ -90,7 +91,7 @@ public:
 	~test_maker();
 	//friend bool equal_name(test_maker &A, test_maker &B);
 	void inc_word_num();
-	void update_EXP(string word);
+	void update_EXP(string word);//务必先加EXP再算等级！
 	void update_level();
 private:
 	int word_num;

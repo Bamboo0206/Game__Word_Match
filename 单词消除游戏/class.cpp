@@ -54,6 +54,9 @@ inline bool participant::operator==(participant const &A)
 
 player::player()
 {
+	level = 0;
+	EXP = 0;
+	round = 0;
 }
 
 inline player::player(string s)
@@ -76,10 +79,6 @@ player::~player()
 //
 //}
 
-void test_maker::update_level()
-{
-	/*下凸函数？？？*/
-}
 
 
 /*****************出题者****************/
@@ -96,6 +95,9 @@ void test_maker::update_level()
 
 test_maker::test_maker()
 {
+	level = 0;
+	EXP = 0;
+	word_num = 0;
 }
 
 inline test_maker::test_maker(string s)
@@ -147,4 +149,12 @@ void test_maker::update_EXP(string input_word)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 5;
 	}
+}
+void test_maker::update_level()
+{
+	/*等级是EXP的上凸函数，等级越高升级所需增加的经验越多*/
+	/*暂时是开根号*/
+	/*level=f(EXP)=EXP^(1/2)*/
+	level = sqrt(EXP / 100);//会被截断为整数的
+	//为什么/100呢，去看宏定义EXP_BASIC_MAKER
 }
