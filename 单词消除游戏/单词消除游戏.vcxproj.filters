@@ -47,5 +47,8 @@
     <ClCompile Include="rank.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="search_participant.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

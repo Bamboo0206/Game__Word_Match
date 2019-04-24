@@ -69,8 +69,11 @@ int main()
 			log_out();
 		}
 		/*查询：排名、排行榜等*/
-		
+		else if (option == "rank")
+		{
+			cout << "请选择要查看的排行榜（player/test_maker）：\n";
 
+		}
 		/**/
 		else
 			cout << "非法输入" << endl;

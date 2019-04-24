@@ -29,6 +29,7 @@
     <ClCompile Include="log_out.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rank.cpp" />
+    <ClCompile Include="search_participant.cpp" />
     <ClCompile Include="sign_up.cpp" />
     <ClCompile Include="start_game.cpp" />
   </ItemGroup>

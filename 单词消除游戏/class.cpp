@@ -197,3 +197,8 @@ void test_maker::update_level()
 	level = sqrt(EXP / 100);//会被截断为整数的
 	//为什么/100呢，去看宏定义EXP_BASIC_MAKER
 }
+
+int test_maker::show_word_num()const
+{
+	return word_num;
+}

@@ -22,9 +22,9 @@ public:
 	bool operator<(const participant &p1);//按名字字典序比大小//???
 	participant & operator=(const participant &p1);//赋值运算符重载
 
-	string show_name() { return name; }
-	int show_level() { return level; }
-	long show_EXP() { return EXP; }
+	string show_name()const { return name; }
+	int show_level() const{ return level; }
+	long show_EXP() const{ return EXP; }
 
 	//virtual void sign_up() = 0;//注册 //????
 	//void log_in();//登陆
@@ -53,6 +53,7 @@ public:
 	void inc_round(){ ++round; }
 	void update_EXP(int difficulty);//务必先加EXP再算等级！
 	void update_level();
+	int show_round()const { return round; }
 private:
 	int round;//已闯关数量
 };
@@ -73,6 +74,7 @@ public:
 	void inc_word_num();
 	void update_EXP(string word);//务必先加EXP再算等级！
 	void update_level();
+	int show_word_num()const;
 private:
 	int word_num;
 };
@@ -85,6 +87,42 @@ struct my_shorter
 	bool operator()(const string & a1, const string & a2) const
 	{
 		return a1.size() < a2.size();
+	}
+};
+
+class name_less
+{
+	bool operator()(const participant & a1, const participant & a2) const
+	{
+		return a1.show_name() < a2.show_name();
+	}
+};
+class EXP_less
+{
+	bool operator()(const participant & a1, const participant & a2) const
+	{
+		return a1.show_EXP() < a2.show_EXP();
+	}
+};
+class level_less
+{
+	bool operator()(const participant & a1, const participant & a2) const
+	{
+		return a1.show_level() < a2.show_level();
+	}
+};
+class round_less
+{
+	bool operator()(const player & a1, const player & a2) const
+	{
+		return a1.show_round() < a2.show_round();
+	}
+};
+class word_num_less
+{
+	bool operator()(const test_maker & a1, const test_maker & a2) const
+	{
+		return a1.show_word_num() < a2.show_word_num();
 	}
 };
 
