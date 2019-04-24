@@ -25,6 +25,7 @@
   <ItemGroup>
     <ClCompile Include="add_word.cpp" />
     <ClCompile Include="class.cpp" />
+    <ClCompile Include="initialize.cpp" />
     <ClCompile Include="log_in.cpp" />
     <ClCompile Include="log_out.cpp" />
     <ClCompile Include="main.cpp" />

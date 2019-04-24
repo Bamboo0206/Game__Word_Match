@@ -7,6 +7,7 @@
 #include<cmath>
 #include<ctime>
 #include<windows.h>
+#include<fstream>
 using namespace std;
 
 //»ùÀà

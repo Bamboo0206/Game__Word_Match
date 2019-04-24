@@ -74,7 +74,7 @@ int main()
 			cout << "请选择要查看的排行榜（player/test_maker）：\n";
 
 		}
-		/**/
+		/*退出系统 需要写文件*/
 		else
 			cout << "非法输入" << endl;
 	}
