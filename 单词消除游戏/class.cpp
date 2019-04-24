@@ -92,6 +92,18 @@ player & player::operator=(const player & p1)
 	return *this;
 }
 
+void player::update_EXP(int difficulty)
+{
+	EXP = EXP + EXP_BASIC_MAKER * difficulty;
+}
+
+void player::update_level()
+{
+	level = sqrt(EXP / 100);
+}
+
+
+
 
 
 /*****************ГіЬтеп****************/

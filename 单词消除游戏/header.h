@@ -50,7 +50,9 @@ public:
 
 	//virtual void sign_up() override;//注册
 	//friend bool equal_name(player &A, player &B);
-
+	void inc_round(){ ++round; }
+	void update_EXP(int difficulty);//务必先加EXP再算等级！
+	void update_level();
 private:
 	int round;//已闯关数量
 };
