@@ -23,6 +23,22 @@ extern set<string> word_set;//单词集合
 /************基类*************/
 participant::participant()
 {
+	level = 0;
+	EXP = 0;
+}
+
+participant::participant(const participant & p1)
+{
+	name = p1.name;
+	level = p1.level;
+	EXP = p1.EXP;
+}
+
+participant::participant(const string & name1)
+{
+	name = name1;
+	level = 0;
+	EXP = 0;
 }
 
 participant::~participant()
@@ -31,10 +47,22 @@ participant::~participant()
 
 inline bool participant::operator==(participant const &A)
 {
-	if (A.name == name)
-		return true;
-	else
-		return false;
+	return A.name == name;
+}
+
+bool participant::operator<(const participant & p1)
+{
+	return this->name < p1.name;
+}
+
+participant & participant::operator=(const participant & p1)
+{
+	if (this == &p1) return *this;
+	
+	name = p1.name;
+	EXP = p1.EXP;
+	level = p1.level;
+	return *this;
 }
 
 //
@@ -59,6 +87,14 @@ player::player()
 	round = 0;
 }
 
+player::player(const player & p1)
+{
+	name = p1.name;
+	level = p1.level;
+	EXP = p1.EXP;
+	round = p1.round;
+}
+
 inline player::player(string s)
 {
 	name = s;
@@ -69,6 +105,22 @@ inline player::player(string s)
 
 player::~player()
 {
+}
+
+bool player::operator<(const player & p1)
+{
+	return this->name < p1.name;
+}
+
+player & player::operator=(const player & p1)
+{
+	if (this == &p1) return *this;
+
+	name = p1.name;
+	EXP = p1.EXP;
+	level = p1.level;
+	round = p1.level;
+	return *this;
 }
 
 //inline void player::sign_up()
@@ -100,6 +152,14 @@ test_maker::test_maker()
 	word_num = 0;
 }
 
+test_maker::test_maker(const test_maker & t1)
+{
+	name = t1.name;
+	level = t1.level;
+	EXP = t1.EXP;
+	word_num = t1.word_num;
+}
+
 inline test_maker::test_maker(string s)
 {
 	name = s;
@@ -110,6 +170,22 @@ inline test_maker::test_maker(string s)
 
 test_maker::~test_maker()
 {
+}
+
+bool test_maker::operator<(const test_maker & p1)
+{
+	return this->name < p1.name;
+}
+
+test_maker & test_maker::operator=(const test_maker & p1)
+{
+	if (this == &p1) return *this;
+
+	name = p1.name;
+	EXP = p1.EXP;
+	level = p1.level;
+	word_num = p1.word_num;
+	return *this;
 }
 
 void test_maker::inc_word_num()
