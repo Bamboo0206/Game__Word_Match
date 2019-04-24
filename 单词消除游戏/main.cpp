@@ -19,6 +19,7 @@ int main()
 	/*初始化 有问题*/
 	//it_user_player == v_player.();
 	//it_user_test_maker == v_test_maker.begin();
+	srand((unsigned int) time(NULL));
 	/*运行*/
 	string option;
 	while (true)

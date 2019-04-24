@@ -5,6 +5,8 @@
 #include<iterator>
 #include<set>
 #include<cmath>
+#include<ctime>
+#include<windows.h>
 using namespace std;
 
 //»ùÀà

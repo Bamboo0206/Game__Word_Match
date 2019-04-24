@@ -4,9 +4,9 @@
 void add_word()
 {
 	bool finish = false;
-	cout << "输入选择：输入单词0/退出1\n";
-	cin >> finish;
-	pair<set<string>::iterator, bool> insert_result;//
+	//cout << "输入选择：输入单词0/退出1\n";
+	//cin >> finish;
+	pair<set<string>::iterator, bool> insert_result;//使用pair！
 	string new_word;
 	//set<string>::iterator it_word;
 	while (!finish)
