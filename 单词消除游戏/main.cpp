@@ -16,9 +16,9 @@ void start_game();
 
 int main()
 {
-	/*初始化*/
+	/*初始化 有问题*/
 	//it_user_player == v_player.();
-	it_user_test_maker == v_test_maker.begin();
+	//it_user_test_maker == v_test_maker.begin();
 	/*运行*/
 	string option;
 	while (true)
@@ -52,7 +52,7 @@ int main()
 		else if (option == "add_word")
 		{
 			/*检测是否登陆*/
-			if (it_user_test_maker == v_test_maker.end())
+			if (it_user_test_maker == v_test_maker.end())//？？？？
 			{
 				cout << "请先登陆\n";
 			}

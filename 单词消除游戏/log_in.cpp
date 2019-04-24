@@ -11,6 +11,7 @@ void log_in()
 	string name, type;
 	cout << "请选择登陆类型：闯关者player/出题者test_maker：\n";
 	cin >> type;
+	getchar();//吞回车
 	cout << "请输入用户名：\n";
 	getline(cin, name);
 	/*待改：输入正确性检验,检测重名*/
@@ -34,7 +35,7 @@ void log_in()
 				temp_it++;
 			}
 		}
-		if (it_user_player == v_player.end())
+		if (temp_it == v_player.end())
 		{
 			cout << "not found\n";
 		}
@@ -62,7 +63,7 @@ void log_in()
 			}
 		}
 		
-		if (it_user_test_maker == v_test_maker.end())
+		if (temp_it == v_test_maker.end())
 		{
 			cout << "not found\n";
 		}

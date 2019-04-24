@@ -8,6 +8,7 @@ void sign_up()
 	string name, type;
 	cout << "请选择注册类型：闯关者player/出题者test_maker：\n";
 	cin >> type;
+	getchar();//吞回车
 
 	//请选择要注册的类型：闯关者/出题者
 	if (type == "player")
