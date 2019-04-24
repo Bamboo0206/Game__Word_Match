@@ -1,10 +1,6 @@
 #include"header.h"
+#include"variable.h"
 
-/*全局变量*/
-extern vector<player> v_player;
-extern vector<test_maker> v_test_maker;
-extern vector<player>::iterator it_user_player;
-extern vector<test_maker>::iterator it_user_test_maker;
 void log_out()
 {
 	string name, type;

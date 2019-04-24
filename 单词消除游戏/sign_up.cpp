@@ -1,8 +1,6 @@
 #include"header.h"
+#include"variable.h"
 
-/*全局变量*/
-extern vector<player> v_player;
-extern vector<test_maker> v_test_maker;
 void sign_up()
 {
 	string name, type;

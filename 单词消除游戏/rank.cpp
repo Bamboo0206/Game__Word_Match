@@ -1,6 +1,7 @@
 /*写个函数模板？？*/
 
 #include"header.h"
+#include"variable.h"
 
 /*全局变量*/
 extern vector<player> v_player;//所有player

@@ -1,5 +1,5 @@
 #include"header.h"
-extern set<string, my_shorter> word_set;//µ¥´Ê¼¯ºÏ
+#include"variable.h"
 
 
 //

@@ -21,6 +21,8 @@ public:
 	participant & operator=(const participant &p1);//¸³ÖµÔËËã·ûÖØÔØ
 
 	string show_name() { return name; }
+	int show_level() { return level; }
+	long show_EXP() { return EXP; }
 
 	//virtual void sign_up() = 0;//×¢²á //????
 	//void log_in();//µÇÂ½

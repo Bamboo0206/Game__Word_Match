@@ -1,8 +1,5 @@
 #include"header.h"
-
-/*全局变量*/
-extern vector<test_maker>::iterator it_user_test_maker;//当前系统用户
-extern set<string, my_shorter> word_set;//单词集合
+#include"variable.h"
 
 void add_word()
 {
@@ -35,4 +32,6 @@ void add_word()
 		cout << "请选择：继续输入单词0/退出1\n";
 		cin >> finish;
 	}
+	cout << "level:" << it_user_test_maker->show_level
+		<< "\tEXP:" << it_user_test_maker->show_EXP << endl;
 }
