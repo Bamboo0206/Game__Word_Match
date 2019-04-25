@@ -35,6 +35,6 @@ void add_word()
 		cout << "请选择：继续输入单词0/退出1\n";
 		cin >> finish;
 	}
-	cout << "level:" << it_user_test_maker->show_level
-		<< "\tEXP:" << it_user_test_maker->show_EXP << endl;
+	cout << "level:" << it_user_test_maker->show_level()
+		<< "\tEXP:" << it_user_test_maker->show_EXP() << endl;
 }

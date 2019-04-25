@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="function_declaration.h" />
+    <ClInclude Include="class.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="variable.h" />
   </ItemGroup>

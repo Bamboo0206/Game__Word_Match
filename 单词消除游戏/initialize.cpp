@@ -6,6 +6,7 @@
 void read_wordlib()
 {
 	fstream f_wordlib("wordlib.csv", ios::in);
+	if (!f_wordlib) { cerr << "无法打开文件wordlib.csv" << endl; return; }
 	f_wordlib.seekg(0, fstream::beg);
 	string word;
 	while (!f_wordlib.eof())
@@ -20,18 +21,25 @@ void read_player()
 	if (!inFile) { cerr<<"无法打开文件player.csv" << endl; return; }
 	inFile.seekg(0, fstream::beg);
 	
-	while (!inFile.eof())
+	string str;
+	while (getline(inFile, str))
 	{
 		int level, pass_count;
 		long EXP;
-		string name;
-		getline(inFile, name, ',');
-		cin >> level;
-		getchar();
-		cin >> EXP;
-		getchar();
-		cin >> pass_count;
-		getchar();
+		string name,buf;
+		char ch;
+
+		stringstream ss(str);
+
+		getline(ss, name, ',');
+		ss >> level;
+		getline(ss, buf, ',');
+		//inFile >> ch;
+		ss >> EXP;
+		getline(ss, buf, ',');
+		ss >> pass_count;
+		getline(ss, buf);//最后是回车
+
 		player temp(name, level, EXP, pass_count);
 		v_player.push_back(temp);
 	}

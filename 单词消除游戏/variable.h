@@ -1,4 +1,5 @@
 #include"header.h"
+#include"class.h"
 
 /*全局变量*/ //在main里定义
 extern vector<player> v_player;//所有player

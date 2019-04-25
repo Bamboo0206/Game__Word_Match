@@ -1,4 +1,5 @@
 #include"header.h"
+#include"class.h"
 #include"function_declaration.h"
 
 /*全局变量*/
@@ -17,6 +18,10 @@ int main()
 	//it_user_player == v_player.();
 	//it_user_test_maker == v_test_maker.begin();
 	srand((unsigned int) time(NULL));
+	read_wordlib();
+	read_player();
+	read_test_maker();
+
 	/*运行*/
 	string option;
 	while (true)
@@ -37,11 +42,11 @@ int main()
 		else if (option == "start_game")
 		{
 			/*检测是否登陆*/
-			if (it_user_player == v_player.end())
-			{
-				cout << "请先登陆\n";
-			}
-			else
+			//if (it_user_player == v_player.end())
+			//{
+			//	cout << "请先登陆\n";
+			//}
+			//else
 			{
 				start_game();
 			}
