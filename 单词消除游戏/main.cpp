@@ -66,14 +66,20 @@ int main()
 		/*登出*/
 		else if (option == "log_out")
 		{
+			/*检测是否登陆*/
+
 			log_out();
 		}
 		/*查询：排名、排行榜等*/
 		else if (option == "rank")
 		{
 			cout << "请选择要查看的排行榜（player/test_maker）：\n";
-
+			string choice;
+			cin >> choice;
+			if (choice == "player")search_player();
 		}
+		/*按角色属性查询*/
+
 		/*退出系统 需要写文件*/
 		else
 			cout << "非法输入" << endl;
