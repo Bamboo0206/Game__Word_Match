@@ -47,5 +47,30 @@ void read_player()
 }
 void read_test_maker()
 {
+	fstream inFile("test_maker.csv", ios::in);
+	if (!inFile) { cerr << "无法打开文件test_maker.csv" << endl; return; }
+	inFile.seekg(0, fstream::beg);
 
+	string str;
+	while (getline(inFile, str))
+	{
+		int level, word_num;
+		long EXP;
+		string name, buf;
+		char ch;
+
+		stringstream ss(str);
+
+		getline(ss, name, ',');
+		ss >> level;
+		getline(ss, buf, ',');
+		//inFile >> ch;
+		ss >> EXP;
+		getline(ss, buf, ',');
+		ss >> word_num;
+		getline(ss, buf);//最后是回车
+
+		test_maker temp(name, level, EXP, word_num);
+		v_test_maker.push_back(temp);
+	}
 }

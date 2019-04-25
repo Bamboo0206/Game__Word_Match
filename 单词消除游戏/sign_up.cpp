@@ -19,7 +19,12 @@ void sign_up()
 		v_player.push_back(p);
 
 		/*写文件*/
-
+		fstream f_player("player.csv", ios::app);
+		if (!f_player) { cerr << "无法打开文件player.csv" << endl; return; }
+		f_player << p.show_name() << ','
+			<< p.show_level() << ','
+			<< p.show_EXP() << ','
+			<< p.show_pass_count() << endl;
 
 		cout << "注册成功！" << endl;
 	}
@@ -31,6 +36,15 @@ void sign_up()
 
 		test_maker t(name);
 		v_test_maker.push_back(t);
+
+		/*写文件*/
+		fstream f_test_maker("test_maker.csv", ios::app);
+		if (!f_test_maker) { cerr << "无法打开文件test_maker.csv" << endl; return; }
+		f_test_maker << t.show_name() << ','
+			<< t.show_level() << ','
+			<< t.show_EXP() << ','
+			<< t.show_word_num() << endl;
+
 		cout << "注册成功！" << endl;
 	}
 	else

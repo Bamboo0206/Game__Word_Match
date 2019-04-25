@@ -110,6 +110,7 @@ player & player::operator=(const player & p1)
 void player::update_EXP(int difficulty)
 {
 	EXP = EXP + EXP_BASIC_MAKER * difficulty;
+	cout << "EXP+" << EXP_BASIC_MAKER * difficulty << endl;
 }
 
 
@@ -137,6 +138,14 @@ test_maker::test_maker(const test_maker & t1)
 	EXP = 0;
 	word_num = 0;
 }
+
+ test_maker::test_maker(string n, int l, long e, int w)
+ {
+	 name = n;
+	 level = l; 
+	 EXP = e;
+	 word_num = w;
+ }
 
 test_maker::~test_maker()
 {
@@ -180,22 +189,27 @@ void test_maker::update_EXP(string input_word)
 	if (seq < (size) / 5)//EXP1
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER;
+		cout << "EXP+" << EXP_BASIC_MAKER << endl;
 	}
 	else if ((size) / 5 <= seq && seq < (size) * 2 / 5)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 2;//二倍基础经验
+		cout << "EXP+" << EXP_BASIC_MAKER*2 << endl;
 	}
 	else if ((size)*2 / 5 <= seq && seq < (size) * 3 / 5)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 3;
+		cout << "EXP+" << EXP_BASIC_MAKER*3 << endl;
 	}
 	else if ((size) *3 / 5 <= seq && seq < (size) * 4 / 5)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 4;
+		cout << "EXP+" << EXP_BASIC_MAKER*4 << endl;
 	}
 	else if ((size)*4 / 5 <= seq && seq < size)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 5;
+		cout << "EXP+" << EXP_BASIC_MAKER*5 << endl;
 	}
 }
 

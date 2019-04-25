@@ -21,6 +21,10 @@ void add_word()
 		{
 			word_set.push_back(new_word);
 			cout << "成功添加单词：" << word_set.back() << endl;
+			/*写入文件*/
+			fstream f_wordlib("wordlib.csv", ios::app);
+			if (!f_wordlib) { cerr << "无法打开文件wordlib.csv" << endl; return; }
+			f_wordlib << new_word << endl;
 
 			/*出题者属性修改：单词数、经验值、等级*/
 			it_user_test_maker->inc_word_num();

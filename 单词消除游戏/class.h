@@ -60,6 +60,7 @@ public:
 	test_maker();
 	test_maker(const test_maker &t1);//拷贝构造函数
 	test_maker(string s);
+	test_maker(string n, int l, long e, int w);
 	~test_maker();
 
 	bool operator<(const test_maker &p1);//按名字字典序比大小//???

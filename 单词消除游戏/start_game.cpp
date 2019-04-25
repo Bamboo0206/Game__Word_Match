@@ -1,5 +1,6 @@
 #include"header.h"
 #include"variable.h"
+#include"function_declaration.h"
 
 /*游戏每一关，程序会根据该关卡难度，显示一个单词，一定时间后单词消失。
 闯关者需要在相应地方输入刚刚显示并消失的单词，如果闯关者输入正确则为通过。*/
@@ -29,27 +30,25 @@ void start_game()
 		switch (difficulty)
 		{
 		case 1://随机取前1/5单词
-			//loc = rand() % (size / 5);//可能会出现%不起作用的问题
 			break;
 		case 2:
-			loc+=size * 1 / 5;//可能会出现%不起作用的问题
+			loc += size * 1 / 5;
 			break;
 		case 3:
 			loc += size * 2 / 5;
-			//loc = rand() % (size *  2/ 5);//可能会出现%不起作用的问题
 			break;
 		case 4:
 			loc += size * 3 / 5;
-			//loc = rand() % (size * 3/ 5);//可能会出现%不起作用的问题
 			break;
 		case 5:
 			loc += size * 4 / 5;
-			//loc = rand() % size;//可能会出现%不起作用的问题
 			break;
 		case 0:
 			cout << "游戏已退出" << endl;
 			return;
 		default:
+			cout << "非法输入" << endl;
+			continue;//??
 			break;
 		}
 		cout << word_set.at(loc);

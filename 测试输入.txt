@@ -32,3 +32,12 @@ EXP
 rank
 player
 pass_count
+
+/*²âÊÔsearch_participant*/
+search_player
+name
+ZQY
+
+search_player
+level
+5//Ìì´óµÄbug
