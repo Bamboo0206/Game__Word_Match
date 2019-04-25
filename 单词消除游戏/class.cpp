@@ -53,7 +53,7 @@ player::player()
 {
 	level = 0;
 	EXP = 0;
-	round = 0;
+	pass_count = 0;
 }
 
 player::player(const player & p1)
@@ -61,7 +61,7 @@ player::player(const player & p1)
 	name = p1.name;
 	level = p1.level;
 	EXP = p1.EXP;
-	round = p1.round;
+	pass_count = p1.pass_count;
 }
 
  player::player(string s)
@@ -69,8 +69,16 @@ player::player(const player & p1)
 	name = s;
 	level = 0;
 	EXP = 0;
-	round = 0;
+	pass_count = 0;
 }
+
+ player::player(string n, int l, long e, int r)
+ {
+	 name = n;
+	 level = l;
+	 EXP = e;
+	 pass_count = r;
+ }
 
 player::~player()
 {
@@ -88,9 +96,21 @@ player & player::operator=(const player & p1)
 	name = p1.name;
 	EXP = p1.EXP;
 	level = p1.level;
-	round = p1.level;
+	pass_count = p1.level;
 	return *this;
 }
+
+void player::update_EXP(int difficulty)
+{
+	EXP = EXP + EXP_BASIC_MAKER * difficulty;
+}
+
+void player::update_level()
+{
+	level = sqrt(EXP / 100);
+}
+
+
 
 
 
@@ -147,32 +167,34 @@ void test_maker::inc_word_num()
 
 void test_maker::update_EXP(string input_word)
 {
-	set<string>::iterator it;
-	it = word_set.lower_bound(input_word);//找input_word的greatest lower bound ^
-	
+	sort(word_set.begin(), word_set.end());
+	vector<string>::iterator it, input_it;
+	input_it = find(word_set.begin(), word_set.end(), input_word);
+
 	/*手动求元素序号*/
 	int seq = 0;
-	for (it = word_set.begin(); it != word_set.lower_bound(input_word); it++)
+	for (it = word_set.begin(); it != input_it; it++)
 		seq++;
+	int size = word_set.size();
 
 	/*分五级，分别加不同经验*/
-	if (seq < (word_set.size()) / 5)//EXP1
+	if (seq < (size) / 5)//EXP1
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER;
 	}
-	else if ((word_set.size()) / 5 <= seq && seq < (word_set.size()) * 2 / 5)
+	else if ((size) / 5 <= seq && seq < (size) * 2 / 5)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 2;//二倍基础经验
 	}
-	else if ((word_set.size())*2 / 5 <= seq && seq < (word_set.size()) * 3 / 5)
+	else if ((size)*2 / 5 <= seq && seq < (size) * 3 / 5)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 3;
 	}
-	else if ((word_set.size()) *3 / 5 <= seq && seq < (word_set.size()) * 4 / 5)
+	else if ((size) *3 / 5 <= seq && seq < (size) * 4 / 5)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 4;
 	}
-	else if ((word_set.size())*4 / 5 <= seq && seq < word_set.size())
+	else if ((size)*4 / 5 <= seq && seq < size)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 5;
 	}
@@ -184,4 +206,9 @@ void test_maker::update_level()
 	/*level=f(EXP)=EXP^(1/2)*/
 	level = sqrt(EXP / 100);//会被截断为整数的
 	//为什么/100呢，去看宏定义EXP_BASIC_MAKER
+}
+
+int test_maker::show_word_num()const
+{
+	return word_num;
 }

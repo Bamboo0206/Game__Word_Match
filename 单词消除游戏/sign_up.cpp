@@ -17,6 +17,10 @@ void sign_up()
 
 		player p(name);
 		v_player.push_back(p);
+
+		/*写文件*/
+
+
 		cout << "注册成功！" << endl;
 	}
 	else if (type == "test_maker")
