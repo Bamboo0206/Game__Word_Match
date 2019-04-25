@@ -15,12 +15,14 @@ void start_game()
 	size = word_set.size();
 	if (!size) { cout << "词库为空！请先添加单词\n"; return ; }
 
+	sort(word_set.begin(), word_set.end(),my_shorter());
+
 	while (!finish)
 	{
 		cout << "请选择难度（1-5）：" << endl;
 		cin >> difficulty;
 		/*待加入：正确性检验 若有空格之类的会导致fail*/
-		cout << "请记住这个单词：" ;
+		cout << "请记住这个单词（3s后消失）：" ;
 
 		int loc = 0;//下标
 		loc = rand() % (size / 5);
@@ -33,24 +35,28 @@ void start_game()
 			loc+=size * 1 / 5;//可能会出现%不起作用的问题
 			break;
 		case 3:
-			loc += size * 1 / 5;
-			loc = rand() % (size *  2/ 5);//可能会出现%不起作用的问题
+			loc += size * 2 / 5;
+			//loc = rand() % (size *  2/ 5);//可能会出现%不起作用的问题
 			break;
 		case 4:
-			loc += size * 1 / 5;
-			loc = rand() % (size * 3/ 5);//可能会出现%不起作用的问题
+			loc += size * 3 / 5;
+			//loc = rand() % (size * 3/ 5);//可能会出现%不起作用的问题
 			break;
 		case 5:
-			loc = rand() % size;//可能会出现%不起作用的问题
+			loc += size * 4 / 5;
+			//loc = rand() % size;//可能会出现%不起作用的问题
 			break;
-
+		case 0:
+			cout << "游戏已退出" << endl;
+			return;
 		default:
 			break;
 		}
 		cout << word_set.at(loc);
 		Sleep(3000);
 
-		cout << "\r请输入刚才出现的单词：";
+		cout << "\r                                                            ";
+		cout<<"\r请输入刚才出现的单词：";
 		cin >> input_word;
 		/*待改 正确性检验*/
 
@@ -64,6 +70,6 @@ void start_game()
 		{
 			cout << "输入单词错误，闯关失败\n";
 		}
-
+		cout << "输入0退出游戏\n";
 	}
 }

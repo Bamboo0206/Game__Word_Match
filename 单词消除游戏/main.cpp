@@ -55,11 +55,11 @@ int main()
 		else if (option == "add_word")
 		{
 			/*检测是否登陆*/
-			if (it_user_test_maker == v_test_maker.end())//？？？？
-			{
-				cout << "请先登陆\n";
-			}
-			else
+			//if (it_user_test_maker == v_test_maker.end())//？？？？
+			//{
+			//	cout << "请先登陆\n";
+			//}
+			//else
 			{
 				add_word();
 			}
@@ -72,7 +72,7 @@ int main()
 
 			log_out();
 		}
-		/*查询：排名、排行榜等*/
+		/*排行榜*/
 		else if (option == "rank")
 		{
 			cout << "请选择要查看的排行榜（player/test_maker）：\n";
