@@ -32,6 +32,7 @@ void rank_player()
 		cout << "输入错误\n";
 		return;
 	}
+	getchar();//吞回车
 
 	/*输出排行榜*/
 	cout << "用户名\t\t等级\t\tEXP\t\t通关数" << endl;

@@ -46,7 +46,14 @@ participant & participant::operator=(const participant & p1)
 	level = p1.level;
 	return *this;
 }
-
+void participant::update_level()
+{
+	/*等级是EXP的上凸函数，等级越高升级所需增加的经验越多*/
+	/*暂时是开根号*/
+	/*level=f(EXP)=EXP^(1/2)*/
+	level = sqrt(EXP / 100);//会被截断为整数的
+	//为什么/100呢，去看宏定义EXP_BASIC_MAKER
+}
 
 /****************闯关者*****************/
 player::player()
@@ -104,14 +111,6 @@ void player::update_EXP(int difficulty)
 {
 	EXP = EXP + EXP_BASIC_MAKER * difficulty;
 }
-
-void player::update_level()
-{
-	level = sqrt(EXP / 100);
-}
-
-
-
 
 
 /*****************出题者****************/
@@ -199,14 +198,7 @@ void test_maker::update_EXP(string input_word)
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 5;
 	}
 }
-void test_maker::update_level()
-{
-	/*等级是EXP的上凸函数，等级越高升级所需增加的经验越多*/
-	/*暂时是开根号*/
-	/*level=f(EXP)=EXP^(1/2)*/
-	level = sqrt(EXP / 100);//会被截断为整数的
-	//为什么/100呢，去看宏定义EXP_BASIC_MAKER
-}
+
 
 int test_maker::show_word_num()const
 {

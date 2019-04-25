@@ -64,12 +64,30 @@ void start_game()
 		{
 			cout << "输入单词正确，闯关成功\n";
 			/*更新等级、经验*/
-
+			it_user_player->update_EXP(difficulty);
+			it_user_player->update_level();
 		}
 		else//错误
 		{
-			cout << "输入单词错误，闯关失败\n";
+			cout << "输入单词错误，闯关失败\t刚才显示的单词是：" << word_set.at(loc) << endl;
 		}
 		cout << "输入0退出游戏\n";
 	}
+	/*输出用户信息*/
+	print_player();
+}
+
+void print_player()
+{
+	cout <<"name:"<< it_user_player->show_name() << '\t'
+		<< "level:" << it_user_player->show_level() << '\t'
+		<< "EXP:" << it_user_player->show_EXP() << '\t'
+		<< "通关数:" << it_user_player->show_pass_count() << endl;
+}
+void print_test_maker()
+{
+	cout << "name:" << it_user_test_maker->show_name() << '\t'
+		<< "level:" << it_user_test_maker->show_level() << '\t'
+		<< "EXP:" << it_user_test_maker->show_EXP() << '\t'
+		<< "输入单词数:" << it_user_test_maker->show_word_num() << endl;
 }

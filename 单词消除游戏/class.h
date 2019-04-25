@@ -14,6 +14,7 @@ public:
 	string show_name()const { return name; }
 	int show_level() const{ return level; }
 	long show_EXP() const{ return EXP; }
+	void update_level();
 
 	//void set_name(string n){  name=n; }
 	//void set_level(int n) { level=n; }
@@ -47,7 +48,6 @@ public:
 	//friend bool equal_name(player &A, player &B);
 	void inc_pass_count(){ ++pass_count; }
 	void update_EXP(int difficulty);//务必先加EXP再算等级！
-	void update_level();
 	int show_pass_count()const { return pass_count; }
 private:
 	int pass_count;//已闯关数量
@@ -68,7 +68,7 @@ public:
 	//friend bool equal_name(test_maker &A, test_maker &B);
 	void inc_word_num();
 	void update_EXP(string word);//务必先加EXP再算等级！
-	void update_level();
+
 	int show_word_num()const;
 private:
 	int word_num;

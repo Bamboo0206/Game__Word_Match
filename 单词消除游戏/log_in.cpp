@@ -1,5 +1,6 @@
 #include"header.h"
 #include"variable.h"
+#include"function_declaration.h"
 
 
 void log_in()
@@ -38,6 +39,7 @@ void log_in()
 		else
 		{
 			cout << "log in successfully\n";
+			print_player();
 		}
 	}
 	else if (type == "test_maker")
@@ -66,6 +68,7 @@ void log_in()
 		else
 		{
 			cout << "log in successfully\n";
+			print_test_maker();
 		}
 	}
 	else
