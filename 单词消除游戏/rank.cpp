@@ -11,7 +11,7 @@ void rank_player()
 {
 	string choice;
 
-	cout << "请选择排序方式（name/level/EXP/round）：\n";
+	cout << "请选择排序方式（name/level/EXP/pass_count）：\n";
 	cin >> choice;
 	if (choice == "name")
 	{
@@ -25,9 +25,9 @@ void rank_player()
 	{
 		sort(v_player.begin(), v_player.end(), EXP_less());
 	}
-	else if (choice == "round")
+	else if (choice == "pass_count")
 	{
-		sort(v_player.begin(), v_player.end(), round_less());
+		sort(v_player.begin(), v_player.end(), pass_count_less());
 	}
 	else
 	{
@@ -40,7 +40,7 @@ void rank_player()
 	for (auto val : v_player)
 	{
 		cout << val.show_name() << "\t\t" << val.show_level() << "\t\t" 
-			<< val.show_EXP() << "\t\t" << val.show_round() << endl;
+			<< val.show_EXP() << "\t\t" << val.show_pass_count() << endl;
 	}
 }
 

@@ -10,7 +10,7 @@ void search_player()
 	vector<player>::iterator the_one/*要找的人*/;
 	string choice;
 
-	cout << "请选择查询的属性（name/level/EXP/round）：" << endl;
+	cout << "请选择查询的属性（name/level/EXP/pass_count）：" << endl;
 	cin >> choice;
 	if (choice == "name")
 	{
@@ -39,14 +39,14 @@ void search_player()
 		/*先排序再equal range？？*/
 		the_one = find(v_player.begin(), v_player.end(), EXP_input);
 	}
-	else if (choice == "round")
+	else if (choice == "pass_count")
 	{
-		int round_input;
+		int pass_count_input;
 		cout << "请输入通关数：" << endl;
-		cin >> round_input;
+		cin >> pass_count_input;
 		/*待改 将该等级的人全部输出*/
 		/*先排序再equal range？？*/
-		the_one = find(v_player.begin(), v_player.end(), round_input);
+		the_one = find(v_player.begin(), v_player.end(), pass_count_input);
 	}
 	else
 	{
@@ -65,7 +65,7 @@ void search_player()
 			<< "用户名：" << the_one->show_name() << endl
 			<< "等级：" << the_one->show_level() << endl
 			<< "EXP：" << the_one->show_EXP() << endl
-			<< "通关数：" << the_one->show_round() << endl;
+			<< "通关数：" << the_one->show_pass_count() << endl;
 	}
 }
 void search_test_maker()

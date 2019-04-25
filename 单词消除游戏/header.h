@@ -56,12 +56,12 @@ public:
 
 	//virtual void sign_up() override;//注册
 	//friend bool equal_name(player &A, player &B);
-	void inc_round(){ ++round; }
+	void inc_pass_count(){ ++pass_count; }
 	void update_EXP(int difficulty);//务必先加EXP再算等级！
 	void update_level();
-	int show_round()const { return round; }
+	int show_pass_count()const { return pass_count; }
 private:
-	int round;//已闯关数量
+	int pass_count;//已闯关数量
 };
 
 /*出题者*/
@@ -117,11 +117,11 @@ class level_less
 		return a1.show_level() < a2.show_level();
 	}
 };
-class round_less
+class pass_count_less
 {
 	bool operator()(const player & a1, const player & a2) const
 	{
-		return a1.show_round() < a2.show_round();
+		return a1.show_pass_count() < a2.show_pass_count();
 	}
 };
 class word_num_less

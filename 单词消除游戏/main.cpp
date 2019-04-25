@@ -1,18 +1,15 @@
 #include"header.h"
+#include"function_declaration.h"
 
 /*全局变量*/
 vector<player> v_player;//所有player
 vector<test_maker> v_test_maker;//所有test_maker
 vector<player>::iterator it_user_player;//当前系统用户
 vector<test_maker>::iterator it_user_test_maker;
-set<string,my_shorter> word_set;//单词集合//使用自定义my_shorter比较大小
+vector<string> word_set;//单词集合
+//set<string,my_shorter> word_set;//单词集合//使用自定义my_shorter比较大小
 
-/*函数*/
-void sign_up();
-void log_in();
-void log_out();
-void add_word();
-void start_game();
+
 
 int main()
 {
@@ -76,9 +73,19 @@ int main()
 			cout << "请选择要查看的排行榜（player/test_maker）：\n";
 			string choice;
 			cin >> choice;
-			if (choice == "player")search_player();
+			if (choice == "player")rank_player();
+			else if (choice == "test_maker")rank_test_maker();
 		}
+
 		/*按角色属性查询*/
+		else if (option == "search_player")
+		{
+			search_player();
+		}
+		else if (option == "search_test_maker")
+		{
+			search_test_maker();
+		}
 
 		/*退出系统 需要写文件*/
 		else

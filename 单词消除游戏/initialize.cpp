@@ -22,7 +22,7 @@ void read_player()
 	
 	while (!inFile.eof())
 	{
-		int level, round;
+		int level, pass_count;
 		long EXP;
 		string name;
 		getline(inFile, name, ',');
@@ -30,9 +30,9 @@ void read_player()
 		getchar();
 		cin >> EXP;
 		getchar();
-		cin >> round;
+		cin >> pass_count;
 		getchar();
-		player temp(name, level, EXP, round);
+		player temp(name, level, EXP, pass_count);
 		v_player.push_back(temp);
 	}
 }
