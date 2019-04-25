@@ -93,6 +93,10 @@ int main()
 		}
 
 		/*退出系统 需要写文件*/
+		else if (option == "quit")
+		{
+
+		}
 		else
 			cout << "非法输入" << endl;
 	}

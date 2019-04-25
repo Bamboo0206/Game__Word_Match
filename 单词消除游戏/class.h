@@ -1,4 +1,3 @@
-
 //»ùÀà
 class participant
 {

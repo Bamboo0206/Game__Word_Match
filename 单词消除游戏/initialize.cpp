@@ -14,6 +14,7 @@ void read_wordlib()
 		f_wordlib >> word;
 		word_set.push_back(word);
 	}
+	//f_wordlib析构时文件自动关闭
 }
 void read_player()
 {
