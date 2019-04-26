@@ -4,7 +4,7 @@
 #include"header.h"
 #include"variable.h"
 
-void my_find(char kind/*p/t*/, char qaulity/*n,l,e,p,w*/, long num_input = 0, string name_input = NULL);
+void my_find(char kind/*p/t*/, char qaulity/*n,l,e,p,w*/, long num_input = 0, string name_input = "default");
 
 void search_player()
 {
