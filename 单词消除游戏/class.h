@@ -78,47 +78,47 @@ private:
 
 /*函数类*/
 /*自定义比较大小方式：按字符串长度比较（函数类）*/
-struct my_shorter
+struct my_longer
 {
 	bool operator()(const string & a1, const string & a2) const
 	{
-		return a1.size() < a2.size();
+		return a1.size() > a2.size();
 	}
 };
 
-struct name_less
+struct name_greater
 {
 	bool operator()(const participant & a1, const participant & a2) const
 	{
-		return a1.show_name() < a2.show_name();
+		return a1.show_name() > a2.show_name();
 	}
 };
-struct EXP_less
+struct EXP_greater
 {
 	bool operator()(const participant & a1, const participant & a2) const
 	{
-		return a1.show_EXP() < a2.show_EXP();
+		return a1.show_EXP() > a2.show_EXP();
 	}
 };
-struct level_less
+struct level_greater
 {
 	bool operator()(const participant & a1, const participant & a2) const
 	{
-		return a1.show_level() < a2.show_level();
+		return a1.show_level() > a2.show_level();
 	}
 };
-struct pass_count_less
+struct pass_count_greater
 {
 	bool operator()(const player & a1, const player & a2) const
 	{
-		return a1.show_pass_count() < a2.show_pass_count();
+		return a1.show_pass_count() > a2.show_pass_count();
 	}
 };
-class word_num_less
+class word_num_greater
 {
 	bool operator()(const test_maker & a1, const test_maker & a2) const
 	{
-		return a1.show_word_num() < a2.show_word_num();
+		return a1.show_word_num() > a2.show_word_num();
 	}
 };
 

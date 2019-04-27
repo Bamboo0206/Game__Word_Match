@@ -13,19 +13,19 @@ void rank_player()
 	cin >> choice;
 	if (choice == "name")
 	{
-		sort(v_player.begin(), v_player.end(), name_less());
+		sort(v_player.begin(), v_player.end(), name_greater());
 	}
 	else if (choice == "level")
 	{
-		sort(v_player.begin(), v_player.end(), level_less());
+		sort(v_player.begin(), v_player.end(), level_greater());
 	}
 	else if (choice == "EXP")
 	{
-		sort(v_player.begin(), v_player.end(), EXP_less());
+		sort(v_player.begin(), v_player.end(), EXP_greater());
 	}
 	else if (choice == "pass_count")
 	{
-		sort(v_player.begin(), v_player.end(), pass_count_less());
+		sort(v_player.begin(), v_player.end(), pass_count_greater());
 	}
 	else
 	{

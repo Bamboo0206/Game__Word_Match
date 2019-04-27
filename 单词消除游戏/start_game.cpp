@@ -16,7 +16,7 @@ void start_game()
 	size = word_set.size();
 	if (!size) { cout << "词库为空！请先添加单词\n"; return ; }
 
-	sort(word_set.begin(), word_set.end(),my_shorter());
+	sort(word_set.begin(), word_set.end(),my_longer());
 
 	while (!finish)
 	{

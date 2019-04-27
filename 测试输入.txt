@@ -1,19 +1,22 @@
-/*²âÊÔtest_maker*/
+/*²âÊÔsign_up*/
 sign_up
 test_maker
-ZQYt
+ZQYt426
+
+sign_up
+player
+ZQYp426
+
+/*²âÊÔtest_maker*/
 log_in
 test_maker
-ZQYt
+ZQYt426
 add_word
 
 /*²âÊÔplayer*/
-sign_up
-player
-ZQYp
 log_in
 player
-ZQYp
+ZQYp426
 start_game
 
 /*²âÊÔrank*/
@@ -40,4 +43,13 @@ ZQY
 
 search_player
 level
-5//Ìì´óµÄbug
+5
+
+search_player
+EXP
+2000
+
+search_player
+pass_count
+10
+

@@ -4,17 +4,20 @@
 void add_word()
 {
 	bool finish = false;
-	//cout << "输入选择：输入单词0/退出1\n";
-	//cin >> finish;
-	//pair<set<string>::iterator, bool> insert_result;//使用pair！
 	string new_word;
-	//set<string>::iterator it_word;
 	while (!finish)
 	{
 		cout << "请输入新增的单词：" << endl;
 		cin >> new_word;
 		/*待加入：正确性检验 若有空格之类的会导致fail*/
-		//insert_result = word_set.insert(new_word);//insert返回pair
+		if (!cin)
+		{
+			cerr << "input error!\n";
+			cin.clear();
+			cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
+
+			continue;
+		}
 		vector<string>::iterator insert_result;
 		insert_result = find(word_set.begin(), word_set.end(), new_word);
 		if (insert_result== word_set.end())//插入成功检验:单词不存在

@@ -9,5 +9,7 @@
 #include<ctime>
 #include<windows.h>
 #include<fstream>
-#include<sstream>
+#include<sstream> // for stringstream
+#include<ios>     // for <streamsize>
+#include<limits>  // for numeric_limits
 using namespace std;
