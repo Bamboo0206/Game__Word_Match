@@ -13,7 +13,20 @@ void sign_up()
 	{
 		cout << "请输入用户名：\n";
 		getline(cin, name);
-		/*待改：输入正确性检验,检测重名*/
+		/*检测重名*/
+		bool user_exist = false;
+		for (auto val : v_player)
+		{
+			if (val.show_name() == name)
+			{
+				user_exist = true;
+			}
+		}
+		if (user_exist)
+		{
+			cout << "该用户名已存在，请直接登陆" << endl;
+			return;
+		}
 
 		player p(name);
 		v_player.push_back(p);
@@ -32,7 +45,20 @@ void sign_up()
 	{
 		cout << "请输入用户名：\n";
 		getline(cin, name);
-		/*待改：输入正确性检验,检测重名*/
+		/*检测重名*/
+		bool user_exist = false;
+		for (auto val : v_test_maker)
+		{
+			if (val.show_name() == name)
+			{
+				user_exist = true;
+			}
+		}
+		if (user_exist)
+		{
+			cout << "该用户名已存在，请直接登陆" << endl;
+			return;
+		}
 
 		test_maker t(name);
 		v_test_maker.push_back(t);

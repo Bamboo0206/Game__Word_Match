@@ -8,21 +8,26 @@
 void start_game()
 {
 	bool finish = false;
-	//pair<set<string>::iterator, bool> insert_result;//使用pair！
 	string input_word;
-	//set<string>::iterator word_it = word_set.begin();
 	int difficulty = 1, size = 0;
 
 	size = word_set.size();
 	if (!size) { cout << "词库为空！请先添加单词\n"; return ; }
 
-	sort(word_set.begin(), word_set.end(),my_longer());
+	sort(word_set.begin(), word_set.end(),my_shorter());
 
 	while (!finish)
 	{
 		cout << "请选择难度（1-5）：" << endl;
 		cin >> difficulty;
-		/*待加入：正确性检验 若有空格之类的会导致fail*/
+		if (!cin)//输入正确性检验
+		{
+			cerr << "input error!\n";
+			cin.clear();
+			cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
+			continue;
+		}
+
 		cout << "请记住这个单词（3s后消失）：" ;
 
 		int loc = 0;//下标
@@ -43,21 +48,27 @@ void start_game()
 		case 5:
 			loc += size * 4 / 5;
 			break;
-		case 0:
-			cout << "游戏已退出" << endl;
-			return;
 		default:
 			cout << "非法输入" << endl;
 			continue;//??
 			break;
 		}
+
+		/*输出单词*/
 		cout << word_set.at(loc);
 		Sleep(3000);
 
 		cout << "\r                                                            ";
 		cout<<"\r请输入刚才出现的单词：";
 		cin >> input_word;
-		/*待改 正确性检验*/
+		/*输入正确性检验*/
+		if (!cin)
+		{
+			cerr << "input error!\n";
+			cin.clear();
+			cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
+			continue;
+		}
 
 		if (input_word == word_set.at(loc))//正确
 		{
@@ -70,10 +81,21 @@ void start_game()
 		{
 			cout << "输入单词错误，闯关失败\t刚才显示的单词是：" << word_set.at(loc) << endl;
 		}
-		cout << "输入0退出游戏\n";
+
+		cout << "请选择：继续游戏0/退出1（默认继续）\n";
+		cin >> finish;
+		if (!cin)//输入正确性检验
+		{
+			cerr << "input error!\n";
+			cin.clear();
+			cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
+			continue;
+		}
 	}
 	/*输出用户信息*/
 	print_player();
+	cout << "游戏已退出" << endl;
+	return;
 }
 
 void print_player()

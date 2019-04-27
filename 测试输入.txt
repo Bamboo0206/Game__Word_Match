@@ -36,6 +36,22 @@ rank
 player
 pass_count
 
+rank
+test_maker
+name
+
+rank
+test_maker
+level
+
+rank
+test_maker
+EXP
+
+rank
+test_maker
+word_num
+
 /*²âÊÔsearch_participant*/
 search_player
 name
@@ -52,4 +68,20 @@ EXP
 search_player
 pass_count
 10
+
+search_test_maker
+name
+ZQYt
+
+search_test_maker
+level
+12
+
+search_test_maker
+EXP
+600
+
+search_test_maker
+word_num
+3
 

@@ -7,6 +7,7 @@ void add_word();
 void start_game();
 void print_player();//打印当前登陆的player的用户信息
 void print_test_maker();//打印当前登陆的test_maker的用户信息
+bool cin_error_and_repair();
 
 /*initialize.cpp*/
 void read_wordlib();

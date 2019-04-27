@@ -78,11 +78,11 @@ private:
 
 /*函数类*/
 /*自定义比较大小方式：按字符串长度比较（函数类）*/
-struct my_longer
+struct my_shorter
 {
 	bool operator()(const string & a1, const string & a2) const
 	{
-		return a1.size() > a2.size();
+		return a1.size() < a2.size();
 	}
 };
 
@@ -114,7 +114,7 @@ struct pass_count_greater
 		return a1.show_pass_count() > a2.show_pass_count();
 	}
 };
-class word_num_greater
+struct word_num_greater
 {
 	bool operator()(const test_maker & a1, const test_maker & a2) const
 	{

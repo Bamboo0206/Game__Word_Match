@@ -11,14 +11,9 @@ void log_in()
 	getchar();//吞回车
 	cout << "请输入用户名：\n";
 	getline(cin, name);
-	/*待改：输入正确性检验,检测重名*/
 	//请选择要注册的类型：闯关者/出题者
 	if (type == "player")
 	{
-		/*待改find*/
-		//player temp_player(name);
-		//it_user_player = find(v_player.begin(), v_player.end(),temp_player);//重载==？
-		//find_if(, equal_name);
 		vector<player>::iterator temp_it = v_player.begin();
 		while (temp_it != v_player.end())
 		{
@@ -44,9 +39,6 @@ void log_in()
 	}
 	else if (type == "test_maker")
 	{
-		/*待改find*/
-		//test_maker temp_test_maker(name);
-		//it_user_test_maker = find(v_test_maker.begin(), v_test_maker.end(), temp_test_maker);//重载==？
 		vector<test_maker>::iterator temp_it = v_test_maker.begin();
 		while (temp_it != v_test_maker.end())
 		{
@@ -76,13 +68,3 @@ void log_in()
 		cout << "不正确的类型\n";
 	}
 }
-
-//find_participant()
-//
-//bool equal_name(participant &A, string &name)
-//{
-//	if (A.name == name)
-//		return true;
-//	else
-//		return false;
-//}

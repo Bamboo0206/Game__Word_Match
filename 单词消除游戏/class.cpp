@@ -175,7 +175,7 @@ void test_maker::inc_word_num()
 
 void test_maker::update_EXP(string input_word)
 {
-	sort(word_set.begin(), word_set.end());
+	sort(word_set.begin(), word_set.end(), my_shorter());
 	vector<string>::iterator it, input_it;
 	input_it = find(word_set.begin(), word_set.end(), input_word);
 

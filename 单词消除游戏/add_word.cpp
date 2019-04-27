@@ -1,5 +1,6 @@
 #include"header.h"
 #include"variable.h"
+#include"function_declaration.h"
 
 void add_word()
 {
@@ -9,13 +10,12 @@ void add_word()
 	{
 		cout << "请输入新增的单词：" << endl;
 		cin >> new_word;
-		/*待加入：正确性检验 若有空格之类的会导致fail*/
+		/*正确性检验 若有空格之类的会导致fail*/
 		if (!cin)
 		{
 			cerr << "input error!\n";
 			cin.clear();
 			cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
-
 			continue;
 		}
 		vector<string>::iterator insert_result;
@@ -42,6 +42,6 @@ void add_word()
 		cout << "请选择：继续输入单词0/退出1\n";
 		cin >> finish;
 	}
-	cout << "level:" << it_user_test_maker->show_level()
-		<< "\tEXP:" << it_user_test_maker->show_EXP() << endl;
+	print_test_maker();
+	getchar();//吞回车
 }

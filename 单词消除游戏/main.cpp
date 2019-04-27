@@ -15,25 +15,36 @@ vector<string> word_set;//单词集合
 int main()
 {
 	/*初始化 有问题*/
-	//it_user_player == v_player.();
-	//it_user_test_maker == v_test_maker.begin();
 	srand((unsigned int) time(NULL));
 	read_wordlib();
 	read_player();
 	read_test_maker();
+	it_user_player = v_player.end();//??
+	it_user_test_maker = v_test_maker.end();
 
 	/*运行*/
 	string option;
 	while (true)
 	{
-		cout << "请选择操作：\n";
+		cout<<"*****************************************\n"
+			<<"注册：sign_up\n"
+			<<"登陆：log_in\n"
+			<<"闯关者：开始游戏：start_game\n"
+			<<"出题者：新增单词：add_word\n"
+			<<"排行榜：rank\n"
+			<<"查找闯关者：search_player\n"
+			<<"查找出题者：search_test_maker\n"
+			<<"登出：log_out\n"
+			<<"退出程序：quit\n"
+			<<"*****************************************\n"
+			<< "请选择操作：\n";
 		getline(cin, option);
 		/*注册*/
 		if (option == "sign_up")
 		{
 			sign_up();
 		}
-		/*登陆*/
+		/*登陆*///如果已登陆的情况
 		else if (option == "log_in")
 		{
 			log_in();
@@ -42,11 +53,11 @@ int main()
 		else if (option == "start_game")
 		{
 			/*检测是否登陆*/
-			//if (it_user_player == v_player.end())
-			//{
-			//	cout << "请先登陆\n";
-			//}
-			//else
+			if (it_user_player == v_player.end())
+			{
+				cout << "请先登陆\n";
+			}
+			else
 			{
 				start_game();
 			}
@@ -55,11 +66,11 @@ int main()
 		else if (option == "add_word")
 		{
 			/*检测是否登陆*/
-			//if (it_user_test_maker == v_test_maker.end())//？？？？
-			//{
-			//	cout << "请先登陆\n";
-			//}
-			//else
+			if (it_user_test_maker == v_test_maker.end())//？？？？
+			{
+				cout << "请先登陆\n";
+			}
+			else
 			{
 				add_word();
 			}
@@ -68,8 +79,6 @@ int main()
 		/*登出*/
 		else if (option == "log_out")
 		{
-			/*检测是否登陆*/
-
 			log_out();
 		}
 		/*排行榜*/
@@ -80,6 +89,7 @@ int main()
 			cin >> choice;
 			if (choice == "player")rank_player();
 			else if (choice == "test_maker")rank_test_maker();
+			else cout << "非法输入" << endl;
 		}
 
 		/*按角色属性查询*/
