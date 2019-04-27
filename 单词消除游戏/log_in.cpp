@@ -35,6 +35,7 @@ void log_in()
 		{
 			cout << "log in successfully\n";
 			print_player();
+			username_player = it_user_player->show_name();
 		}
 	}
 	else if (type == "test_maker")
@@ -61,6 +62,7 @@ void log_in()
 		{
 			cout << "log in successfully\n";
 			print_test_maker();
+			username_test_maker = it_user_test_maker->show_name();
 		}
 	}
 	else

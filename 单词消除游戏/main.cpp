@@ -8,7 +8,7 @@ vector<test_maker> v_test_maker;//所有test_maker
 vector<player>::iterator it_user_player;//当前系统用户
 vector<test_maker>::iterator it_user_test_maker;
 vector<string> word_set;//单词集合
-//set<string,my_shorter> word_set;//单词集合//使用自定义my_shorter比较大小
+string username_player, username_test_maker;
 
 
 

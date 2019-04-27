@@ -34,4 +34,5 @@ void log_out()
 	{
 		cout << "不正确的类型\n";
 	}
+	getchar();
 }

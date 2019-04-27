@@ -1,23 +1,34 @@
+/*请先把程序内会写的文件都关掉再开始运行程序*/
 /*测试sign_up*/
 sign_up
 test_maker
-ZQYt426
+ZQYt427
 
 sign_up
 player
 ZQYp426
 
-/*测试test_maker*/
+/*测试登陆log_in*/
 log_in
 test_maker
 ZQYt426
-add_word
 
-/*测试player*/
 log_in
 player
 ZQYp426
+
+/*测试test_maker*///要先登陆
+add_word
+
+/*测试player*///要先登陆
 start_game
+
+/*测试log_out*/
+log_out
+player
+
+log_out
+test_maker
 
 /*测试rank*/
 rank
@@ -85,3 +96,5 @@ search_test_maker
 word_num
 3
 
+/*退出*/
+quit

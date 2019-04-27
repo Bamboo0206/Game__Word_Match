@@ -21,7 +21,7 @@ void rank_test_maker();
 /*search_participant*/
 void search_player();
 void search_test_maker();
-//void my_find(char kind/*p/t*/, char qaulity/*n,l,e,p,w*/, long num_input = 0, string name_input = NULL);
+void my_find(char kind/*p/t*/, char qaulity/*n,l,e,p,w*/, long num_input , string name_input );
 
 /*write_file.cpp*/
 void write_participants();
