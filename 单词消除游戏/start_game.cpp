@@ -76,6 +76,7 @@ void start_game()
 			/*更新等级、经验*/
 			it_user_player->update_EXP(difficulty);
 			it_user_player->update_level();
+			it_user_player->inc_pass_count();
 		}
 		else//错误
 		{
