@@ -40,6 +40,7 @@ void start_game()
 	/*输出用户信息*/
 	print_player();
 	cout << "游戏已退出" << endl;
+	getchar();
 	return;
 }
 
@@ -64,7 +65,7 @@ bool one_round(int round_current)//一关，闯关成功返回true
 	int difficulty = 1, word_num_to_pass = 0, display_time = 0, error_chance = 0;
 	difficulty = round_current / 3;
 	difficulty = difficulty < 5 ? difficulty : 5;//上限5级
-	word_num_to_pass = round_current + 1;
+	word_num_to_pass = sqrt(round_current) ;
 	display_time = -round_current * 2000 / 15 + 3000;
 	display_time = display_time > 1000 ? display_time : 1000;//下限1000
 	error_chance = -round_current * 2 / 15 + 3;
@@ -76,7 +77,8 @@ bool one_round(int round_current)//一关，闯关成功返回true
 		<< "您有" << error_chance << "次错误机会\n";
 
 	string input_word;//用户输入的单词
-	bool finish = false;
+	clock_t start=0, finish=0;//计时器
+	double duration=0;
 	int loc = 0, wordlib_size = 0, word_passed=0;//下标,单词数量,已通过数量
 	wordlib_size = word_set.size();
 
@@ -114,7 +116,11 @@ bool one_round(int round_current)//一关，闯关成功返回true
 		cout << "\r                                                            ";
 		cout << "\r请输入刚才出现的单词：";
 		/*待改：计时器*/
+		start = clock();//启动计时器
 		cin >> input_word;
+		finish = clock();//关闭计时器
+		duration += (double)(finish - start) / CLOCKS_PER_SEC;//算时间
+		cout << "用时" << (double)(finish - start) / CLOCKS_PER_SEC << "秒" << endl;
 		/*输入正确性检验*/
 		if (!cin)
 		{
@@ -124,6 +130,7 @@ bool one_round(int round_current)//一关，闯关成功返回true
 			continue;
 		}
 
+
 		if (input_word == word_set.at(loc))//正确
 		{
 			cout << "输入单词正确\n";
@@ -131,7 +138,8 @@ bool one_round(int round_current)//一关，闯关成功返回true
 		}
 		else//错误
 		{
-			cout << "输入单词错误，闯关失败\t刚才显示的单词是：" << word_set.at(loc) << endl;
+			cout << "输入单词错误\t刚才显示的单词是：" << word_set.at(loc) << endl;
+			Sleep(2000);
 			if (--error_chance == -1)
 			{
 				break;
@@ -144,7 +152,7 @@ bool one_round(int round_current)//一关，闯关成功返回true
 	{
 		cout << "闯关成功\n";
 		it_user_player->inc_pass_count();
-		it_user_player->update_EXP(difficulty);//????
+		it_user_player->update_EXP(duration,round_current);
 		it_user_player->update_level();
 		return true;
 	}

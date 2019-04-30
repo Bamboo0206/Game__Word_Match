@@ -113,6 +113,14 @@ void player::update_EXP(int difficulty)
 	cout << "EXP+" << EXP_BASIC_MAKER * difficulty << endl;
 }
 
+void player::update_EXP(double time_consume, int round)
+{
+	int temp = round * EXP_BASIC_MAKER - time_consume * 30;//30倍罚时
+	temp = temp > 20 ? temp : 20;//最低加20
+	EXP = EXP + temp;
+	cout << "EXP+" << temp << endl;
+}
+
 
 /*****************出题者****************/
 
