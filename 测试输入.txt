@@ -45,6 +45,14 @@ EXP
 
 rank
 player
+level
+
+rank
+player
+EXP
+
+rank
+player
 pass_count
 
 rank
