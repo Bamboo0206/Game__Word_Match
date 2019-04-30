@@ -5,7 +5,7 @@
 /*游戏每一关，程序会根据该关卡难度，显示一个单词，一定时间后单词消失。
 闯关者需要在相应地方输入刚刚显示并消失的单词，如果闯关者输入正确则为通过。*/
 
-bool one_round(int pass_count);//一关，闯关成功返回true
+bool one_round(int round_current);//一关，闯关成功返回true//传入pass_count+1
 
 void start_game()
 {
@@ -20,14 +20,14 @@ void start_game()
 
 	while (!finish)
 	{
-		if (one_round(it_user_player->show_pass_count()))
+		if (one_round(it_user_player->show_pass_count()+1))//闯关成功
 		{
-			
+			cout << "请选择：下一关0/退出1（默认继续）\n";
 		}
-
-
-
-		cout << "请选择：继续游戏0/退出1（默认继续）\n";
+		else//闯关失败
+		{
+			cout << "请选择：重新尝试该关0/退出1（默认继续）\n";
+		}
 		cin >> finish;
 		if (!cin)//输入正确性检验
 		{
@@ -58,29 +58,30 @@ void print_test_maker()
 		<< "输入单词数:" << it_user_test_maker->show_word_num() << endl;
 }
 
-bool one_round(int pass_count)//一关，闯关成功返回true
+bool one_round(int round_current)//一关，闯关成功返回true
 {
 	/*计算单词长度（5级），单词个数，显示时间*/
 	int difficulty = 1, word_num_to_pass = 0, display_time = 0, error_chance = 0;
-	difficulty = pass_count / 3;
+	difficulty = round_current / 3;
 	difficulty = difficulty < 5 ? difficulty : 5;//上限5级
-	word_num_to_pass = pass_count + 1;
-	display_time = -pass_count * 2000 / 15 + 3000;
+	word_num_to_pass = round_current + 1;
+	display_time = -round_current * 2000 / 15 + 3000;
 	display_time = display_time > 1000 ? display_time : 1000;//下限1000
-	error_chance = -pass_count * 2 / 15;
+	error_chance = -round_current * 2 / 15 + 3;
 	error_chance = error_chance > 1 ? error_chance : 1;//下限1
 		/*输出*/
-	cout << "难度：" << difficulty << "级，单词：" << word_num_to_pass << "个，显示时间：" << display_time << "毫秒" << endl
+	cout <<"*********************************************************************\n"
+		<<"                  第"<< round_current <<"关                  \n"
+		<< "难度：" << difficulty << "级，单词：" << word_num_to_pass << "个，显示时间：" << display_time << "毫秒" << endl
 		<< "您有" << error_chance << "次错误机会\n";
 
 	string input_word;//用户输入的单词
-	bool finish = false, pass = true;
-	int loc = 0, wordlib_size = 0;//下标,单词数量
+	bool finish = false;
+	int loc = 0, wordlib_size = 0, word_passed=0;//下标,单词数量,已通过数量
 	wordlib_size = word_set.size();
 
-
-	pass = true;
-	for (int i = 1; i <= word_num_to_pass; i++)
+	word_passed = 0;
+	while (word_passed < word_num_to_pass && error_chance >= 0)
 	{
 		/*计算单词下标*/
 		loc = rand() % (wordlib_size / 5);
@@ -105,13 +106,14 @@ bool one_round(int pass_count)//一关，闯关成功返回true
 		}
 
 		/*输出单词*/
-		cout << "请记住这个单词（<<" << display_time << "毫秒后消失）："
+		cout << "请记住这个单词（" << display_time << "毫秒后消失）："
 			<< word_set.at(loc);
 		Sleep(display_time);
 
 
 		cout << "\r                                                            ";
 		cout << "\r请输入刚才出现的单词：";
+		/*待改：计时器*/
 		cin >> input_word;
 		/*输入正确性检验*/
 		if (!cin)
@@ -125,21 +127,20 @@ bool one_round(int pass_count)//一关，闯关成功返回true
 		if (input_word == word_set.at(loc))//正确
 		{
 			cout << "输入单词正确\n";
-
+			word_passed++;
 		}
 		else//错误
 		{
 			cout << "输入单词错误，闯关失败\t刚才显示的单词是：" << word_set.at(loc) << endl;
 			if (--error_chance == -1)
 			{
-				pass = false;
 				break;
 			}
 			cout << "您还有" << error_chance << "次错误机会" << endl;
 		}
 	}
 	/*更新等级、经验*/
-	if (pass)
+	if (word_passed == word_num_to_pass)
 	{
 		cout << "闯关成功\n";
 		it_user_player->inc_pass_count();
