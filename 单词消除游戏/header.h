@@ -1,3 +1,6 @@
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#include <WINSOCK2.H> //for socket
+#include <process.h>
 
 #include<iostream>
 #include<string>
@@ -12,4 +15,5 @@
 #include<sstream> // for stringstream
 #include<ios>     // for <streamsize>
 #include<limits>  // for numeric_limits
+
 using namespace std;
