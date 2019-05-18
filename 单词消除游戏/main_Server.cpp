@@ -103,7 +103,18 @@ unsigned __stdcall newClient(void* pArguments)
 	stringstream oss,iss;//分别与cout,cin绑定
 	cout.rdbuf(oss.rdbuf());
 	cin.rdbuf(iss.rdbuf());
-	char sendData[BUF_SIZE];
+
+	/*发送*/
+	char sendData[BUF_SIZE] = "Welcome to Word Match Game.\nInput anything to continue.\n";
+	send(sClient, sendData, strlen(sendData), 0);
+	/*接收*/
+	char recData[BUF_SIZE];
+	int ret = recv(sClient, recData, BUF_SIZE, 0);
+	if (ret > 0)
+	{
+		recData[ret] = '\0';
+		cerr << recData << endl;
+	}
 
 	/*运行*/
 	string option;
