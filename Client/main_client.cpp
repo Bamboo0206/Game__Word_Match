@@ -58,7 +58,7 @@ int main()
 
 
 		/*读输入*/
-		cout << "Send:";
+		cout << "Send>>>";
 		char data[BUF_SIZE] = { '\0' };
 		cin.getline(data, BUF_SIZE, '\n');
 		////输入正确性检验
@@ -75,11 +75,12 @@ int main()
 
 		/*发送*/
 		send(sclient, data, strlen(data), 0);
-		//send()用来将数据由指定的socket传给对方主机
-		//int send(int s, const void * msg, int len, unsigned int flags)
-		//s为已建立好连接的socket，msg指向数据内容，len则为数据长度，参数flags一般设0
-		//成功则返回实际传送出去的字符数，失败返回-1，错误原因存于error 
+		
 
+		if (strcmp(data, "start_game") == 0)
+		{
+
+		}
 
 	}
 	shutdown(sclient, SD_SEND);
