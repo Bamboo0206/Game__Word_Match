@@ -2,7 +2,7 @@
 #include"variable.h"
 #include"function_declaration.h"
 
-void add_word()
+void add_word(vector<test_maker>::iterator &it_user_test_maker)
 {
 	bool finish = false;
 	string new_word;
@@ -42,6 +42,6 @@ void add_word()
 		cout << "请选择：继续输入单词0/退出1\n";
 		cin >> finish;
 	}
-	print_test_maker();
+	print_test_maker(it_user_test_maker);
 	getchar();//吞回车
 }

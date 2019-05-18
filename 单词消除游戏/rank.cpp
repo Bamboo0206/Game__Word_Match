@@ -3,9 +3,8 @@
 #include"function_declaration.h"
 
 
-/*全局变量*/
 
-void rank_player()
+void rank_player(vector<player>::iterator &it_user_player)
 {
 	string choice;
 
@@ -55,7 +54,7 @@ void rank_player()
 	}
 }
 
-void rank_test_maker()
+void rank_test_maker(vector<test_maker>::iterator &it_user_test_maker)
 {
 	string choice;
 

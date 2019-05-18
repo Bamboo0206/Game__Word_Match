@@ -3,7 +3,7 @@
 #include"function_declaration.h"
 
 
-void log_in()
+void log_in(vector<player>::iterator &it_user_player,vector<test_maker>::iterator &it_user_test_maker)
 {
 	string name, type;
 	cout << "请选择登陆类型：闯关者player/出题者test_maker：\n";
@@ -34,7 +34,7 @@ void log_in()
 		else
 		{
 			cout << "log in successfully\n";
-			print_player();
+			print_player(it_user_player);
 			username_player = it_user_player->show_name();
 		}
 	}
@@ -61,7 +61,7 @@ void log_in()
 		else
 		{
 			cout << "log in successfully\n";
-			print_test_maker();
+			print_test_maker(it_user_test_maker);
 			username_test_maker = it_user_test_maker->show_name();
 		}
 	}

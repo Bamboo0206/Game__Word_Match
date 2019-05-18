@@ -94,8 +94,8 @@ unsigned __stdcall newClient(void* pArguments)
 	SOCKET sClient = *((SOCKET*)pArguments);
 
 	/*初始化*/
-	vector<player>::iterator it_user_player = v_player.end();//当前系统用户
-	vector<test_maker>::iterator it_user_test_maker = v_test_maker.end();
+	vector<player>::iterator it_user_player = v_player.end();//本线程当前系统用户player
+	vector<test_maker>::iterator it_user_test_maker = v_test_maker.end();//本线程当前系统用户test_maker
 
 	/*cout重定向*/
 	stringstream oss,iss;//分别与cout,cin绑定
@@ -150,7 +150,7 @@ unsigned __stdcall newClient(void* pArguments)
 		/*登陆*///如果已登陆的情况
 		else if (option == "log_in")
 		{
-			log_in();
+			log_in(it_user_player,it_user_test_maker);
 		}
 		/*开始游戏*/
 		else if (option == "start_game")
@@ -162,7 +162,7 @@ unsigned __stdcall newClient(void* pArguments)
 			}
 			else
 			{
-				start_game();
+				start_game(it_user_player);
 			}
 		}
 		/*新增单词*/
@@ -175,14 +175,14 @@ unsigned __stdcall newClient(void* pArguments)
 			}
 			else
 			{
-				add_word();
+				add_word(it_user_test_maker);
 			}
 		}
 
 		/*登出*/
 		else if (option == "log_out")
 		{
-			log_out();
+			log_out(it_user_player,it_user_test_maker);
 		}
 		/*排行榜*/
 		else if (option == "rank")
@@ -190,8 +190,8 @@ unsigned __stdcall newClient(void* pArguments)
 			cout << "请选择要查看的排行榜（player/test_maker）：\n";
 			string choice;
 			cin >> choice;
-			if (choice == "player")rank_player();
-			else if (choice == "test_maker")rank_test_maker();
+			if (choice == "player")rank_player(it_user_player);
+			else if (choice == "test_maker")rank_test_maker(it_user_test_maker);
 			else cout << "非法输入" << endl;
 		}
 

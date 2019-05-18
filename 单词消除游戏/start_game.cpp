@@ -5,7 +5,7 @@
 /*游戏每一关，程序会根据该关卡难度，显示一个单词，一定时间后单词消失。
 闯关者需要在相应地方输入刚刚显示并消失的单词，如果闯关者输入正确则为通过。*/
 
-void start_game()
+void start_game(vector<player>::iterator &it_user_player)
 {
 	bool finish = false;
 	string input_word;
@@ -94,19 +94,19 @@ void start_game()
 		}
 	}
 	/*输出用户信息*/
-	print_player();
+	print_player(it_user_player);
 	cout << "游戏已退出" << endl;
 	return;
 }
 
-void print_player()
+void print_player(vector<player>::iterator &it_user_player)
 {
 	cout <<"name:"<< it_user_player->show_name() << '\t'
 		<< "level:" << it_user_player->show_level() << '\t'
 		<< "EXP:" << it_user_player->show_EXP() << '\t'
 		<< "通关数:" << it_user_player->show_pass_count() << endl;
 }
-void print_test_maker()
+void print_test_maker(vector<test_maker>::iterator &it_user_test_maker)
 {
 	cout << "name:" << it_user_test_maker->show_name() << '\t'
 		<< "level:" << it_user_test_maker->show_level() << '\t'
