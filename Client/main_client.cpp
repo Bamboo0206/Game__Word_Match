@@ -6,7 +6,7 @@
 //定义程序中使用的常量      
 #define SERVER_ADDRESS "10.122.221.251" //服务器端IP地址      
 #define PORT           51500         //服务器的端口号      
-#define MSGSIZE        1024         //收发缓冲区的大小     
+#define BUF_SIZE 1024				//收发缓冲区的大小 
 
 #pragma comment(lib, "ws2_32.lib")      
 using namespace std;
@@ -43,24 +43,31 @@ int main()
 	while (true)
 	{
 		/*接收*/
-		char recData[255];
-		int ret = recv(sclient, recData, 255, 0);
+		char recData[BUF_SIZE];
+		int ret = recv(sclient, recData, BUF_SIZE, 0);
 		if (ret > 0)
 		{
-			recData[ret] = 0x00;
+			recData[ret] = '\0';
 			cout << recData << endl;
+		}
+		else if (ret <= 0)
+		{
+			cerr << "出错\n";
+			break;
 		}
 
 
 		/*读输入*/
 		cout << "Send:";
-		char data[100] = { '\0' };
-		while (!(cin.getline(data, 100, '\n') && data[0] != '\0'))
-		{
-			memset(data, 0, sizeof(data));
-			cin.clear();
-			cin.ignore(100, '\n');
-		}
+		char data[BUF_SIZE] = { '\0' };
+		cin.getline(data, BUF_SIZE, '\n');
+		////输入正确性检验
+		//while (! && data[0] != '\0'))
+		//{
+		//	memset(data, 0, sizeof(data));
+		//	cin.clear();
+		//	cin.ignore(100, '\n');
+		//}
 		if (strcmp(data, "quit") == 0)
 		{
 			break;

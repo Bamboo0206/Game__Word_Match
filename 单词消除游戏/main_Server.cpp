@@ -138,12 +138,13 @@ unsigned __stdcall newClient(void* pArguments)
 
 
 		//接收数据
-		char szMessage[MSGSIZE];
-		int ret = recv(sClient, szMessage, MSGSIZE, 0);
+		//char szMessage[MSGSIZE];
+		ret = recv(sClient, recData, BUF_SIZE, 0);
 		if (ret > 0)
 		{
-			szMessage[ret] = '\0';
-			cout << szMessage << endl;
+			recData[ret] = '\0';
+			if(DEBUG) cerr << recData << endl;
+
 		}
 		if (ret == 0)/*关闭*/
 		{
@@ -151,10 +152,14 @@ unsigned __stdcall newClient(void* pArguments)
 			closesocket(sClient);//正常关闭会返回0
 			break;
 		}
-		//if (ret < 0)/*不正常关闭*///??????待改
+		if (ret < 0)/*不正常关闭*///??????待改
+		{
+			cerr << "client不正常关闭\n";
+			break;
+		}
 
 		/*运行*/
-		string option(szMessage);
+		string option(recData);
 		/*注册*/
 		if (option == "sign_up")
 		{
