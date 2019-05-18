@@ -125,4 +125,5 @@ struct word_num_greater
 
 /*宏定义*/
 #define EXP_BASIC_MAKER 100 //出题者成功出一个单词的最低经验值
-
+#define BUF_SIZE 1024 //发送字符串的缓冲区大小
+#define DEBUG 1

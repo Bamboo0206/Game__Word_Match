@@ -8,6 +8,7 @@
 bool one_round(int round_current);//一关，闯关成功返回true//传入pass_count+1
 
 void start_game()
+void start_game(string &username_player)
 {
 	bool finish = false;
 	string input_word;
@@ -133,33 +134,43 @@ bool one_round(int round_current)//一关，闯关成功返回true
 
 		if (input_word == word_set.at(loc))//正确
 		{
-			cout << "输入单词正确\n";
-			word_passed++;
+			cout << "输入单词正确，闯关成功\n";
+			/*更新等级、经验*/
+			it_user_player->update_EXP(difficulty);
+			it_user_player->update_level();
 		}
 		else//错误
 		{
-			cout << "输入单词错误\t刚才显示的单词是：" << word_set.at(loc) << endl;
-			Sleep(2000);
-			if (--error_chance == -1)
-			{
-				break;
-			}
-			cout << "您还有" << error_chance << "次错误机会" << endl;
+			cout << "输入单词错误，闯关失败\t刚才显示的单词是：" << word_set.at(loc) << endl;
+		}
+
+		cout << "请选择：继续游戏0/退出1（默认继续）\n";
+		cin >> finish;
+		if (!cin)//输入正确性检验
+		{
+			cerr << "input error!\n";
+			cin.clear();
+			cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
+			continue;
 		}
 	}
-	/*更新等级、经验*/
-	if (word_passed == word_num_to_pass)
-	{
-		cout << "闯关成功\n";
-		it_user_player->inc_pass_count();
-		it_user_player->update_EXP(duration,round_current);
-		it_user_player->update_level();
-		return true;
-	}
-	else
-	{
-		cout << "闯关失败" << endl;
-		return false;
-	}
+	/*输出用户信息*/
+	print_player();
+	cout << "游戏已退出" << endl;
+	return;
+}
 
+void print_player()
+{
+	cout <<"name:"<< it_user_player->show_name() << '\t'
+		<< "level:" << it_user_player->show_level() << '\t'
+		<< "EXP:" << it_user_player->show_EXP() << '\t'
+		<< "通关数:" << it_user_player->show_pass_count() << endl;
+}
+void print_test_maker()
+{
+	cout << "name:" << it_user_test_maker->show_name() << '\t'
+		<< "level:" << it_user_test_maker->show_level() << '\t'
+		<< "EXP:" << it_user_test_maker->show_EXP() << '\t'
+		<< "输入单词数:" << it_user_test_maker->show_word_num() << endl;
 }
