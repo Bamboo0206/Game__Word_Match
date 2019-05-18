@@ -97,13 +97,31 @@ unsigned __stdcall newClient(void* pArguments)
 	vector<player>::iterator it_user_player = v_player.end();//当前系统用户
 	vector<test_maker>::iterator it_user_test_maker = v_test_maker.end();
 
+	/*cout重定向*/
+	stringstream oss,iss;
+	cout.rdbuf(oss.rdbuf());
+
 	/*运行*/
 	string option;
 	while (true)
 	{
 		/*发送选项*/
-		const char *sendData = "*****************************************\n注册：sign_up\n登陆：log_in\n闯关者：开始游戏：start_game\n出题者：新增单词：add_word\n排行榜：rank\n查找闯关者：search_player\n查找出题者：search_test_maker\n登出：log_out\n退出程序：quit\n*****************************************\n请选择操作：\n";
-		
+		cout << "*****************************************\n"
+			<< "注册：sign_up\n"
+			<< "登陆：log_in\n"
+			<< "闯关者：开始游戏：start_game\n"
+			<< "出题者：新增单词：add_word\n"
+			<< "排行榜：rank\n"
+			<< "查找闯关者：search_player\n"
+			<< "查找出题者：search_test_maker\n"
+			<< "登出：log_out\n"
+			<< "退出程序：quit\n"
+			<< "*****************************************\n"
+			<< "请选择操作：\n";
+		//因为有\n,可能需要while循环发送
+		string ostr(oss.str());
+		char sendData[BUF_SIZE];
+		strcpy(sendData, ostr.c_str());
 		send(sClient, sendData, strlen(sendData), 0);
 
 
