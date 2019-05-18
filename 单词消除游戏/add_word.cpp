@@ -2,7 +2,7 @@
 #include"variable.h"
 #include"function_declaration.h"
 
-void add_word(vector<test_maker>::iterator &it_user_test_maker)
+void add_word(string &username_test_maker)
 {
 	bool finish = false;
 	string new_word;
@@ -30,6 +30,8 @@ void add_word(vector<test_maker>::iterator &it_user_test_maker)
 			f_wordlib << new_word << endl;
 
 			/*出题者属性修改：单词数、经验值、等级*/
+			vector<test_maker>::iterator it_user_test_maker;
+			locate_test_maker(username_test_maker, it_user_test_maker);
 			it_user_test_maker->inc_word_num();
 			it_user_test_maker->update_EXP(new_word);
 			it_user_test_maker->update_level();
@@ -42,6 +44,6 @@ void add_word(vector<test_maker>::iterator &it_user_test_maker)
 		cout << "请选择：继续输入单词0/退出1\n";
 		cin >> finish;
 	}
-	print_test_maker(it_user_test_maker);
+	print_test_maker(username_test_maker);
 	getchar();//吞回车
 }

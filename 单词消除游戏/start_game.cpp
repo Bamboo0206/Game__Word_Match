@@ -5,7 +5,7 @@
 /*游戏每一关，程序会根据该关卡难度，显示一个单词，一定时间后单词消失。
 闯关者需要在相应地方输入刚刚显示并消失的单词，如果闯关者输入正确则为通过。*/
 
-void start_game(vector<player>::iterator &it_user_player)
+void start_game(string &username_player)
 {
 	bool finish = false;
 	string input_word;
@@ -74,6 +74,8 @@ void start_game(vector<player>::iterator &it_user_player)
 		{
 			cout << "输入单词正确，闯关成功\n";
 			/*更新等级、经验*/
+			vector<player>::iterator it_user_player;
+			locate_player(username_player, it_user_player);
 			it_user_player->update_EXP(difficulty);
 			it_user_player->update_level();
 			it_user_player->inc_pass_count();
@@ -85,31 +87,17 @@ void start_game(vector<player>::iterator &it_user_player)
 
 		cout << "请选择：继续游戏0/退出1（默认继续）\n";
 		cin >> finish;
-		if (!cin)//输入正确性检验
-		{
-			cerr << "input error!\n";
-			cin.clear();
-			cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
-			continue;
-		}
+		if (cin_error_and_repair()) continue;
+		//if (!cin)//输入正确性检验
+		//{
+		//	cerr << "input error!\n";
+		//	cin.clear();
+		//	cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
+		//	continue;
+		//}
 	}
 	/*输出用户信息*/
-	print_player(it_user_player);
+	print_player(username_player);
 	cout << "游戏已退出" << endl;
 	return;
-}
-
-void print_player(vector<player>::iterator &it_user_player)
-{
-	cout <<"name:"<< it_user_player->show_name() << '\t'
-		<< "level:" << it_user_player->show_level() << '\t'
-		<< "EXP:" << it_user_player->show_EXP() << '\t'
-		<< "通关数:" << it_user_player->show_pass_count() << endl;
-}
-void print_test_maker(vector<test_maker>::iterator &it_user_test_maker)
-{
-	cout << "name:" << it_user_test_maker->show_name() << '\t'
-		<< "level:" << it_user_test_maker->show_level() << '\t'
-		<< "EXP:" << it_user_test_maker->show_EXP() << '\t'
-		<< "输入单词数:" << it_user_test_maker->show_word_num() << endl;
 }

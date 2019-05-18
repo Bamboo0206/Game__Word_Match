@@ -4,7 +4,7 @@
 
 
 
-void rank_player(vector<player>::iterator &it_user_player)
+void rank_player()
 {
 	string choice;
 
@@ -43,18 +43,18 @@ void rank_player(vector<player>::iterator &it_user_player)
 			<< val.show_name() << "\t\t" << val.show_level() << "\t\t"
 			<< val.show_EXP() << "\t\t" << val.show_pass_count() << endl;
 	}
-	/*全局变量迭代器可能指向了其他用户。指回*/
-	for (vector<player>::iterator it=v_player.begin();it!=v_player.end();it++)
-	{
-		if (it->show_name() == username_player)
-		{
-			it_user_player = it;
-			break;
-		}
-	}
+	///*全局变量迭代器可能指向了其他用户。指回*/
+	//for (vector<player>::iterator it=v_player.begin();it!=v_player.end();it++)
+	//{
+	//	if (it->show_name() == username_player)
+	//	{
+	//		it_user_player = it;
+	//		break;
+	//	}
+	//}
 }
 
-void rank_test_maker(vector<test_maker>::iterator &it_user_test_maker)
+void rank_test_maker()
 {
 	string choice;
 
@@ -93,29 +93,14 @@ void rank_test_maker(vector<test_maker>::iterator &it_user_test_maker)
 			<< val.show_name() << "\t\t" << val.show_level() << "\t\t"
 			<< val.show_EXP() << "\t\t" << val.show_word_num() << endl;
 	}
-	/*全局变量迭代器可能指向了其他用户。指回*/
-	for (vector<test_maker>::iterator it = v_test_maker.begin(); it != v_test_maker.end(); it++)
-	{
-		if (it->show_name() == username_test_maker)
-		{
-			it_user_test_maker = it;
-			break;
-		}
-	}
+	///*全局变量迭代器可能指向了其他用户。指回*/
+	//for (vector<test_maker>::iterator it = v_test_maker.begin(); it != v_test_maker.end(); it++)
+	//{
+	//	if (it->show_name() == username_test_maker)
+	//	{
+	//		it_user_test_maker = it;
+	//		break;
+	//	}
+	//}
 }
 
-/*通用函数*/
-
-/*输入正确性检验，cin出问题则返回true*/
-bool cin_error_and_repair()
-{
-	if (!cin)
-	{
-		cerr << "input error!\n";
-		cin.clear();
-		cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
-		return true;
-	}
-	else
-		return false;
-}

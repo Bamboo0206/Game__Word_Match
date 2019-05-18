@@ -36,6 +36,7 @@
     <ClCompile Include="search_participant.cpp" />
     <ClCompile Include="sign_up.cpp" />
     <ClCompile Include="start_game.cpp" />
+    <ClCompile Include="tool.cpp" />
     <ClCompile Include="write_file.cpp" />
   </ItemGroup>
   <ItemGroup>
