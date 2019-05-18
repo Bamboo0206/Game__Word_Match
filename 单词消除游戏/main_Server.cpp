@@ -98,8 +98,10 @@ unsigned __stdcall newClient(void* pArguments)
 	vector<test_maker>::iterator it_user_test_maker = v_test_maker.end();
 
 	/*cout重定向*/
-	stringstream oss,iss;
+	stringstream oss,iss;//分别与cout,cin绑定
 	cout.rdbuf(oss.rdbuf());
+	cin.rdbuf(iss.rdbuf());
+	char sendData[BUF_SIZE];
 
 	/*运行*/
 	string option;
@@ -117,11 +119,8 @@ unsigned __stdcall newClient(void* pArguments)
 			<< "登出：log_out\n"
 			<< "退出程序：quit\n"
 			<< "*****************************************\n"
-			<< "请选择操作：\n";
-		//因为有\n,可能需要while循环发送
-		string ostr(oss.str());
-		char sendData[BUF_SIZE];
-		strcpy(sendData, ostr.c_str());
+			<< "请选择操作：\n\0";
+		oss.getline(sendData, BUF_SIZE, '\0');
 		send(sClient, sendData, strlen(sendData), 0);
 
 
@@ -213,12 +212,11 @@ unsigned __stdcall newClient(void* pArguments)
 			break;
 		}
 		else
-			cout << "非法输入" << endl;
-
-		////发送数据
-		//const char *sendData = NULL;
-		//sendData = "Server: Got it";
-		//send(sClient, sendData, strlen(sendData), 0);
+		{
+			cout << "非法输入\n" ;
+			oss.getline(sendData, BUF_SIZE, '\0');
+			send(sClient, sendData, strlen(sendData), 0);
+		}
 	}
 
 	cout << "disconnected\n";
