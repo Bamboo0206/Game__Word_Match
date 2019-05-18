@@ -226,3 +226,19 @@ int test_maker::show_word_num()const
 {
 	return word_num;
 }
+
+
+
+/***********sysInfo*************/
+
+sysInfo::sysInfo()
+{
+	/*cout重定向*/
+	stringstream oss, iss;//分别与cout,cin绑定
+	cout.rdbuf(oss.rdbuf());
+	cin.rdbuf(iss.rdbuf());
+}
+
+sysInfo::~sysInfo()
+{
+}

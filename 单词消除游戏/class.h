@@ -1,3 +1,5 @@
+#define BUF_SIZE 1024 //发送字符串的缓冲区大小
+
 //基类
 class participant
 {
@@ -76,6 +78,21 @@ private:
 	int word_num;
 };
 
+class sysInfo
+{
+public:
+	sysInfo();
+	~sysInfo();
+
+	string name;
+	bool kind;//0闯关者，1出题者
+	stringstream oss, iss;
+	SOCKET sClient;
+	char sendData[BUF_SIZE];
+private:
+
+};
+
 
 /*函数类*/
 /*自定义比较大小方式：按字符串长度比较（函数类）*/
@@ -125,5 +142,4 @@ struct word_num_greater
 
 /*宏定义*/
 #define EXP_BASIC_MAKER 100 //出题者成功出一个单词的最低经验值
-#define BUF_SIZE 1024 //发送字符串的缓冲区大小
 #define DEBUG 1

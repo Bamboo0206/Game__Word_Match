@@ -6,6 +6,7 @@
 vector<player> v_player;//所有player
 vector<test_maker> v_test_maker;//所有test_maker
 vector<string> word_set;//单词集合
+vector<sysInfo> v_sysInfo;//每个线程一个对象，用于存储系统信息和当前系统用户等
 
 #define PORT           51500    //端口号
 #define MSGSIZE        1024    
@@ -99,10 +100,8 @@ unsigned __stdcall newClient(void* pArguments)
 	string username_player;
 	string username_test_maker;
 
-	/*cout重定向*/
-	stringstream oss,iss;//分别与cout,cin绑定
-	cout.rdbuf(oss.rdbuf());
-	cin.rdbuf(iss.rdbuf());
+	sysInfo sysinfo;//标准io重定向
+	v_sysInfo.push_back(sysinfo);
 
 	/*发送*/
 	char sendData[BUF_SIZE] = "Welcome to Word Match Game.\nInput anything to continue...\n";
@@ -133,7 +132,7 @@ unsigned __stdcall newClient(void* pArguments)
 			<< "退出程序：quit\n"
 			<< "*****************************************\n"
 			<< "请选择操作：\n\0";
-		oss.getline(sendData+1, BUF_SIZE-1, '\0');
+		sysinfo.oss.getline(sendData+1, BUF_SIZE-1, '\0');
 		sendData[0] = 1;//0为client继续接收，1为client发送
 		send(sClient, sendData, strlen(sendData), 0);
 
@@ -235,7 +234,7 @@ unsigned __stdcall newClient(void* pArguments)
 		else
 		{
 			cout << "非法输入\n" ;
-			oss.getline(sendData + 1, BUF_SIZE - 1, '\0');
+			sysinfo.oss.getline(sendData + 1, BUF_SIZE - 1, '\0');
 			sendData[0] = 1;//0为client继续接收，1为client发送
 			send(sClient, sendData, strlen(sendData), 0);
 		}

@@ -8,3 +8,4 @@ extern vector<test_maker> v_test_maker;//所有test_maker
 //extern vector<test_maker>::iterator it_user_test_maker;//当前系统用户test_maker
 extern vector<string> word_set;//单词集合//或许可以用堆？
 //extern string username_player, username_test_maker;
+extern vector<sysInfo> v_sysInfo;//每个线程一个对象，用于存储系统信息和当前系统用户等

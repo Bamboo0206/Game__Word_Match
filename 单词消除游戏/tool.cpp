@@ -59,9 +59,11 @@ bool cin_error_and_repair()
 }
 
 /*发送*/
-void mySend(char flag,char* sendData,SOCKET sClient)
+void mySend(char flag,string name)
 {
-	oss.getline(sendData + 1, BUF_SIZE - 1, '\0');
-	sendData[0] = 0;//0为client继续接收，1为client发送
-	send(sClient, sendData, strlen(sendData), 0);
+	vector<sysInfo>::iterator it;
+	for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->name != name; it++);
+	it->oss.getline(it->sendData + 1, BUF_SIZE - 1, '\0');
+	it->sendData[0] = flag;//0为client继续接收，1为client发送
+	send(it->sClient, it->sendData, strlen(it->sendData), 0);
 }

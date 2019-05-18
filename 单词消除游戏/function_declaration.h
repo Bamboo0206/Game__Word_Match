@@ -30,3 +30,4 @@ void print_test_maker(string &username_test_maker);//´òÓ¡µ±Ç°µÇÂ½µÄtest_makerµÄÓ
 void locate_player(string name, vector<player>::iterator &it_user_player);//Ê¹µü´úÆ÷Ö¸ÏònameµÄplayer
 void locate_test_maker(string name, vector<test_maker>::iterator &it_user_test_maker);
 bool cin_error_and_repair();
+void mySend(char flag, string name);//flag0Îªclient¼ÌĞø½ÓÊÕ£¬1Îªclient·¢ËÍ
