@@ -9,6 +9,7 @@ void add_word(string &username_test_maker)
 	while (!finish)
 	{
 		cout << "请输入新增的单词：" << endl;
+
 		cin >> new_word;
 		/*正确性检验 若有空格之类的会导致fail*/
 		if (!cin)

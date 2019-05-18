@@ -57,3 +57,11 @@ bool cin_error_and_repair()
 	else
 		return false;
 }
+
+/*发送*/
+void mySend(char flag,char* sendData,SOCKET sClient)
+{
+	oss.getline(sendData + 1, BUF_SIZE - 1, '\0');
+	sendData[0] = 0;//0为client继续接收，1为client发送
+	send(sClient, sendData, strlen(sendData), 0);
+}

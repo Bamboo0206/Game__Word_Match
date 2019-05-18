@@ -40,6 +40,7 @@ int main()
 		return 0;
 	}
 
+	char data[BUF_SIZE] = { '\0' };
 	while (true)
 	{
 		/*接收*/
@@ -59,7 +60,6 @@ int main()
 
 		/*读输入*/
 		cout << "Send>>>";
-		char data[BUF_SIZE] = { '\0' };
 		cin.getline(data, BUF_SIZE, '\n');
 		////输入正确性检验
 		//while (! && data[0] != '\0'))
@@ -72,16 +72,16 @@ int main()
 		{
 			break;
 		}
-
-		/*发送*/
-		send(sclient, data, strlen(data), 0);
-		
-
 		if (strcmp(data, "start_game") == 0)
 		{
 
 		}
 
+
+
+		/*发送*/
+		send(sclient, data, strlen(data), 0);
+		
 	}
 	shutdown(sclient, SD_SEND);
 

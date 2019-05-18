@@ -105,7 +105,7 @@ unsigned __stdcall newClient(void* pArguments)
 	cin.rdbuf(iss.rdbuf());
 
 	/*发送*/
-	char sendData[BUF_SIZE] = "Welcome to Word Match Game.\nInput anything to continue.\n";
+	char sendData[BUF_SIZE] = "Welcome to Word Match Game.\nInput anything to continue...\n";
 	send(sClient, sendData, strlen(sendData), 0);
 	/*接收*/
 	char recData[BUF_SIZE];
@@ -133,7 +133,8 @@ unsigned __stdcall newClient(void* pArguments)
 			<< "退出程序：quit\n"
 			<< "*****************************************\n"
 			<< "请选择操作：\n\0";
-		oss.getline(sendData, BUF_SIZE, '\0');
+		oss.getline(sendData+1, BUF_SIZE-1, '\0');
+		sendData[0] = 1;//0为client继续接收，1为client发送
 		send(sClient, sendData, strlen(sendData), 0);
 
 
@@ -234,7 +235,8 @@ unsigned __stdcall newClient(void* pArguments)
 		else
 		{
 			cout << "非法输入\n" ;
-			oss.getline(sendData, BUF_SIZE, '\0');
+			oss.getline(sendData + 1, BUF_SIZE - 1, '\0');
+			sendData[0] = 1;//0为client继续接收，1为client发送
 			send(sClient, sendData, strlen(sendData), 0);
 		}
 	}
