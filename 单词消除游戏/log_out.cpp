@@ -2,10 +2,12 @@
 #include"variable.h"
 #include"function_declaration.h"
 
-void log_out(string &username_player, string &username_test_maker)
+void log_out(string &username_player, string &username_test_maker, unsigned short int port)
 {
 	string name, type;
 	cout << "请选择登出类型：闯关者player/出题者test_maker：\n";
+	mySend(port);
+	myRecv(port);
 	cin >> type;
 	if (type == "player")  
 	{

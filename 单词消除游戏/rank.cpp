@@ -4,11 +4,13 @@
 
 
 
-void rank_player()
+void rank_player(unsigned short int port)
 {
 	string choice;
 
 	cout << "请选择排序方式（name/level/EXP/pass_count）：\n";
+	mySend(port);
+	myRecv(port);
 	cin >> choice;
 	if (choice == "name")
 	{
@@ -31,7 +33,7 @@ void rank_player()
 		cout << "输入错误\n";
 		return;
 	}
-	getchar();//吞回车
+	//getchar();//吞回车
 
 	/*输出排行榜*/
 	int cnt = 0;
@@ -54,11 +56,13 @@ void rank_player()
 	//}
 }
 
-void rank_test_maker()
+void rank_test_maker(unsigned short int port)
 {
 	string choice;
 
 	cout << "请选择排序方式（name/level/EXP/pass_count）：\n";
+	mySend(port);
+	myRecv(port);
 	cin >> choice;
 	if (choice == "name")
 	{

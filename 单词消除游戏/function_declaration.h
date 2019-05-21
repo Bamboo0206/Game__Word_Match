@@ -1,11 +1,11 @@
 
 /*º¯Êý*/
 void sign_up(unsigned short int port);
-void log_in(string &username_player, string &username_test_maker);
-void log_out(string &username_player, string &username_test_maker);
-void add_word(string &username_test_maker);
+void log_in(string &username_player, string &username_test_maker,unsigned short int port);
+void log_out(string &username_player, string &username_test_maker, unsigned short int port);
+void add_word(string &username_test_maker, unsigned short int port);
 void start_game(string &username_player);
-bool one_round(int round_current, string username);
+bool one_round(string name);
 
 /*initialize.cpp*/
 void read_wordlib();
@@ -13,12 +13,12 @@ void read_player();
 void read_test_maker();
 
 /*rank*/
-void rank_player();
-void rank_test_maker();
+void rank_player(unsigned short int port);
+void rank_test_maker(unsigned short int port);
 
 /*search_participant*/
-void search_player();
-void search_test_maker();
+void search_player(unsigned short int port);
+void search_test_maker(unsigned short int port);
 void my_find(char kind/*p/t*/, char qaulity/*n,l,e,p,w*/, long num_input , string name_input );
 
 /*write_file.cpp*/

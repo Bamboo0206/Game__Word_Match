@@ -186,7 +186,7 @@ unsigned __stdcall newClient(void* pArguments)
 		/*登陆*///如果已登陆的情况
 		else if (option == "log_in")
 		{
-			log_in(username_player,username_test_maker);
+			log_in(username_player,username_test_maker, sktInfo->addr->sin_port);
 		}
 		/*开始游戏*/
 		else if (option == "start_game")
@@ -213,14 +213,14 @@ unsigned __stdcall newClient(void* pArguments)
 			}
 			else
 			{
-				add_word(username_test_maker);
+				add_word(username_test_maker, sktInfo->addr->sin_port);
 			}
 		}
 
 		/*登出*/
 		else if (option == "log_out")
 		{
-			log_out(username_player,username_test_maker);
+			log_out(username_player,username_test_maker, sktInfo->addr->sin_port);
 		}
 		/*排行榜*/
 		else if (option == "rank")
@@ -228,19 +228,19 @@ unsigned __stdcall newClient(void* pArguments)
 			cout << "请选择要查看的排行榜（player/test_maker）：\n";
 			string choice;
 			cin >> choice;
-			if (choice == "player")rank_player();
-			else if (choice == "test_maker")rank_test_maker();
+			if (choice == "player")rank_player(sktInfo->addr->sin_port);
+			else if (choice == "test_maker")rank_test_maker(sktInfo->addr->sin_port);
 			else cout << "非法输入" << endl;
 		}
 
 		/*按角色属性查询*/
 		else if (option == "search_player")
 		{
-			search_player();
+			search_player(sktInfo->addr->sin_port);
 		}
 		else if (option == "search_test_maker")
 		{
-			search_test_maker();
+			search_test_maker(sktInfo->addr->sin_port);
 		}
 
 		/*退出系统 需要写文件*/

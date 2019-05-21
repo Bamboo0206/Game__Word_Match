@@ -7,21 +7,27 @@
 
 void my_find(char kind/*p/t*/, char qaulity/*n,l,e,p,w*/, long num_input = 0, string name_input = "default");
 
-void search_player()
+void search_player(unsigned short int port)
 {
 	/*变量定义*/
 	string choice;
 
 	cout << "请选择查询的属性（name/level/EXP/pass_count）：" << endl;
+	mySend(port);
+	myRecv(port);
 	cin >> choice;
 	if (choice == "name")
 	{
 		string input_name;
 		cout << "请输入用户名：" << endl;
+		mySend(port);
+		myRecv(port);
 		cin >> input_name;
 		if (cin_error_and_repair())//正确性检验
 		{
 			cout << "请重新输入用户名：" << endl;
+			mySend(port);
+			myRecv(port);
 			cin >> input_name;
 		}
 		my_find('p', 'n', 0, input_name);
@@ -30,10 +36,14 @@ void search_player()
 	{
 		int level_input;
 		cout << "请输入等级：" << endl;
+		mySend(port);
+		myRecv(port);
 		cin >> level_input;
 		if (cin_error_and_repair())
 		{
 			cout << "请重新输入等级：" << endl;
+			mySend(port);
+			myRecv(port);
 			cin >> level_input;
 		}
 		my_find('p', 'l', level_input);
@@ -42,10 +52,14 @@ void search_player()
 	{
 		long EXP_input;
 		cout << "请输入EXP：" << endl;
+		mySend(port);
+		myRecv(port);
 		cin >> EXP_input;
 		if (cin_error_and_repair())
 		{
 			cout << "请重新输入EXP：" << endl;
+			mySend(port);
+			myRecv(port);
 			cin >> EXP_input;
 		}
 		my_find('p', 'e', EXP_input);
@@ -54,10 +68,14 @@ void search_player()
 	{
 		int pass_count_input;
 		cout << "请输入通关数：" << endl;
+		mySend(port);
+		myRecv(port);
 		cin >> pass_count_input;
 		if (cin_error_and_repair())
 		{
 			cout << "请重新输入通关数：" << endl;
+			mySend(port);
+			myRecv(port);
 			cin >> pass_count_input;
 		}
 		my_find('p', 'p', pass_count_input);
@@ -69,22 +87,28 @@ void search_player()
 	}
 	getchar();//吞回车
 }
-void search_test_maker()
+void search_test_maker(unsigned short int port)
 {
 	/*变量定义*/
 	string choice;
 
 	cout << "请选择查询的属性（name/level/EXP/word_num）：" << endl;
+	mySend(port);
+	myRecv(port);
 	cin >> choice;
 
 	if (choice == "name")
 	{
 		string input_name;
 		cout << "请输入用户名：" << endl;
+		mySend(port);
+		myRecv(port);
 		cin >> input_name;
 		if (cin_error_and_repair())//正确性检验
 		{
 			cout << "请重新输入用户名：" << endl;
+			mySend(port);
+			myRecv(port);
 			cin >> input_name;
 		}
 		my_find('t', 'n', 0, input_name);
@@ -93,10 +117,14 @@ void search_test_maker()
 	{
 		int level_input;
 		cout << "请输入等级：" << endl;
+		mySend(port);
+		myRecv(port);
 		cin >> level_input;
 		if (cin_error_and_repair())//正确性检验
 		{
 			cout << "请重新输入等级：" << endl;
+			mySend(port);
+			myRecv(port);
 			cin >> level_input;
 		}
 		my_find('t', 'l', level_input);
@@ -105,10 +133,14 @@ void search_test_maker()
 	{
 		long EXP_input;
 		cout << "请输入EXP：" << endl;
+		mySend(port);
+		myRecv(port);
 		cin >> EXP_input;
 		if (cin_error_and_repair())//正确性检验
 		{
 			cout << "请重新输入EXP：" << endl;
+			mySend(port);
+			myRecv(port);
 			cin >> EXP_input;
 		}
 		my_find('t', 'e', EXP_input);
@@ -117,10 +149,14 @@ void search_test_maker()
 	{
 		int word_num_input;
 		cout << "请输入通关数：" << endl;
+		mySend(port);
+		myRecv(port);
 		cin >> word_num_input;
 		if (cin_error_and_repair())//正确性检验
 		{
 			cout << "请重新输入通关数：" << endl;
+			mySend(port);
+			myRecv(port);
 			cin >> word_num_input;
 		}
 		my_find('t', 'w', word_num_input);

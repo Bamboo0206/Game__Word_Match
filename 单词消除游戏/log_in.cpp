@@ -3,14 +3,18 @@
 #include"function_declaration.h"
 
 
-void log_in(string &username_player,string &username_test_maker)
+void log_in(string &username_player,string &username_test_maker ,unsigned short int port)
 {
 	string name, type;
 	cout << "请选择登陆类型：闯关者player/出题者test_maker：\n";
+	mySend(port);
 
+	myRecv(port);
 	cin >> type;
-	getchar();//吞回车
+	//getchar();//吞回车
 	cout << "请输入用户名：\n";
+	mySend(port);
+	myRecv(port);
 	getline(cin, name);
 	
 	if (type == "player")

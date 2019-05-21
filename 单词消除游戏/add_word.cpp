@@ -2,14 +2,15 @@
 #include"variable.h"
 #include"function_declaration.h"
 
-void add_word(string &username_test_maker)
+void add_word(string &username_test_maker, unsigned short int port)
 {
 	bool finish = false;
 	string new_word;
 	while (!finish)
 	{
 		cout << "请输入新增的单词：" << endl;
-
+		mySend(port);
+		myRecv(port);
 		cin >> new_word;
 		/*正确性检验 若有空格之类的会导致fail*/
 		if (!cin)
@@ -43,8 +44,10 @@ void add_word(string &username_test_maker)
 		}
 
 		cout << "请选择：继续输入单词0/退出1\n";
+		mySend(port);
+		myRecv(port);
 		cin >> finish;
 	}
 	print_test_maker(username_test_maker);
-	getchar();//吞回车
+	//getchar();//吞回车????????????
 }

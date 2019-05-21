@@ -13,11 +13,11 @@ void locate_player(string name, vector<player>::iterator &it_user_player)//Ê¹µü´
 	}
 }
 
-void locate_test_maker(string name, vector<test_maker>::iterator &it_user_test_maker)
+void locate_test_maker(string name, vector<test_maker>::iterator& it_user_test_maker)
 {
 	for (vector<test_maker>::iterator it = v_test_maker.begin(); it != v_test_maker.end(); it++)
 	{
-		if (it->show_name() == name)
+		if ((*it).show_name() == name)
 		{
 			it_user_test_maker = it;
 			break;
@@ -37,6 +37,7 @@ void print_player(string &username_player)
 void print_test_maker(string &username_test_maker)
 {
 	vector<test_maker>::iterator it_user_test_maker;
+	locate_test_maker(username_test_maker, it_user_test_maker);
 	cout << "name:" << it_user_test_maker->show_name() << '\t'
 		<< "level:" << it_user_test_maker->show_level() << '\t'
 		<< "EXP:" << it_user_test_maker->show_EXP() << '\t'
@@ -108,3 +109,10 @@ void myRecv(unsigned short int port)
 	it->iss.clear();//????
 	cin.clear();
 }
+//
+//void locate_sysInfo(unsigned short int port,vector<sysInfo>::iterator it)
+//{
+//	
+//	for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->ClientAddr->sin_port != port; it++);//Í¨¹ýportÕÒµ½¸ÃÈ«¾Ö±äÁ¿
+//
+//}
