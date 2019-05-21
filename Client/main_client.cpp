@@ -5,7 +5,7 @@
 
 //定义程序中使用的常量      
 #define SERVER_ADDRESS "10.122.221.251" //服务器端IP地址      
-#define PORT           51500         //服务器的端口号      
+#define PORT           52499         //服务器的端口号      
 #define BUF_SIZE 1024				//收发缓冲区的大小 
 
 #pragma comment(lib, "ws2_32.lib")      
@@ -50,6 +50,9 @@ int main()
 		{
 			recData[ret] = '\0';
 			cout << recData << endl;
+
+			
+
 		}
 		else if (ret <= 0)
 		{

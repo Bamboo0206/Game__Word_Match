@@ -229,12 +229,28 @@ int test_maker::show_word_num()const
 
 
 
-/***********sysInfo*************/
+/********************sysInfo************************/
+
+sysInfo::sysInfo(SKT_INFO *sktInfo)
+{
+
+	/*记录socket信息*/
+	sClient = sktInfo->skt;
+	ClientAddr = sktInfo->addr;
+}
+
+sysInfo::sysInfo(const sysInfo & s)
+{
+	name = s.name;
+	kind = s.kind;
+	sClient = s.sClient;
+	ClientAddr = s.ClientAddr;
+	strcpy(sendData,s.sendData);//???
+}
 
 sysInfo::sysInfo()
 {
 	/*cout重定向*/
-	stringstream oss, iss;//分别与cout,cin绑定
 	cout.rdbuf(oss.rdbuf());
 	cin.rdbuf(iss.rdbuf());
 }

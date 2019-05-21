@@ -8,7 +8,7 @@ vector<test_maker> v_test_maker;//所有test_maker
 vector<string> word_set;//单词集合
 vector<sysInfo> v_sysInfo;//每个线程一个对象，用于存储系统信息和当前系统用户等
 
-#define PORT           51500    //端口号
+#define PORT           52499    //端口号
 #define MSGSIZE        1024    
 
 
@@ -73,16 +73,19 @@ int main()
 		/*accept()*/
 		cout << "waiting for connect...\n";
 		SOCKET *sClient = new SOCKET;
-		SOCKADDR_IN clientaddr;
+		SOCKADDR_IN *clientaddr = new SOCKADDR_IN;
 		int iaddrSize = sizeof(SOCKADDR_IN);
-		*sClient = accept(sListen, (struct sockaddr *) &clientaddr, &iaddrSize);//无连接会卡在这里
+		*sClient = accept(sListen, (struct sockaddr *) clientaddr, &iaddrSize);//无连接会卡在这里
 		if (*sClient == INVALID_SOCKET)
 		{
 			cout << "accept error!\n";
 		}
-		cout << "Accept a connection:" << inet_ntoa(clientaddr.sin_addr) << ":"
-			<< ntohs(clientaddr.sin_port) << endl;
-		HANDLE hThread=(HANDLE*)_beginthreadex(NULL, 0, newClient, sClient, 0, NULL);
+		cout << "Accept a connection:" << inet_ntoa(clientaddr->sin_addr) << ":"
+			<< ntohs(clientaddr->sin_port) << endl;
+		SKT_INFO *sktInfo = new SKT_INFO;
+		sktInfo->skt = sClient;
+		sktInfo->addr = clientaddr;
+		HANDLE hThread=(HANDLE*)_beginthreadex(NULL, 0, newClient, sktInfo, 0, NULL);
 		CloseHandle(hThread);
 	}
 
@@ -92,7 +95,8 @@ int main()
 
 unsigned __stdcall newClient(void* pArguments)
 {
-	SOCKET sClient = *((SOCKET*)pArguments);
+	SKT_INFO *sktInfo = (SKT_INFO *)pArguments;
+	SOCKET sClient = *(sktInfo->skt);
 
 	/*初始化：定义变量*/
 	vector<player>::iterator it_user_player = v_player.end();//本线程当前系统用户player
@@ -100,12 +104,20 @@ unsigned __stdcall newClient(void* pArguments)
 	string username_player;
 	string username_test_maker;
 
-	sysInfo sysinfo;//标准io重定向
-	v_sysInfo.push_back(sysinfo);
+	{
+		sysInfo sysinfo(sktInfo);
+		v_sysInfo.push_back(sysinfo);//深拷贝。
+		vector<sysInfo>::iterator it_sysInfo = v_sysInfo.end() - 1;
+		//标准io重定向
+		cout.rdbuf(it_sysInfo->oss.rdbuf());//分别与cout,cin绑定
+		cin.rdbuf(it_sysInfo->iss.rdbuf());
+	}
 
 	/*发送*/
-	char sendData[BUF_SIZE] = "Welcome to Word Match Game.\nInput anything to continue...\n";
-	send(sClient, sendData, strlen(sendData), 0);
+	//char sendData[BUF_SIZE] = "Welcome to Word Match Game.\nInput anything to continue...\n\0";
+	cout<<"Welcome to Word Match Game.\nInput anything to continue...\n";
+	mySend(sktInfo->addr->sin_port);
+	//send(sClient, sendData, strlen(sendData), 0);
 	/*接收*/
 	char recData[BUF_SIZE];
 	int ret = recv(sClient, recData, BUF_SIZE, 0);
@@ -132,38 +144,44 @@ unsigned __stdcall newClient(void* pArguments)
 			<< "退出程序：quit\n"
 			<< "*****************************************\n"
 			<< "请选择操作：\n\0";
-		sysinfo.oss.getline(sendData+1, BUF_SIZE-1, '\0');
-		sendData[0] = 1;//0为client继续接收，1为client发送
-		send(sClient, sendData, strlen(sendData), 0);
+		//sysinfo.oss.getline(sendData+1, BUF_SIZE-1, '\0');
+		//sendData[0] = 1;//0为client继续接收，1为client发送
+		//send(sClient, sendData, strlen(sendData), 0);
+		mySend(sktInfo->addr->sin_port);
 
 
-		//接收数据
-		//char szMessage[MSGSIZE];
-		ret = recv(sClient, recData, BUF_SIZE, 0);
-		if (ret > 0)
-		{
-			recData[ret] = '\0';
-			if(DEBUG) cerr << recData << endl;
+		////接收数据
+		////char szMessage[MSGSIZE];
+		//ret = recv(sClient, recData, BUF_SIZE, 0);
+		//if (ret > 0)
+		//{
+		//	recData[ret] = '\0';
+		//	if(DEBUG) cerr << recData << endl;
 
-		}
-		if (ret == 0)/*关闭*/
-		{
-			shutdown(sClient, SD_SEND);
-			closesocket(sClient);//正常关闭会返回0
-			break;
-		}
-		if (ret < 0)/*不正常关闭*///??????待改
-		{
-			cerr << "client不正常关闭\n";
-			break;
-		}
+		//}
+		//if (ret == 0)/*关闭*/
+		//{
+		//	cerr << "Disconected:" << inet_ntoa(sktInfo->addr->sin_addr) << ":"
+		//		<< ntohs(sktInfo->addr->sin_port) << endl;
+		//	shutdown(sClient, SD_SEND);
+		//	closesocket(sClient);//正常关闭会返回0
+		//	break;
+		//}
+		//if (ret < 0)/*不正常关闭*///??????待改
+		//{
+		//	cerr << "client不正常关闭:" << inet_ntoa(sktInfo->addr->sin_addr) << ":"
+		//		<< ntohs(sktInfo->addr->sin_port) << endl;
+		//	break;
+		//}
 
 		/*运行*/
-		string option(recData);
+		string option/*(recData)*/;
+		myRecv(sktInfo->addr->sin_port);
+		cin >> option;
 		/*注册*/
 		if (option == "sign_up")
 		{
-			sign_up();
+			sign_up(sktInfo->addr->sin_port);
 		}
 		/*登陆*///如果已登陆的情况
 		else if (option == "log_in")
@@ -234,9 +252,9 @@ unsigned __stdcall newClient(void* pArguments)
 		else
 		{
 			cout << "非法输入\n" ;
-			sysinfo.oss.getline(sendData + 1, BUF_SIZE - 1, '\0');
-			sendData[0] = 1;//0为client继续接收，1为client发送
-			send(sClient, sendData, strlen(sendData), 0);
+			//sysinfo.oss.getline(sendData + 1, BUF_SIZE - 1, '\0');
+			//sendData[0] = 1;//0为client继续接收，1为client发送
+			//send(sClient, sendData, strlen(sendData), 0);
 		}
 	}
 

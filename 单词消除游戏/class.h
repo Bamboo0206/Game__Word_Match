@@ -1,5 +1,11 @@
 #define BUF_SIZE 1024 //发送字符串的缓冲区大小
 
+/*结构体*/
+typedef struct {
+	SOCKET *skt;
+	SOCKADDR_IN *addr;
+}SKT_INFO;
+
 //基类
 class participant
 {
@@ -78,17 +84,23 @@ private:
 	int word_num;
 };
 
+
+/*系统信息*/
 class sysInfo
 {
 public:
+	sysInfo(SKT_INFO *sktInfo);
+	sysInfo(const sysInfo &s);
 	sysInfo();
 	~sysInfo();
 
 	string name;
 	bool kind;//0闯关者，1出题者
 	stringstream oss, iss;
-	SOCKET sClient;
+	SOCKET *sClient;
+	SOCKADDR_IN *ClientAddr;
 	char sendData[BUF_SIZE];
+	char recData[BUF_SIZE];
 private:
 
 };

@@ -15,9 +15,9 @@ void log_in(string &username_player,string &username_test_maker)
 	
 	if (type == "player")
 	{
-		vector<sysInfo>::iterator it;
-		for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->sClient != ; it++);//定位到
-		it->kind = 0;
+		//vector<sysInfo>::iterator it;
+		//for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->sClient != ; it++);//定位到
+		//it->kind = 0;
 		vector<player>::iterator temp_it/* = v_player.begin()*/;
 		locate_player(name, temp_it);
 		if (temp_it == v_player.end())
@@ -28,7 +28,7 @@ void log_in(string &username_player,string &username_test_maker)
 		{
 			cout << "log in successfully\n";
 			username_player = name;
-			it->name = name;//写系统信息
+			//it->name = name;//写系统信息
 			print_player(name);
 		}
 	}

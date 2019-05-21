@@ -1,17 +1,22 @@
 #include"header.h"
 #include"variable.h"
+#include"function_declaration.h"
 
-void sign_up()
+void sign_up(unsigned short int port)
 {
 	string name, type;
-	cout << "请选择注册类型：闯关者player/出题者test_maker：\n";
+	cout << "请选择注册类型：闯关者player/出题者test_maker：\n\0";
+	mySend(port);
+	myRecv(port);
 	cin >> type;
-	getchar();//吞回车
+	//getchar();//吞回车
 
 	//请选择要注册的类型：闯关者/出题者
 	if (type == "player")
 	{
 		cout << "请输入用户名：\n";
+		mySend(port);
+		myRecv(port);
 		getline(cin, name);
 		/*检测重名*/
 		bool user_exist = false;
@@ -39,11 +44,14 @@ void sign_up()
 			<< p.show_EXP() << ','
 			<< p.show_pass_count() << endl;
 
+	
 		cout << "注册成功！" << endl;
 	}
 	else if (type == "test_maker")
 	{
 		cout << "请输入用户名：\n";
+		mySend(port);
+		myRecv(port);
 		getline(cin, name);
 		/*检测重名*/
 		bool user_exist = false;
