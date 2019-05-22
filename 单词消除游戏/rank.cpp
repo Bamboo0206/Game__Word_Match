@@ -85,11 +85,11 @@ void rank_test_maker(unsigned short int port)
 		cout << "输入错误\n";
 		return;
 	}
-	getchar();//吞回车
+	//getchar();//吞回车
 
 	/*输出排行榜*/
 	int cnt = 0;
-	cout << "名次\t\t用户名\t\t等级\t\tEXP\t\t通关数" << endl;
+	cout << "名次\t\t用户名\t\t等级\t\tEXP\t\t出题数" << endl;
 	for (auto val : v_test_maker)
 	{
 		cnt++;

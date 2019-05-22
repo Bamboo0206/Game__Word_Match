@@ -85,7 +85,7 @@ void search_player(unsigned short int port)
 		cout << "输入错误\n";
 		return;
 	}
-	getchar();//吞回车
+	//getchar();//吞回车
 }
 void search_test_maker(unsigned short int port)
 {
@@ -166,7 +166,7 @@ void search_test_maker(unsigned short int port)
 		cout << "输入错误\n";
 		return;
 	}
-	getchar();//吞回车
+	//getchar();//吞回车
 }
 
 /*按属性查找，顺便输出全部*/

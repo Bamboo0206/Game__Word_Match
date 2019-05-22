@@ -8,9 +8,10 @@ void locate_player(string name, vector<player>::iterator &it_user_player)//Ê¹µü´
 		if (it->show_name() == name)
 		{
 			it_user_player = it;
-			break;
+			return;
 		}
 	}
+	it_user_player = v_player.end();
 }
 
 void locate_test_maker(string name, vector<test_maker>::iterator& it_user_test_maker)
@@ -20,9 +21,10 @@ void locate_test_maker(string name, vector<test_maker>::iterator& it_user_test_m
 		if ((*it).show_name() == name)
 		{
 			it_user_test_maker = it;
-			break;
+			return;
 		}
 	}
+	it_user_test_maker = v_test_maker.end();
 }
 
 void print_player(string &username_player)
@@ -61,14 +63,14 @@ bool cin_error_and_repair()
 
 /*·¢ËÍ*/
 /*Êı¾İ°üµÚ0Î»Îªflag*/
-void mySend(char flag/*0Îªclient¼ÌĞø½ÓÊÕ*/, unsigned short int port)
-{
-	vector<sysInfo>::iterator it;
-	for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->ClientAddr->sin_port != port; it++);//Í¨¹ıportÕÒµ½¸ÃÈ«¾Ö±äÁ¿
-	it->oss.getline(it->sendData + 1, BUF_SIZE - 1, '\0');//½«ossÁ÷ÀïµÄÊı¾İ¿½±´µ½sendDataÊı×éÀï£¬ÒÔ\0½áÎ²£¨Êı¾İ°üÀïÃ»ÓĞ\0
-	it->sendData[0] = flag;//0Îªclient¼ÌĞø½ÓÊÕ£¬1Îªclient·¢ËÍ
-	send(*(it->sClient), it->sendData, strlen(it->sendData), 0);//·¢ËÍÊı¾İ
-}
+//void mySend(char flag/*0Îªclient¼ÌĞø½ÓÊÕ*/, unsigned short int port)
+//{
+//	vector<sysInfo>::iterator it;
+//	for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->ClientAddr->sin_port != port; it++);//Í¨¹ıportÕÒµ½¸ÃÈ«¾Ö±äÁ¿
+//	it->oss.getline(it->sendData + 1, BUF_SIZE - 1, '\0');//½«ossÁ÷ÀïµÄÊı¾İ¿½±´µ½sendDataÊı×éÀï£¬ÒÔ\0½áÎ²£¨Êı¾İ°üÀïÃ»ÓĞ\0
+//	it->sendData[0] = flag;//0Îªclient¼ÌĞø½ÓÊÕ£¬1Îªclient·¢ËÍ
+//	send(*(it->sClient), it->sendData, strlen(it->sendData), 0);//·¢ËÍÊı¾İ
+//}
 
 void mySend(unsigned short int port)
 {
@@ -109,10 +111,3 @@ void myRecv(unsigned short int port)
 	it->iss.clear();//????
 	cin.clear();
 }
-//
-//void locate_sysInfo(unsigned short int port,vector<sysInfo>::iterator it)
-//{
-//	
-//	for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->ClientAddr->sin_port != port; it++);//Í¨¹ıportÕÒµ½¸ÃÈ«¾Ö±äÁ¿
-//
-//}

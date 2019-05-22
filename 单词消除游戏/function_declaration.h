@@ -4,8 +4,8 @@ void sign_up(unsigned short int port);
 void log_in(string &username_player, string &username_test_maker,unsigned short int port);
 void log_out(string &username_player, string &username_test_maker, unsigned short int port);
 void add_word(string &username_test_maker, unsigned short int port);
-void start_game(string &username_player);
-bool one_round(string name);
+void start_game(string &username_player, unsigned short int port);
+bool one_round(string name, unsigned short int port);
 
 /*initialize.cpp*/
 void read_wordlib();

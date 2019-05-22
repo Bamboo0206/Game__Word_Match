@@ -41,5 +41,5 @@ void log_out(string &username_player, string &username_test_maker, unsigned shor
 	{
 		cout << "不正确的类型\n";
 	}
-	getchar();
+	//getchar();
 }

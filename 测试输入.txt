@@ -21,6 +21,10 @@ log_in
 player
 happy51
 
+log_in
+player
+Monty
+
 /*²âÊÔtest_maker*///ÒªÏÈµÇÂ½
 add_word
 
@@ -50,10 +54,6 @@ EXP
 rank
 player
 level
-
-rank
-player
-EXP
 
 rank
 player

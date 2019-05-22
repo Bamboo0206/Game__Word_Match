@@ -199,7 +199,7 @@ unsigned __stdcall newClient(void* pArguments)
 			}
 			else
 			{
-				start_game(username_player);
+				start_game(username_player, sktInfo->addr->sin_port);
 			}
 		}
 		/*新增单词*/
@@ -227,6 +227,8 @@ unsigned __stdcall newClient(void* pArguments)
 		{
 			cout << "请选择要查看的排行榜（player/test_maker）：\n";
 			string choice;
+			mySend(sktInfo->addr->sin_port);
+			myRecv(sktInfo->addr->sin_port);
 			cin >> choice;
 			if (choice == "player")rank_player(sktInfo->addr->sin_port);
 			else if (choice == "test_maker")rank_test_maker(sktInfo->addr->sin_port);
@@ -258,7 +260,13 @@ unsigned __stdcall newClient(void* pArguments)
 		}
 	}
 
-	cout << "disconnected\n";
+	
+	cerr << "Disconected:" << inet_ntoa(sktInfo->addr->sin_addr) << ":"
+			<< ntohs(sktInfo->addr->sin_port) << endl;
+	shutdown(sClient, SD_SEND);
+	closesocket(sClient);//正常关闭会返回0
+
+	//cout << "disconnected\n";
 	delete &sClient;
 	_endthreadex(0);
 	return 0;

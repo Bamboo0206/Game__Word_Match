@@ -5,9 +5,9 @@
 /*游戏每一关，程序会根据该关卡难度，显示一个单词，一定时间后单词消失。
 闯关者需要在相应地方输入刚刚显示并消失的单词，如果闯关者输入正确则为通过。*/
 
-bool one_round(string name);//一关，闯关成功返回true//传入pass_count+1
+bool one_round(string name, unsigned short int port);//一关，闯关成功返回true//传入pass_count+1
 
-void start_game(string &username_player)
+void start_game(string &username_player, unsigned short int port)
 {
 	bool finish = false;
 	string input_word;
@@ -20,7 +20,7 @@ void start_game(string &username_player)
 
 	while (!finish)
 	{
-		if (one_round(username_player))//闯关成功
+		if (one_round(username_player,port))//闯关成功
 		{
 			cout << "请选择：下一关0/退出1（默认继续）\n";
 		}
@@ -28,6 +28,8 @@ void start_game(string &username_player)
 		{
 			cout << "请选择：重新尝试该关0/退出1（默认继续）\n";
 		}
+		mySend(port);
+		myRecv(port);
 		cin >> finish;
 		if (!cin)//输入正确性检验
 		{
@@ -40,12 +42,12 @@ void start_game(string &username_player)
 	/*输出用户信息*/
 	print_player(username_player);
 	cout << "游戏已退出" << endl;
-	getchar();
+	//getchar();
 	return;
 }
 
 
-bool one_round(string name)//一关，闯关成功返回true
+bool one_round(string name, unsigned short int port)//一关，闯关成功返回true
 {
 	vector<player>::iterator it_user_player;
 	locate_player(name, it_user_player);
@@ -65,12 +67,13 @@ bool one_round(string name)//一关，闯关成功返回true
 		<< "                  第" << round_current << "关                  \n"
 		<< "难度：" << difficulty << "级，单词：" << word_num_to_pass << "个，显示时间：" << display_time << "毫秒" << endl
 		<< "您有" << error_chance << "次错误机会\n";
-
-	string input_word;//用户输入的单词
-	clock_t start = 0, finish = 0;//计时器
+	mySend(port);
 	double duration = 0;
 	int loc = 0, wordlib_size = 0, word_passed = 0;//下标,单词数量,已通过数量
 	wordlib_size = word_set.size();
+	cout << word_num_to_pass << " " << error_chance << "\n\0";
+	mySend(port);
+	Sleep(50);
 
 	word_passed = 0;
 	while (word_passed < word_num_to_pass && error_chance >= 0)
@@ -97,50 +100,37 @@ bool one_round(string name)//一关，闯关成功返回true
 			break;
 		}
 
-		/*输出单词*/
-		cout << "请记住这个单词（" << display_time << "毫秒后消失）："
-			<< word_set.at(loc);
-		Sleep(display_time);
+		/*发送单词和显示时间*/
+		cout << display_time << "\n"<< word_set.at(loc);
+		mySend(port);
 
+		/*接收结果*/
+		myRecv(port);
+		char result;//结果
+		double tempD;
+		cin >> result >> tempD;
 
-		cout << "\r                                                            ";
-		cout << "\r请输入刚才出现的单词：";
-		/*待改：计时器*/
-		start = clock();//启动计时器
-		cin >> input_word;
-		finish = clock();//关闭计时器
-		duration += (double)(finish - start) / CLOCKS_PER_SEC;//算时间
-		cout << "用时" << (double)(finish - start) / CLOCKS_PER_SEC << "秒" << endl;
-		/*输入正确性检验*/
-		if (!cin)
+		duration += tempD;//算时间;
+		
+
+		if (result=='1')//正确
 		{
-			cerr << "input error!\n";
-			cin.clear();
-			cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
-			continue;
-		}
-
-
-		if (input_word == word_set.at(loc))//正确
-		{
-			cout << "输入单词正确\n";
 			word_passed++;
 		}
 		else//错误
 		{
-			cout << "输入单词错误\t刚才显示的单词是：" << word_set.at(loc) << endl;
-			Sleep(2000);
 			if (--error_chance == -1)
 			{
 				break;
 			}
-			cout << "您还有" << error_chance << "次错误机会" << endl;
 		}
 	}
 	/*更新等级、经验*/
 	if (word_passed == word_num_to_pass)
 	{
 		cout << "闯关成功\n";
+		vector<player>::iterator it_user_player;
+		locate_player(name, it_user_player);
 		it_user_player->inc_pass_count();
 		it_user_player->update_EXP(duration, round_current);
 		it_user_player->update_level();
