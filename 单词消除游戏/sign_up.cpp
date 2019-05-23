@@ -4,20 +4,26 @@
 
 void sign_up(unsigned short int port)
 {
+	vector<sysInfo>::iterator it_sysInfo;
 	string name, type;
-	cout << "请选择注册类型：闯关者player/出题者test_maker：\n\0";
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "请选择注册类型：闯关者player/出题者test_maker：\n\0";
 	mySend(port);
 	myRecv(port);
-	cin >> type;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->iss >> type;
 	//getchar();//吞回车
 
 	//请选择要注册的类型：闯关者/出题者
 	if (type == "player")
 	{
-		cout << "请输入用户名：\n";
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "请输入用户名：\n";
 		mySend(port);
 		myRecv(port);
-		getline(cin, name);
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->iss >> name;
+		//getline(cin, name);
 		/*检测重名*/
 		bool user_exist = false;
 		for (auto val : v_player)
@@ -29,7 +35,8 @@ void sign_up(unsigned short int port)
 		}
 		if (user_exist)
 		{
-			cout << "该用户名已存在，请直接登陆" << endl;
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+			it_sysInfo->oss << "该用户名已存在，请直接登陆" << endl;
 			return;
 		}
 
@@ -45,14 +52,18 @@ void sign_up(unsigned short int port)
 			<< p.show_pass_count() << endl;
 
 	
-		cout << "注册成功！" << endl;
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "注册成功！" << endl;
 	}
 	else if (type == "test_maker")
 	{
-		cout << "请输入用户名：\n";
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "请输入用户名：\n";
 		mySend(port);
 		myRecv(port);
-		getline(cin, name);
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->iss >> name;
+		//getline(cin, name);
 		/*检测重名*/
 		bool user_exist = false;
 		for (auto val : v_test_maker)
@@ -64,7 +75,8 @@ void sign_up(unsigned short int port)
 		}
 		if (user_exist)
 		{
-			cout << "该用户名已存在，请直接登陆" << endl;
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+			it_sysInfo->oss << "该用户名已存在，请直接登陆" << endl;
 			return;
 		}
 
@@ -79,11 +91,13 @@ void sign_up(unsigned short int port)
 			<< t.show_EXP() << ','
 			<< t.show_word_num() << endl;
 
-		cout << "注册成功！" << endl;
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "注册成功！" << endl;
 	}
 	else
 	{
-		cout << "不正确的类型\n";
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "不正确的类型\n";
 	}
 
 }

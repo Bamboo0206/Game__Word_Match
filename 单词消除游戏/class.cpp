@@ -259,6 +259,24 @@ sysInfo::~sysInfo()
 {
 }
 
+bool sysInfo::operator==(const sysInfo & s)
+{
+	return ClientAddr->sin_port == s.ClientAddr->sin_port;
+}
+
+sysInfo & sysInfo::operator=(const sysInfo & s)
+{
+	if (this == &s) return *this;
+
+	name = s.name;
+	kind = s.kind;
+	sClient = s.sClient;
+	ClientAddr = s.ClientAddr;
+	strcpy(sendData, s.sendData);
+	strcpy(recData, s.recData);
+	return *this;
+}
+
 
 /*******************Ë«ÈË¶ÔÕ½********************/
 room::room()

@@ -93,6 +93,8 @@ public:
 	sysInfo(const sysInfo &s);
 	sysInfo();
 	~sysInfo();
+	bool operator ==(const sysInfo &s);
+	sysInfo& operator=(const sysInfo &s);
 
 	string name;
 	bool kind;//0闯关者，1出题者

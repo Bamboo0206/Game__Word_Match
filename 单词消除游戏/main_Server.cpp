@@ -105,14 +105,14 @@ unsigned __stdcall newClient(void* pArguments)
 	string username_player;
 	string username_test_maker;
 
-	{
+	
 		sysInfo sysinfo(sktInfo);
 		v_sysInfo.push_back(sysinfo);//深拷贝。
-		vector<sysInfo>::iterator it_sysInfo = v_sysInfo.end() - 1;
+		//vector<sysInfo>::iterator it_sysInfo = v_sysInfo.end() - 1;
 		////标准io重定向
 		//cout.rdbuf(it_sysInfo->oss.rdbuf());//分别与cout,cin绑定
 		//cin.rdbuf(it_sysInfo->iss.rdbuf());
-	}
+	
 
 	/*发送*/
 	//char sendData[BUF_SIZE] = "Welcome to Word Match Game.\nInput anything to continue...\n\0";
@@ -122,7 +122,6 @@ unsigned __stdcall newClient(void* pArguments)
 	it_sysInfo->oss << "Welcome to Word Match Game.\nInput anything to continue...\n";
 	mySend(sktInfo->addr->sin_port);
 
-	//send(sClient, sendData, strlen(sendData), 0);
 	/*接收*/
 	char recData[BUF_SIZE];
 	int ret = recv(sClient, recData, BUF_SIZE, 0);
@@ -151,35 +150,10 @@ unsigned __stdcall newClient(void* pArguments)
 			<< "退出程序：quit\n"
 			<< "*****************************************\n"
 			<< "请选择操作：\n\0";
-		//sysinfo.oss.getline(sendData+1, BUF_SIZE-1, '\0');
-		//sendData[0] = 1;//0为client继续接收，1为client发送
-		//send(sClient, sendData, strlen(sendData), 0);
 		mySend(sktInfo->addr->sin_port);
 
 
-		////接收数据
-		////char szMessage[MSGSIZE];
-		//ret = recv(sClient, recData, BUF_SIZE, 0);
-		//if (ret > 0)
-		//{
-		//	recData[ret] = '\0';
-		//	if(DEBUG) cerr << recData << endl;
-
-		//}
-		//if (ret == 0)/*关闭*/
-		//{
-		//	cerr << "Disconected:" << inet_ntoa(sktInfo->addr->sin_addr) << ":"
-		//		<< ntohs(sktInfo->addr->sin_port) << endl;
-		//	shutdown(sClient, SD_SEND);
-		//	closesocket(sClient);//正常关闭会返回0
-		//	break;
-		//}
-		//if (ret < 0)/*不正常关闭*///??????待改
-		//{
-		//	cerr << "client不正常关闭:" << inet_ntoa(sktInfo->addr->sin_addr) << ":"
-		//		<< ntohs(sktInfo->addr->sin_port) << endl;
-		//	break;
-		//}
+		
 
 		/*运行*/
 		string option/*(recData)*/;
@@ -266,6 +240,15 @@ unsigned __stdcall newClient(void* pArguments)
 		else if (option == "quit")
 		{
 			write_participants();
+			/*删除容器里的全局变量*/
+			for (it_sysInfo = v_sysInfo.begin(); 
+				it_sysInfo != v_sysInfo.end() 
+				&& it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port;
+				it_sysInfo++);
+			v_sysInfo.erase(remove(v_sysInfo.begin(), v_sysInfo.end(), *it_sysInfo));
+			/*vector<sysInfo>::iterator tempzqy;
+			tempzqy = remove(v_sysInfo.begin(), v_sysInfo.end(), *it_sysInfo);
+				v_sysInfo.pop_back();*/
 			break;
 		}
 		else
@@ -278,6 +261,7 @@ unsigned __stdcall newClient(void* pArguments)
 		}
 	}
 
+		
 
 	cerr << "Disconected:" << inet_ntoa(sktInfo->addr->sin_addr) << ":"
 		<< ntohs(sktInfo->addr->sin_port) << endl;
@@ -286,6 +270,7 @@ unsigned __stdcall newClient(void* pArguments)
 
 	//cout << "disconnected\n";
 	delete sktInfo->skt;
+	delete sktInfo->addr;
 	_endthreadex(0);
 	return 0;
 }

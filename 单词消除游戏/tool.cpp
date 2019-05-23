@@ -93,6 +93,7 @@ void myRecv(unsigned short int port)
 	for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->ClientAddr->sin_port != port; it++);//通过port找到该全局变量
 	
 	int ret = recv(*(it->sClient), it->recData, BUF_SIZE, 0);
+	for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->ClientAddr->sin_port != port; it++);
 	if (ret > 0)
 	{
 		it->recData[ret] = '\0';
