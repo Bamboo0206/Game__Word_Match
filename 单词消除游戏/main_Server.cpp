@@ -7,6 +7,7 @@ vector<player> v_player;//所有player
 vector<test_maker> v_test_maker;//所有test_maker
 vector<string> word_set;//单词集合
 vector<sysInfo> v_sysInfo;//每个线程一个对象，用于存储系统信息和当前系统用户等
+vector<room> v_room;//游戏房间集合
 
 #define PORT           52499    //端口号
 #define MSGSIZE        1024    

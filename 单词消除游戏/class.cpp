@@ -258,3 +258,38 @@ sysInfo::sysInfo()
 sysInfo::~sysInfo()
 {
 }
+
+
+/*******************Ë«ÈË¶ÔÕ½********************/
+room::room()
+{
+	timeA = 0;
+	timeB = 0;
+	people_num = 0;
+}
+
+room::room(const room & r)
+{
+	roomNumber = r.roomNumber;
+	nameA = r.nameA;
+	nameB = r.nameB;
+	resultA = r.resultA;
+	resultB = r.resultB;
+	word_num_to_pass = r.word_num_to_pass;
+	word = r.word;
+	display_time = r.display_time;
+	people_num = r.people_num;
+}
+
+room::room(int roomNum,string nameA)
+{
+	roomNumber = roomNum;
+	timeA = 0;
+	timeB = 0;
+	this->nameA = nameA;
+	people_num = 1;
+}
+
+room::~room()
+{
+}

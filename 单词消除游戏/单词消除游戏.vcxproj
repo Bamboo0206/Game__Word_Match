@@ -32,6 +32,7 @@
     <ClCompile Include="log_out.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_Server.cpp" />
+    <ClCompile Include="MultiplayerGame.cpp" />
     <ClCompile Include="rank.cpp" />
     <ClCompile Include="search_participant.cpp" />
     <ClCompile Include="sign_up.cpp" />

@@ -105,6 +105,28 @@ private:
 
 };
 
+/*双人对战*/
+class room
+{
+public:
+	room();
+	room(const room &r);
+	room(int roomNum, string nameA);
+	~room();
+
+	int roomNumber;
+	unsigned short int portA, portB;//用于输入输出
+	string nameA, nameB;//名字
+	double timeA, timeB;//耗时
+	char resultA, resultB;//结果正确或错误
+	int word_num_to_pass/*, error_chance*/;
+	string word;
+	int display_time;
+	int people_num;
+private:
+
+};
+
 
 /*函数类*/
 /*自定义比较大小方式：按字符串长度比较（函数类）*/
