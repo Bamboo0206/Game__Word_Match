@@ -15,6 +15,7 @@
 using namespace std;
 
 void game(SOCKET sclient);
+void Multiplayer(SOCKET sclient);
 
 int main()
 {
@@ -117,6 +118,10 @@ int main()
 		{
 			break;
 		}
+		if (strcmp(data, "new") == 0)
+		{
+
+		}
 	}
 	shutdown(sclient, SD_SEND);
 
@@ -185,10 +190,80 @@ void game(SOCKET sclient)
 			sprintf(data, "0\n%f", duration);//回传结果
 
 			cout << "输入单词错误\t刚才显示的单词是：" << word << endl;
-			//Sleep(2000);
+			Sleep(2000);
 			if (--error_chance == -1)
 				break;
 			cout << "您还有" << error_chance << "次错误机会" << endl;
+		}
+		send(sclient, data, strlen(data), 0);
+	}
+}
+
+void Multiplayer(SOCKET sclient)
+{
+	int display_time, word_num_to_pass;
+	char recData[BUF_SIZE], word[100];
+
+	/*接收头*******/
+	int ret = recv(sclient, recData, BUF_SIZE, 0);
+	cout << recData;
+
+	/*接收word_num_to_pass*/
+	recv(sclient, recData, BUF_SIZE, 0);
+	sscanf(recData, "%d", &word_num_to_pass);
+
+
+	/*开始游戏*/
+	int word_passed = 0;
+	while (word_passed < word_num_to_pass )
+	{
+		ret = recv(sclient, recData, BUF_SIZE, 0);//接收单词和显示时间
+		if (ret > 0)
+		{
+			recData[ret] = '\0';
+			sscanf(recData, "%d %s", &display_time, word);
+		}
+		else if (ret <= 0)
+		{
+			cerr << "出错\n";
+			return;
+		}
+		cout << "请记住这个单词（" << display_time << "毫秒后消失）："
+			<< word;
+		Sleep(display_time);
+
+
+		cout << "\r                                                            ";
+		cout << "\r请输入刚才出现的单词：";
+		string input_word;
+		/*计时器*/
+		clock_t start = clock();//启动计时器
+		//cin >> input_word;
+		getline(cin, input_word);
+		clock_t finish = clock();//关闭计时器
+		double duration = (double)(finish - start) / CLOCKS_PER_SEC;//算时间
+		cout << "用时" << (double)(finish - start) / CLOCKS_PER_SEC << "秒" << endl;
+		/*输入正确性检验*/
+		//if (!cin)
+		//{
+		//	cerr << "input error!\n";
+		//	cin.clear();
+		//	cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
+		//}
+
+		char data[BUF_SIZE];
+		if (input_word == word)//正确
+		{
+			cout << "输入单词正确\n";
+			word_passed++;
+			sprintf(data, "1\n%f", duration);
+		}
+		else//错误
+		{
+			sprintf(data, "0\n%f", duration);//回传结果
+
+			cout << "输入单词错误\t刚才显示的单词是：" << word << endl;
+			//Sleep(2000);
 		}
 		send(sclient, data, strlen(data), 0);
 	}

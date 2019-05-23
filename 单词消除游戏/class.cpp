@@ -284,6 +284,8 @@ room::room()
 	timeA = 0;
 	timeB = 0;
 	people_num = 0;
+	winA = 0;
+	winB = 0;
 }
 
 room::room(const room & r)
@@ -293,6 +295,8 @@ room::room(const room & r)
 	nameB = r.nameB;
 	resultA = r.resultA;
 	resultB = r.resultB;
+	winA = r.winA;
+	winB = r.winB;
 	word_num_to_pass = r.word_num_to_pass;
 	word = r.word;
 	display_time = r.display_time;
@@ -304,6 +308,8 @@ room::room(int roomNum,string nameA)
 	roomNumber = roomNum;
 	timeA = 0;
 	timeB = 0;
+	winA = 0;
+	winB = 0;
 	this->nameA = nameA;
 	people_num = 1;
 }

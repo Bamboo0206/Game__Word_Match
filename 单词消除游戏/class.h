@@ -120,6 +120,7 @@ public:
 	unsigned short int portA, portB;//用于输入输出
 	string nameA, nameB;//名字
 	double timeA, timeB;//耗时
+	int winA, winB;//AB各自赢的次数
 	char resultA, resultB;//结果正确或错误
 	int word_num_to_pass/*, error_chance*/;
 	string word;

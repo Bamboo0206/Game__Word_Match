@@ -142,6 +142,7 @@ unsigned __stdcall newClient(void* pArguments)
 			<< "注册：sign_up\n"
 			<< "登陆：log_in\n"
 			<< "闯关者：开始游戏：start_game\n"
+			<< "闯关者：双人游戏：multiplayer\n"
 			<< "出题者：新增单词：add_word\n"
 			<< "排行榜：rank\n"
 			<< "查找闯关者：search_player\n"
@@ -184,6 +185,44 @@ unsigned __stdcall newClient(void* pArguments)
 			else
 			{
 				start_game(username_player, sktInfo->addr->sin_port);
+			}
+		}
+		/*双人游戏*/
+		else if (option == "Multiplayer")
+		{
+			string choice;
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+			it_sysInfo->oss << "请选择：创建对局（new)/加入对局（join）\n";
+			mySend(sktInfo->addr->sin_port);
+			myRecv(sktInfo->addr->sin_port);
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+			it_sysInfo->iss >> choice;
+			if (choice == "new")
+			{
+				int roomNumber;
+				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+				it_sysInfo->oss << "请输入对局编号：\n";
+				mySend(sktInfo->addr->sin_port);
+				myRecv(sktInfo->addr->sin_port);
+				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+				it_sysInfo->iss >> roomNumber;
+				newRoom(username_player, roomNumber, sktInfo->addr->sin_port);
+			}
+			else if (choice == "join")
+			{
+				int roomNumber;
+				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+				it_sysInfo->oss << "请输入对局编号：\n";
+				mySend(sktInfo->addr->sin_port);
+				myRecv(sktInfo->addr->sin_port);
+				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+				it_sysInfo->iss >> roomNumber;
+				joinRoom(username_player, roomNumber, sktInfo->addr->sin_port);
+			}
+			else
+			{
+				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+				it_sysInfo->oss << "非法输入\n";
 			}
 		}
 		/*新增单词*/

@@ -33,3 +33,7 @@ bool cin_error_and_repair();
 void mySend(char flag/*0为client继续接收*/, unsigned short int port);//flag0为client继续接收，1为client发送
 void mySend(unsigned short int port);
 void myRecv(unsigned short int port);
+
+/* MultiplayerGame.cpp */
+void newRoom(string &username_player, int roomNumber, unsigned short int portA);
+void joinRoom(string &username_player, int roomNumber, unsigned short int portB);
