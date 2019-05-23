@@ -19,14 +19,14 @@ void rank_test_maker(unsigned short int port);
 /*search_participant*/
 void search_player(unsigned short int port);
 void search_test_maker(unsigned short int port);
-void my_find(char kind/*p/t*/, char qaulity/*n,l,e,p,w*/, long num_input , string name_input );
+void my_find(unsigned short int port, char kind/*p/t*/, char qaulity/*n,l,e,p,w*/, long num_input , string name_input );
 
 /*write_file.cpp*/
 void write_participants();
 
 /*tool.cpp*/
-void print_player(string &username_player);//打印当前登陆的player的用户信息
-void print_test_maker(string &username_test_maker);//打印当前登陆的test_maker的用户信息
+void print_player(string &username_player, unsigned short int port);//打印当前登陆的player的用户信息
+void print_test_maker(string &username_test_maker, unsigned short int port);//打印当前登陆的test_maker的用户信息
 void locate_player(string name, vector<player>::iterator &it_user_player);//使迭代器指向name的player
 void locate_test_maker(string name, vector<test_maker>::iterator &it_user_test_maker);
 bool cin_error_and_repair();

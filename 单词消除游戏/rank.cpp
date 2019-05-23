@@ -8,10 +8,13 @@ void rank_player(unsigned short int port)
 {
 	string choice;
 
-	cout << "请选择排序方式（name/level/EXP/pass_count）：\n";
+	vector<sysInfo>::iterator it_sysInfo;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "请选择排序方式（name/level/EXP/pass_count）：\n";
 	mySend(port);
 	myRecv(port);
-	cin >> choice;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->iss >> choice;
 	if (choice == "name")
 	{
 		sort(v_player.begin(), v_player.end(), name_greater());
@@ -30,18 +33,21 @@ void rank_player(unsigned short int port)
 	}
 	else
 	{
-		cout << "输入错误\n";
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "输入错误\n";
 		return;
 	}
 	//getchar();//吞回车
 
 	/*输出排行榜*/
 	int cnt = 0;
-	cout << "名次\t\t用户名\t\t等级\t\tEXP\t\t通关数" << endl;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "名次\t\t用户名\t\t等级\t\tEXP\t\t通关数" << endl;
 	for (auto val : v_player)
 	{
 		cnt++;
-		cout << cnt << "\t\t"
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << cnt << "\t\t"
 			<< val.show_name() << "\t\t" << val.show_level() << "\t\t"
 			<< val.show_EXP() << "\t\t" << val.show_pass_count() << endl;
 	}
@@ -59,11 +65,14 @@ void rank_player(unsigned short int port)
 void rank_test_maker(unsigned short int port)
 {
 	string choice;
+	vector<sysInfo>::iterator it_sysInfo;
 
-	cout << "请选择排序方式（name/level/EXP/pass_count）：\n";
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "请选择排序方式（name/level/EXP/pass_count）：\n";
 	mySend(port);
 	myRecv(port);
-	cin >> choice;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->iss >> choice;
 	if (choice == "name")
 	{
 		sort(v_test_maker.begin(), v_test_maker.end(), name_greater());
@@ -82,18 +91,21 @@ void rank_test_maker(unsigned short int port)
 	}
 	else
 	{
-		cout << "输入错误\n";
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "输入错误\n";
 		return;
 	}
 	//getchar();//吞回车
 
 	/*输出排行榜*/
 	int cnt = 0;
-	cout << "名次\t\t用户名\t\t等级\t\tEXP\t\t出题数" << endl;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "名次\t\t用户名\t\t等级\t\tEXP\t\t出题数" << endl;
 	for (auto val : v_test_maker)
 	{
 		cnt++;
-		cout << cnt << "\t\t"
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << cnt << "\t\t"
 			<< val.show_name() << "\t\t" << val.show_level() << "\t\t"
 			<< val.show_EXP() << "\t\t" << val.show_word_num() << endl;
 	}

@@ -27,20 +27,24 @@ void locate_test_maker(string name, vector<test_maker>::iterator& it_user_test_m
 	it_user_test_maker = v_test_maker.end();
 }
 
-void print_player(string &username_player)
+void print_player(string &username_player, unsigned short int port)
 {
 	vector<player>::iterator it_user_player;
 	locate_player(username_player, it_user_player);
-	cout << "name:" << it_user_player->show_name() << '\t'
+	vector<sysInfo>::iterator it_sysInfo;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "name:" << it_user_player->show_name() << '\t'
 		<< "level:" << it_user_player->show_level() << '\t'
 		<< "EXP:" << it_user_player->show_EXP() << '\t'
 		<< "通关数:" << it_user_player->show_pass_count() << endl;
 }
-void print_test_maker(string &username_test_maker)
+void print_test_maker(string &username_test_maker,  unsigned short int port)
 {
 	vector<test_maker>::iterator it_user_test_maker;
 	locate_test_maker(username_test_maker, it_user_test_maker);
-	cout << "name:" << it_user_test_maker->show_name() << '\t'
+	vector<sysInfo>::iterator it_sysInfo;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "name:" << it_user_test_maker->show_name() << '\t'
 		<< "level:" << it_user_test_maker->show_level() << '\t'
 		<< "EXP:" << it_user_test_maker->show_EXP() << '\t'
 		<< "输入单词数:" << it_user_test_maker->show_word_num() << endl;
@@ -95,19 +99,19 @@ void myRecv(unsigned short int port)
 		if (DEBUG) cerr << it->recData << endl;
 
 	}
-	if (ret == 0)/*关闭*/
+	else if (ret == 0)/*关闭*/
 	{
 		cerr << "Disconected:" << inet_ntoa(it->ClientAddr->sin_addr) << ":"
 			<< ntohs(it->ClientAddr->sin_port) << endl;
 		shutdown(*(it->sClient), SD_SEND);
 		closesocket(*(it->sClient));//正常关闭会返回0
 	}
-	if (ret < 0)/*不正常关闭*///??????待改
+	else if (ret < 0)/*不正常关闭*///??????待改
 	{
 		cerr << "Disconected:" << inet_ntoa(it->ClientAddr->sin_addr) << ":"
 			<< ntohs(it->ClientAddr->sin_port) << endl;
 	}
 	it->iss.str(it->recData);//放入输入流
 	it->iss.clear();//????
-	cin.clear();
+	//cin.clear();
 }

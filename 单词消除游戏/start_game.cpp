@@ -12,9 +12,14 @@ void start_game(string &username_player, unsigned short int port)
 	bool finish = false;
 	string input_word;
 	int difficulty = 1, size = 0;
-
+	vector<sysInfo>::iterator it_sysInfo;
 	size = word_set.size();
-	if (!size) { cout << "词库为空！请先添加单词\n"; return ; }
+	if (!size) 
+	{
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "词库为空！请先添加单词\n";
+		return;
+	}
 
 	sort(word_set.begin(), word_set.end(),my_shorter());
 
@@ -22,26 +27,30 @@ void start_game(string &username_player, unsigned short int port)
 	{
 		if (one_round(username_player,port))//闯关成功
 		{
-			cout << "请选择：下一关0/退出1（默认继续）\n";
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+			it_sysInfo->oss << "请选择：下一关0/退出1（默认继续）\n";
 		}
 		else//闯关失败
 		{
-			cout << "请选择：重新尝试该关0/退出1（默认继续）\n";
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+			it_sysInfo->oss << "请选择：重新尝试该关0/退出1（默认继续）\n";
 		}
 		mySend(port);
 		myRecv(port);
-		cin >> finish;
-		if (!cin)//输入正确性检验
-		{
-			cerr << "input error!\n";
-			cin.clear();
-			cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
-			continue;
-		}
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->iss >> finish;
+		//if (!cin)//输入正确性检验
+		//{
+		//	cerr << "input error!\n";
+		//	cin.clear();
+		//	cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
+		//	continue;
+		//}
 	}
 	/*输出用户信息*/
-	print_player(username_player);
-	cout << "游戏已退出" << endl;
+	print_player(username_player, port);
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "游戏已退出" << endl;
 	//getchar();
 	return;
 }
@@ -49,6 +58,7 @@ void start_game(string &username_player, unsigned short int port)
 
 bool one_round(string name, unsigned short int port)//一关，闯关成功返回true
 {
+	vector<sysInfo>::iterator it_sysInfo;
 	vector<player>::iterator it_user_player;
 	locate_player(name, it_user_player);
 	int round_current = it_user_player->show_pass_count() + 1;
@@ -63,7 +73,8 @@ bool one_round(string name, unsigned short int port)//一关，闯关成功返回true
 	error_chance = -round_current * 2 / 15 + 3;
 	error_chance = error_chance > 1 ? error_chance : 1;//下限1
 		/*输出*/
-	cout << "*********************************************************************\n"
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "*********************************************************************\n"
 		<< "                  第" << round_current << "关                  \n"
 		<< "难度：" << difficulty << "级，单词：" << word_num_to_pass << "个，显示时间：" << display_time << "毫秒" << endl
 		<< "您有" << error_chance << "次错误机会\n";
@@ -71,7 +82,8 @@ bool one_round(string name, unsigned short int port)//一关，闯关成功返回true
 	double duration = 0;
 	int loc = 0, wordlib_size = 0, word_passed = 0;//下标,单词数量,已通过数量
 	wordlib_size = word_set.size();
-	cout << word_num_to_pass << " " << error_chance << "\n\0";
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << word_num_to_pass << " " << error_chance << "\n\0";
 	mySend(port);
 	Sleep(50);
 
@@ -101,14 +113,16 @@ bool one_round(string name, unsigned short int port)//一关，闯关成功返回true
 		}
 
 		/*发送单词和显示时间*/
-		cout << display_time << "\n"<< word_set.at(loc);
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << display_time << "\n"<< word_set.at(loc);
 		mySend(port);
 
 		/*接收结果*/
 		myRecv(port);
 		char result;//结果
 		double tempD;
-		cin >> result >> tempD;
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->iss >> result >> tempD;
 
 		duration += tempD;//算时间;
 		
@@ -128,17 +142,22 @@ bool one_round(string name, unsigned short int port)//一关，闯关成功返回true
 	/*更新等级、经验*/
 	if (word_passed == word_num_to_pass)
 	{
-		cout << "闯关成功\n";
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "闯关成功\n";
+
 		vector<player>::iterator it_user_player;
 		locate_player(name, it_user_player);
+
+		it_sysInfo->oss << "EXP+" << it_user_player->update_EXP(duration, round_current) << endl;
+		locate_player(name, it_user_player);
 		it_user_player->inc_pass_count();
-		it_user_player->update_EXP(duration, round_current);
 		it_user_player->update_level();
 		return true;
 	}
 	else
 	{
-		cout << "闯关失败" << endl;
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "闯关失败" << endl;
 		return false;
 	}
 

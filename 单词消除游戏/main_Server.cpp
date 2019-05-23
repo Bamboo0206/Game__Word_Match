@@ -109,15 +109,19 @@ unsigned __stdcall newClient(void* pArguments)
 		sysInfo sysinfo(sktInfo);
 		v_sysInfo.push_back(sysinfo);//深拷贝。
 		vector<sysInfo>::iterator it_sysInfo = v_sysInfo.end() - 1;
-		//标准io重定向
-		cout.rdbuf(it_sysInfo->oss.rdbuf());//分别与cout,cin绑定
-		cin.rdbuf(it_sysInfo->iss.rdbuf());
+		////标准io重定向
+		//cout.rdbuf(it_sysInfo->oss.rdbuf());//分别与cout,cin绑定
+		//cin.rdbuf(it_sysInfo->iss.rdbuf());
 	}
 
 	/*发送*/
 	//char sendData[BUF_SIZE] = "Welcome to Word Match Game.\nInput anything to continue...\n\0";
-	cout<<"Welcome to Word Match Game.\nInput anything to continue...\n";
+
+	vector<sysInfo>::iterator it_sysInfo;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+	it_sysInfo->oss << "Welcome to Word Match Game.\nInput anything to continue...\n";
 	mySend(sktInfo->addr->sin_port);
+
 	//send(sClient, sendData, strlen(sendData), 0);
 	/*接收*/
 	char recData[BUF_SIZE];
@@ -133,7 +137,9 @@ unsigned __stdcall newClient(void* pArguments)
 	while (true)
 	{
 		/*发送选项*/
-		cout << "*****************************************\n"
+
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+		it_sysInfo->oss << "*****************************************\n"
 			<< "注册：sign_up\n"
 			<< "登陆：log_in\n"
 			<< "闯关者：开始游戏：start_game\n"
@@ -178,7 +184,9 @@ unsigned __stdcall newClient(void* pArguments)
 		/*运行*/
 		string option/*(recData)*/;
 		myRecv(sktInfo->addr->sin_port);
-		cin >> option;
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+		it_sysInfo->iss >> option;
+
 		/*注册*/
 		if (option == "sign_up")
 		{
@@ -187,16 +195,17 @@ unsigned __stdcall newClient(void* pArguments)
 		/*登陆*///如果已登陆的情况
 		else if (option == "log_in")
 		{
-			log_in(username_player,username_test_maker, sktInfo->addr->sin_port);
+			log_in(username_player, username_test_maker, sktInfo->addr->sin_port);
 		}
 		/*开始游戏*/
 		else if (option == "start_game")
 		{
 			/*检测是否登陆*/
 			if (username_player.length() == 0)
-			//if (it_user_player == v_player.end())
+				//if (it_user_player == v_player.end())
 			{
-				cout << "请先登陆\n";
+				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+				it_sysInfo->oss << "请先登陆\n";
 			}
 			else
 			{
@@ -207,10 +216,11 @@ unsigned __stdcall newClient(void* pArguments)
 		else if (option == "add_word")
 		{
 			/*检测是否登陆*/
-			if(username_test_maker.length()==0)
-			//if (it_user_test_maker == v_test_maker.end())//？？？？
+			if (username_test_maker.length() == 0)
+				//if (it_user_test_maker == v_test_maker.end())//？？？？
 			{
-				cout << "请先登陆\n";
+				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+				it_sysInfo->oss << "请先登陆\n";
 			}
 			else
 			{
@@ -221,19 +231,25 @@ unsigned __stdcall newClient(void* pArguments)
 		/*登出*/
 		else if (option == "log_out")
 		{
-			log_out(username_player,username_test_maker, sktInfo->addr->sin_port);
+			log_out(username_player, username_test_maker, sktInfo->addr->sin_port);
 		}
 		/*排行榜*/
 		else if (option == "rank")
 		{
-			cout << "请选择要查看的排行榜（player/test_maker）：\n";
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+			it_sysInfo->oss << "请选择要查看的排行榜（player/test_maker）：\n";
 			string choice;
 			mySend(sktInfo->addr->sin_port);
 			myRecv(sktInfo->addr->sin_port);
-			cin >> choice;
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+			it_sysInfo->iss >> choice;
 			if (choice == "player")rank_player(sktInfo->addr->sin_port);
 			else if (choice == "test_maker")rank_test_maker(sktInfo->addr->sin_port);
-			else cout << "非法输入" << endl;
+			else
+			{
+				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+				it_sysInfo->oss << "非法输入" << endl;
+			}
 		}
 
 		/*按角色属性查询*/
@@ -254,21 +270,22 @@ unsigned __stdcall newClient(void* pArguments)
 		}
 		else
 		{
-			cout << "非法输入\n" ;
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+			it_sysInfo->oss << "非法输入\n";
 			//sysinfo.oss.getline(sendData + 1, BUF_SIZE - 1, '\0');
 			//sendData[0] = 1;//0为client继续接收，1为client发送
 			//send(sClient, sendData, strlen(sendData), 0);
 		}
 	}
 
-	
+
 	cerr << "Disconected:" << inet_ntoa(sktInfo->addr->sin_addr) << ":"
-			<< ntohs(sktInfo->addr->sin_port) << endl;
+		<< ntohs(sktInfo->addr->sin_port) << endl;
 	shutdown(sClient, SD_SEND);
 	closesocket(sClient);//正常关闭会返回0
 
 	//cout << "disconnected\n";
-	delete &sClient;
+	delete sktInfo->skt;
 	_endthreadex(0);
 	return 0;
 }

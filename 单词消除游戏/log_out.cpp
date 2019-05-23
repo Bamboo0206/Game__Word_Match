@@ -5,23 +5,28 @@
 void log_out(string &username_player, string &username_test_maker, unsigned short int port)
 {
 	string name, type;
-	cout << "请选择登出类型：闯关者player/出题者test_maker：\n";
+	vector<sysInfo>::iterator it_sysInfo;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->oss << "请选择登出类型：闯关者player/出题者test_maker：\n";
 	mySend(port);
 	myRecv(port);
-	cin >> type;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	it_sysInfo->iss >> type;
 	if (type == "player")  
 	{
 		/*检测是否登陆*/
 		//if (it_user_player == v_player.end())
 		if(username_player.empty())
 		{
-			cout << "请先登陆\n";
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+			it_sysInfo->oss << "请先登陆\n";
 			return;
 		}
-		print_player(username_player);
+		print_player(username_player,port);
 		//it_user_player = v_player.end();
 		username_player.resize(0);
-		cout << "已登出" << endl;
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "已登出" << endl;
 	}
 	else if (type == "test_maker")
 	{
@@ -29,17 +34,20 @@ void log_out(string &username_player, string &username_test_maker, unsigned shor
 		//if (it_user_test_maker == v_test_maker.end())//？？？？
 		if(username_test_maker.empty())
 		{
-			cout << "请先登陆\n";
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+			it_sysInfo->oss << "请先登陆\n";
 			return;
 		}
-		print_test_maker(username_test_maker);
+		print_test_maker(username_test_maker, port);
 		username_test_maker.resize(0);
-		cout << "已登出" << endl;
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "已登出" << endl;
 		//it_user_test_maker = v_test_maker.end();
 	}
 	else
 	{
-		cout << "不正确的类型\n";
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+		it_sysInfo->oss << "不正确的类型\n";
 	}
 	//getchar();
 }

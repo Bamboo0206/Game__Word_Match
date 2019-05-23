@@ -48,6 +48,6 @@ void add_word(string &username_test_maker, unsigned short int port)
 		myRecv(port);
 		cin >> finish;
 	}
-	print_test_maker(username_test_maker);
+	print_test_maker(username_test_maker, port);
 	//getchar();//ÍÌ»Ø³µ????????????
 }

@@ -55,8 +55,8 @@ public:
 	//virtual void sign_up() override;//注册
 	//friend bool equal_name(player &A, player &B);
 	void inc_pass_count(){ ++pass_count; }
-	void update_EXP(int difficulty);//务必先加EXP再算等级！
-	void update_EXP(double time_consume,int round);//耗时和关卡序号
+	int update_EXP(int difficulty);//务必先加EXP再算等级！
+	int update_EXP(double time_consume,int round);//耗时和关卡序号
 	int show_pass_count()const { return pass_count; }
 private:
 	int pass_count;//已闯关数量
@@ -77,7 +77,7 @@ public:
 
 	//friend bool equal_name(test_maker &A, test_maker &B);
 	void inc_word_num();
-	void update_EXP(string word);//务必先加EXP再算等级！
+	int update_EXP(string word);//务必先加EXP再算等级！
 
 	int show_word_num()const;
 private:

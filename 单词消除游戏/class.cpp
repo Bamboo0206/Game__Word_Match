@@ -107,18 +107,20 @@ player & player::operator=(const player & p1)
 	return *this;
 }
 
-void player::update_EXP(int difficulty)
+int player::update_EXP(int difficulty)
 {
 	EXP = EXP + EXP_BASIC_MAKER * difficulty;
-	cout << "EXP+" << EXP_BASIC_MAKER * difficulty << endl;
+	return EXP_BASIC_MAKER * difficulty;
+	//co/ut << "EXP+" << EXP_BASIC_MAKER * difficulty << endl;
 }
 
-void player::update_EXP(double time_consume, int round)
+int player::update_EXP(double time_consume, int round)
 {
 	int temp = round * EXP_BASIC_MAKER - time_consume * 30;//30倍罚时
 	temp = temp > 20 ? temp : 20;//最低加20
 	EXP = EXP + temp;
-	cout << "EXP+" << temp << endl;
+	return temp;
+	//co/ut << "EXP+" << temp << endl;
 }
 
 
@@ -181,7 +183,7 @@ void test_maker::inc_word_num()
 	return;
 }
 
-void test_maker::update_EXP(string input_word)
+int test_maker::update_EXP(string input_word)
 {
 	sort(word_set.begin(), word_set.end(), my_shorter());
 	vector<string>::iterator it, input_it;
@@ -197,27 +199,27 @@ void test_maker::update_EXP(string input_word)
 	if (seq < (size) / 5)//EXP1
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER;
-		cout << "EXP+" << EXP_BASIC_MAKER << endl;
+		return EXP_BASIC_MAKER ;
 	}
 	else if ((size) / 5 <= seq && seq < (size) * 2 / 5)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 2;//二倍基础经验
-		cout << "EXP+" << EXP_BASIC_MAKER*2 << endl;
+		return EXP_BASIC_MAKER*2 ;
 	}
 	else if ((size)*2 / 5 <= seq && seq < (size) * 3 / 5)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 3;
-		cout << "EXP+" << EXP_BASIC_MAKER*3 << endl;
+		return EXP_BASIC_MAKER*3 ;
 	}
 	else if ((size) *3 / 5 <= seq && seq < (size) * 4 / 5)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 4;
-		cout << "EXP+" << EXP_BASIC_MAKER*4 << endl;
+		return EXP_BASIC_MAKER*4 ;
 	}
 	else if ((size)*4 / 5 <= seq && seq < size)
 	{
 		this->EXP = this->EXP + EXP_BASIC_MAKER * 5;
-		cout << "EXP+" << EXP_BASIC_MAKER*5 << endl;
+		return EXP_BASIC_MAKER*5 ;
 	}
 }
 
@@ -250,9 +252,7 @@ sysInfo::sysInfo(const sysInfo & s)
 
 sysInfo::sysInfo()
 {
-	/*cout重定向*/
-	cout.rdbuf(oss.rdbuf());
-	cin.rdbuf(iss.rdbuf());
+	
 }
 
 sysInfo::~sysInfo()
