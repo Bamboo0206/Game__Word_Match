@@ -15,7 +15,6 @@ void log_out(string &username_player, string &username_test_maker, unsigned shor
 	if (type == "player")  
 	{
 		/*¼ì²âÊÇ·ñµÇÂ½*/
-		//if (it_user_player == v_player.end())
 		if(username_player.empty())
 		{
 			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);

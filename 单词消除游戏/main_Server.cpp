@@ -138,6 +138,7 @@ unsigned __stdcall newClient(void* pArguments)
 		/*发送选项*/
 
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+		if (it_sysInfo == v_sysInfo.end()) { cerr << "iterator out of range\n"; break; }
 		it_sysInfo->oss << "*****************************************\n"
 			<< "注册：sign_up\n"
 			<< "登陆：log_in\n"
@@ -176,7 +177,8 @@ unsigned __stdcall newClient(void* pArguments)
 		else if (option == "start_game")
 		{
 			/*检测是否登陆*/
-			if (username_player.length() == 0)
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+			if (username_player.length() == 0|| it_sysInfo->kind==true/*为出题者*/)
 				//if (it_user_player == v_player.end())
 			{
 				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
@@ -188,8 +190,18 @@ unsigned __stdcall newClient(void* pArguments)
 			}
 		}
 		/*双人游戏*/
-		else if (option == "Multiplayer")
+		else if (option == "multiplayer")
 		{
+			/*检测是否登陆*/
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+			if (username_player.length() == 0 || it_sysInfo->kind == 1/*为出题者*/)
+				//if (it_user_player == v_player.end())
+			{
+				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+				it_sysInfo->oss << "请先登陆\n";
+				continue;
+			}
+
 			string choice;
 			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
 			it_sysInfo->oss << "请选择：创建对局（new)/加入对局（join）\n";
@@ -229,7 +241,8 @@ unsigned __stdcall newClient(void* pArguments)
 		else if (option == "add_word")
 		{
 			/*检测是否登陆*/
-			if (username_test_maker.length() == 0)
+			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
+			if (username_test_maker.length() == 0 || it_sysInfo->kind == 0/*为闯关者*/)
 				//if (it_user_test_maker == v_test_maker.end())//？？？？
 			{
 				for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);

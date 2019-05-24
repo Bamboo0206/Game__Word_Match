@@ -39,8 +39,10 @@ void log_in(string &username_player,string &username_test_maker ,unsigned short 
 		{
 			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 			it_sysInfo->oss << "log in successfully\n";
+			it_sysInfo->kind = 0;//写系统信息
+			it_sysInfo->name = name;
 			username_player = name;
-			//it->name = name;//写系统信息
+
 			print_player(name,port);
 		}
 	}
@@ -57,6 +59,8 @@ void log_in(string &username_player,string &username_test_maker ,unsigned short 
 		{
 			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 			it_sysInfo->oss << "log in successfully\n";
+			it_sysInfo->kind = 1;//写系统信息
+			it_sysInfo->name = name;
 			print_test_maker(name, port);
 			username_test_maker = name;
 		}

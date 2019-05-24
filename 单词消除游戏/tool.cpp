@@ -33,6 +33,7 @@ void print_player(string &username_player, unsigned short int port)
 	locate_player(username_player, it_user_player);
 	vector<sysInfo>::iterator it_sysInfo;
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
+	if (it_sysInfo == v_sysInfo.end()) {cerr << "iterator out of range\n";return;}
 	it_sysInfo->oss << "name:" << it_user_player->show_name() << '\t'
 		<< "level:" << it_user_player->show_level() << '\t'
 		<< "EXP:" << it_user_player->show_EXP() << '\t'

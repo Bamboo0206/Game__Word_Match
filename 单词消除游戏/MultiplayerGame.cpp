@@ -19,6 +19,7 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 	/*创建房间*/
 	{
 		room r(roomNumber, username_player);
+		r.portA = portA;
 		v_room.push_back(r);//会用到拷贝构造函数
 	}
 
@@ -29,10 +30,11 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 	myRecv(portA);
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
 	it_sysInfo->iss >> difficulty;
-	difficulty = difficulty % 5 + 1;//排除错误输入
+	if(difficulty<1|| difficulty>5)
+		difficulty = difficulty % 5 + 1;//排除错误输入
 
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
-	it_sysInfo->oss << "成功创建房间。\n等待对手加入...\n";
+	it_sysInfo->oss << "成功创建对局。\n等待对手加入...\n";
 	mySend(portA);
 
 	/*等待一个人加入该房间*/
@@ -47,8 +49,8 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 	}
 
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
-	it_sysInfo->oss << "已找到对手。\n等待开局...\n";
-	//mySend(portA);
+	it_sysInfo->oss << "已找到对手。\n等待开局...\n\0";
+	mySend(portA);
 
 	/*开始游戏*/
 
@@ -62,17 +64,19 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 	//it_room->error_chance = it_room->error_chance > 1 ? it_room->error_chance : 1;//下限1
 		/*输出*/
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
-	it_sysInfo->oss << "*********************************************************************\n"
-		<< "\t玩家A：" << it_room->nameA << "\tVs.\t玩家B：" << it_room->nameB
+	it_sysInfo->oss << "*******************************************************************************************\n"
+		<< "\t玩家A：" << it_room->nameA << "\tVs.\t玩家B：" << it_room->nameB << endl
 		<< "                  难度：" << difficulty << "级\n"
-		<< "单词：" << it_room->word_num_to_pass << "个，显示时间：" << it_room->display_time << "毫秒" << endl;	
+		<< "单词：" << it_room->word_num_to_pass << "个，显示时间：" << it_room->display_time << "毫秒" << endl
+		<< "*******************************************************************************************\n";
 	mySend(portA);
 
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
-	it_sysInfo->oss << "*********************************************************************\n"
-		<< "\t玩家A：" << it_room->nameA << "\tVs.\t玩家B：" << it_room->nameB
+	it_sysInfo->oss << "*******************************************************************************************\n"
+		<< "\t玩家A：" << it_room->nameA << "\tVs.\t玩家B：" << it_room->nameB<<endl
 		<< "                  难度：" << difficulty << "级\n"
-		<< "单词：" << it_room->word_num_to_pass << "个，显示时间：" << it_room->display_time << "毫秒" << endl;
+		<< "单词：" << it_room->word_num_to_pass << "个，显示时间：" << it_room->display_time << "毫秒" << endl
+		<< "*******************************************************************************************\n";
 	mySend(it_room->portB);
 
 	Sleep(50);
@@ -80,17 +84,17 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 	int loc = 0, wordlib_size = 0, word_passed = 0;//下标,单词数量,已通过数量
 	wordlib_size = word_set.size();
 
-	/*输出*/
+	/*输出word_num_to_pass 和 display_time*/
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
-	it_sysInfo->oss << it_room->word_num_to_pass << "\n\0";
+	it_sysInfo->oss << it_room->word_num_to_pass << " " << it_room->display_time << "\n\0";
 	mySend(portA);
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
-	it_sysInfo->oss << it_room->word_num_to_pass << "\n\0";
+	it_sysInfo->oss << it_room->word_num_to_pass << " " << it_room->display_time << "\n\0";
 	mySend(it_room->portB);
 	Sleep(50);
 
-	word_passed = 0;
-	while (word_passed < it_room->word_num_to_pass )
+	
+	while ((it_room->word_num_to_pass )--)
 	{
 		/*计算单词下标*/
 		loc = rand() % (wordlib_size / 5);
@@ -114,12 +118,12 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 			break;
 		}
 		it_room->word = word_set.at(loc);
-		/*发送单词和显示时间*/
+		/*发送单词*/
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
-		it_sysInfo->oss << it_room->display_time << "\n" << word_set.at(loc);
+		it_sysInfo->oss /*<< it_room->display_time << " " */<< word_set.at(loc)<<"\0";
 		mySend(portA);
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
-		it_sysInfo->oss << it_room->display_time << "\n" << word_set.at(loc);
+		it_sysInfo->oss /*<< it_room->display_time << " " */<< word_set.at(loc) << "\0";
 		mySend(it_room->portB);
 
 		/*接收结果*/
@@ -158,48 +162,60 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 		}
 	}
 	/*更新等级、经验*/
-	if (it_room->winA> it_room->winB)
-	{
-		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
-		it_sysInfo->oss << "玩家A胜利，B失败\n";
-		mySend(portA);
-		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
-		it_sysInfo->oss << "玩家A胜利，B失败\n";
-		mySend(it_room->portB);
-
-		vector<player>::iterator it_user_player;
-		locate_player(it_room->nameA, it_user_player);
-		it_user_player->inc_pass_count();
-		it_user_player->update_EXP(difficulty);
-		it_user_player->update_level();
-	}
 	if (it_room->winA > it_room->winB)
 	{
-		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
-		it_sysInfo->oss << "玩家B胜利，A失败\n";
-		mySend(portA);
-		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
-		it_sysInfo->oss << "玩家B胜利，A失败\n";
-		mySend(it_room->portB);
-
 		vector<player>::iterator it_user_player;
 		locate_player(it_room->nameA, it_user_player);
 		it_user_player->inc_pass_count();
-		it_user_player->update_EXP(difficulty);
+		int expA = it_user_player->update_EXP(difficulty);
 		it_user_player->update_level();
+
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
+		it_sysInfo->oss << "玩家A胜利，B失败\n"
+			<< it_room->nameA <<" : EXP+" << expA << endl;
+
+		print_player(it_room->nameA, portA);
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
+		it_sysInfo->oss << "玩家A胜利，B失败\n"
+			<< it_room->nameA << " : EXP+" << expA << endl;
+		print_player(it_room->nameB, it_room->portB);
+
+	}
+	else if (it_room->winA < it_room->winB)
+	{
+		vector<player>::iterator it_user_player;
+		locate_player(it_room->nameB, it_user_player);
+		it_user_player->inc_pass_count();
+		int expB = it_user_player->update_EXP(difficulty);
+		it_user_player->update_level();
+
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
+		if (it_sysInfo == v_sysInfo.end()) { 
+			cerr << "iterator out of range"; 
+		return; }
+		it_sysInfo->oss << "玩家B胜利，A失败\n"
+			<< it_room->nameB << " : EXP+" << expB << endl;
+		print_player(it_room->nameA, portA);
+		
+		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
+		it_sysInfo->oss << "玩家B胜利，A失败\n"
+			<< it_room->nameB << " : EXP+" << expB << endl;
+		print_player(it_room->nameB, it_room->portB);
 	}
 	else
 	{
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
 		it_sysInfo->oss << "平局\n";
-		mySend(portA);
+		print_player(it_room->nameA, portA);
+
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
 		it_sysInfo->oss << "平局\n";
-		mySend(it_room->portB);
+		print_player(it_room->nameB, it_room->portB);
 	}
 
 	/*删除该房间*/
 	it_room->people_num = 0;
+	it_room->roomNumber = -1;
 	return;
 }
 
@@ -225,8 +241,12 @@ void joinRoom(string &username_player, int roomNumber, unsigned short int portB)
 	it_room->nameB = username_player;
 	it_room->people_num++;
 	it_room->portB = portB;
+	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portB; it_sysInfo++);
+	it_sysInfo->oss << "已找到对手。\n等待开局...\n\0";
+	mySend(portB);
 	while (it_room->people_num!=0)//等待对局结束
 	{
 		Sleep(2000);
+		for (it_room = v_room.begin(); it_room != v_room.end() && it_room->roomNumber != roomNumber; it_room++);
 	}
 }

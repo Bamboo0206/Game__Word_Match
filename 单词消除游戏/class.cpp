@@ -293,6 +293,8 @@ room::room(const room & r)
 	roomNumber = r.roomNumber;
 	nameA = r.nameA;
 	nameB = r.nameB;
+	portA = r.portA;
+	portB = r.portB;
 	resultA = r.resultA;
 	resultB = r.resultB;
 	winA = r.winA;

@@ -66,6 +66,21 @@ int main()
 			cerr << "出错\n";
 			break;
 		}
+		if (strcmp(recData, "成功创建对局。\n等待对手加入...\n") == 0)
+		{
+			/*接收:已找到对手。\n等待开局...*/
+			ret = recv(sclient, recData, BUF_SIZE, 0);//继续或退出游戏
+			recData[ret] = '\0';
+			cout << recData;
+
+			Multiplayer(sclient);
+			continue;
+		}
+		if (strcmp(recData, "已找到对手。\n等待开局...\n") == 0)
+		{
+			Multiplayer(sclient);
+			continue;
+		}
 
 
 		if (strcmp(data, "start_game") == 0)//下一次循环才会进入函数
@@ -118,10 +133,7 @@ int main()
 		{
 			break;
 		}
-		if (strcmp(data, "new") == 0)
-		{
-
-		}
+		
 	}
 	shutdown(sclient, SD_SEND);
 
@@ -206,32 +218,35 @@ void Multiplayer(SOCKET sclient)
 
 	/*接收头*******/
 	int ret = recv(sclient, recData, BUF_SIZE, 0);
+	recData[ret] = '\0';
 	cout << recData;
 
 	/*接收word_num_to_pass*/
 	recv(sclient, recData, BUF_SIZE, 0);
-	sscanf(recData, "%d", &word_num_to_pass);
+	sscanf(recData, "%d %d", &word_num_to_pass, &display_time);
 
 
 	/*开始游戏*/
 	int word_passed = 0;
 	while (word_passed < word_num_to_pass )
 	{
-		ret = recv(sclient, recData, BUF_SIZE, 0);//接收单词和显示时间
+		/*接收单词和显示时间*/
+		ret = recv(sclient, word, BUF_SIZE, 0);
 		if (ret > 0)
 		{
-			recData[ret] = '\0';
-			sscanf(recData, "%d %s", &display_time, word);
+			word[ret] = '\0';
+			//sscanf(recData, "%s", word);
 		}
 		else if (ret <= 0)
 		{
 			cerr << "出错\n";
 			return;
 		}
+
+		/*显示*/
 		cout << "请记住这个单词（" << display_time << "毫秒后消失）："
 			<< word;
 		Sleep(display_time);
-
 
 		cout << "\r                                                            ";
 		cout << "\r请输入刚才出现的单词：";
@@ -255,7 +270,6 @@ void Multiplayer(SOCKET sclient)
 		if (input_word == word)//正确
 		{
 			cout << "输入单词正确\n";
-			word_passed++;
 			sprintf(data, "1\n%f", duration);
 		}
 		else//错误
@@ -266,5 +280,6 @@ void Multiplayer(SOCKET sclient)
 			//Sleep(2000);
 		}
 		send(sclient, data, strlen(data), 0);
+		word_passed++;
 	}
 }
