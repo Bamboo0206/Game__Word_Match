@@ -142,7 +142,7 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 		//it_room->resultB = resultB;
 
 		/*判断*/
-		if (it_room->resultA&&it_room->resultB)//AB都对比时间
+		if (it_room->resultA=='1'&&it_room->resultB == '1')//AB都对比时间
 		{
 			if (it_room->timeA < it_room->timeB)
 			{
@@ -155,9 +155,9 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 		}
 		else//正确的win++
 		{
-			if(it_room->resultA)
+			if(it_room->resultA == '1')
 				it_room->winA++;
-			else if (it_room->resultB)
+			else if (it_room->resultB == '1')
 				it_room->winB++;
 		}
 	}
@@ -171,7 +171,7 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 		it_user_player->update_level();
 
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
-		it_sysInfo->oss << "玩家A胜利，B失败\n"
+		it_sysInfo->oss << "---------------------\n玩家A胜利，B失败\n"
 			<< it_room->nameA <<" : EXP+" << expA << endl;
 
 		print_player(it_room->nameA, portA);
@@ -193,12 +193,12 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 		if (it_sysInfo == v_sysInfo.end()) { 
 			cerr << "iterator out of range"; 
 		return; }
-		it_sysInfo->oss << "玩家B胜利，A失败\n"
+		it_sysInfo->oss << "---------------------\n玩家B胜利，A失败\n"
 			<< it_room->nameB << " : EXP+" << expB << endl;
 		print_player(it_room->nameA, portA);
 		
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
-		it_sysInfo->oss << "玩家B胜利，A失败\n"
+		it_sysInfo->oss << "---------------------\n玩家B胜利，A失败\n"
 			<< it_room->nameB << " : EXP+" << expB << endl;
 		print_player(it_room->nameB, it_room->portB);
 	}
@@ -215,7 +215,7 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 
 	/*删除该房间*/
 	it_room->people_num = 0;
-	it_room->roomNumber = -1;
+	
 	return;
 }
 
@@ -249,4 +249,6 @@ void joinRoom(string &username_player, int roomNumber, unsigned short int portB)
 		Sleep(2000);
 		for (it_room = v_room.begin(); it_room != v_room.end() && it_room->roomNumber != roomNumber; it_room++);
 	}
+	/*删除该房间*/
+	it_room->roomNumber = -1;
 }

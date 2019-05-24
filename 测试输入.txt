@@ -31,6 +31,18 @@ add_word
 /*²âÊÔplayer*///ÒªÏÈµÇÂ½
 start_game
 
+/*²âÊÔmultiplayer*///ÒªÏÈµÇÂ½
+multiplayer
+new
+5
+3
+
+multiplayer
+join
+5
+
+
+
 /*²âÊÔlog_out*/
 log_out
 player

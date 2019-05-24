@@ -74,11 +74,13 @@ int main()
 			cout << recData;
 
 			Multiplayer(sclient);
+			recData[0] = '\0';
 			continue;
 		}
 		if (strcmp(recData, "已找到对手。\n等待开局...\n") == 0)
 		{
 			Multiplayer(sclient);
+			recData[0] = '\0';
 			continue;
 		}
 
