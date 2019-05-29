@@ -176,7 +176,7 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 
 		print_player(it_room->nameA, portA);
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != it_room->portB; it_sysInfo++);
-		it_sysInfo->oss << "Íæ¼ÒAÊ¤Àû£¬BÊ§°Ü\n"
+		it_sysInfo->oss << "---------------------\nÍæ¼ÒAÊ¤Àû£¬BÊ§°Ü\n"
 			<< it_room->nameA << " : EXP+" << expA << endl;
 		print_player(it_room->nameB, it_room->portB);
 

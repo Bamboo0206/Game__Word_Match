@@ -206,7 +206,10 @@ void game(SOCKET sclient)
 			cout << "输入单词错误\t刚才显示的单词是：" << word << endl;
 			Sleep(2000);
 			if (--error_chance == -1)
+			{
+				send(sclient, data, strlen(data), 0);
 				break;
+			}
 			cout << "您还有" << error_chance << "次错误机会" << endl;
 		}
 		send(sclient, data, strlen(data), 0);
