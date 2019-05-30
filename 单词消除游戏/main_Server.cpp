@@ -76,7 +76,7 @@ int main()
 		SOCKET *sClient = new SOCKET;
 		SOCKADDR_IN *clientaddr = new SOCKADDR_IN;
 		int iaddrSize = sizeof(SOCKADDR_IN);
-		*sClient = accept(sListen, (struct sockaddr *) clientaddr, &iaddrSize);//无连接会卡在这里
+		*sClient = accept(sListen, (struct sockaddr *) clientaddr, &iaddrSize);//无连接会阻塞在这里
 		if (*sClient == INVALID_SOCKET)
 		{
 			cout << "accept error!\n";
@@ -86,7 +86,7 @@ int main()
 		SKT_INFO *sktInfo = new SKT_INFO;
 		sktInfo->skt = sClient;
 		sktInfo->addr = clientaddr;
-		HANDLE hThread=(HANDLE*)_beginthreadex(NULL, 0, newClient, sktInfo, 0, NULL);
+		HANDLE hThread=(HANDLE*)_beginthreadex(NULL, 0, newClient, sktInfo, 0, NULL);//开新线程
 		CloseHandle(hThread);
 	}
 
