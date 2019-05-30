@@ -14,7 +14,6 @@ string username_player, username_test_maker;
 
 int main()
 {
-	/*初始化 有问题*/
 	srand((unsigned int) time(NULL));
 	read_wordlib();
 	read_player();
