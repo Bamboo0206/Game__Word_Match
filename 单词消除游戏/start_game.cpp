@@ -63,12 +63,12 @@ bool one_round(int round_current)//一关，闯关成功返回true
 {
 	/*计算单词长度（5级），单词个数，显示时间*/
 	int difficulty = 1, word_num_to_pass = 0, display_time = 0, error_chance = 0;
-	difficulty = round_current / 3;
+	difficulty = round_current / 3;//随关卡增加单词难度增加
 	difficulty = difficulty < 5 ? difficulty : 5;//上限5级
-	word_num_to_pass = sqrt(round_current) ;
-	display_time = -round_current * 2000 / 15 + 3000;
+	word_num_to_pass = sqrt(round_current) ;//随关卡增加每关的单词数增加
+	display_time = -round_current * 2000 / 15 + 3000;//随关卡增加显示时间缩短
 	display_time = display_time > 1000 ? display_time : 1000;//下限1000
-	error_chance = -round_current * 2 / 15 + 3;
+	error_chance = -round_current * 2 / 15 + 3;//随关卡增加允许出错次数减少
 	error_chance = error_chance > 1 ? error_chance : 1;//下限1
 		/*输出*/
 	cout <<"*********************************************************************\n"
