@@ -16,13 +16,7 @@ public:
 	long show_EXP() const{ return EXP; }
 	void update_level();
 
-	//void set_name(string n){  name=n; }
-	//void set_level(int n) { level=n; }
-	//void set_EXP(long n) {  EXP=n; }
 
-	//virtual void sign_up() = 0;//注册 //????
-	//void log_in();//登陆
-	//friend bool equal_name(participant &A, string &name);
 protected://为了能被派生类成员函数访问到
 	string name;
 	int level;
@@ -44,8 +38,7 @@ public:
 	player & operator=(const player &p1);//赋值运算符重载
 
 
-	//virtual void sign_up() override;//注册
-	//friend bool equal_name(player &A, player &B);
+
 	void inc_pass_count(){ ++pass_count; }
 	void update_EXP(int difficulty);//务必先加EXP再算等级！
 	int show_pass_count()const { return pass_count; }
@@ -63,10 +56,10 @@ public:
 	test_maker(string n, int l, long e, int w);
 	~test_maker();
 
-	bool operator<(const test_maker &p1);//按名字字典序比大小//???
+	bool operator<(const test_maker &p1);//按名字字典序比大小
 	test_maker & operator=(const test_maker &p1);//赋值运算符重载
 
-	//friend bool equal_name(test_maker &A, test_maker &B);
+
 	void inc_word_num();
 	void update_EXP(string word);//务必先加EXP再算等级！
 
