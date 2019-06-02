@@ -44,7 +44,7 @@ void rank_player()
 			<< val.show_name() << "\t\t" << val.show_level() << "\t\t"
 			<< val.show_EXP() << "\t\t" << val.show_pass_count() << endl;
 	}
-	/*全局变量迭代器可能指向了其他用户。指回*/
+	/*处理迭代器*/
 	for (vector<player>::iterator it=v_player.begin();it!=v_player.end();it++)
 	{
 		if (it->show_name() == username_player)

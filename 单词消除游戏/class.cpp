@@ -50,7 +50,7 @@ void participant::update_level()
 {
 	/*等级是EXP的上凸函数，等级越高升级所需增加的经验越多*/
 	/*level=f(EXP)=EXP^(1/2)*/
-	level = sqrt(EXP / 100);//会被截断为整数的
+	level = sqrt(EXP / 100);//会被截断为整数
 }
 
 /****************闯关者*****************/

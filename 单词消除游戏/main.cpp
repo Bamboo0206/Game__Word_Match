@@ -14,16 +14,16 @@ string username_player, username_test_maker;
 
 int main()
 {
-	/*初始化 有问题*/
+	/*初始化*/
 	srand((unsigned int) time(NULL));
 	read_wordlib();
 	read_player();
 	read_test_maker();
-	it_user_player = v_player.end();//??
+	it_user_player = v_player.end();
 	it_user_test_maker = v_test_maker.end();
 
 	/*运行*/
-	string option;
+	string option;//使用字符串作为输入，输入合法性更容易检验
 	while (true)
 	{
 		cout<<"*****************************************\n"
@@ -108,6 +108,7 @@ int main()
 			write_participants();
 			break;
 		}
+		/*输入正确性检验*/
 		else
 			cout << "非法输入" << endl;
 	}

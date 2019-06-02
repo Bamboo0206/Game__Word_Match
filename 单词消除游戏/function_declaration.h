@@ -1,5 +1,4 @@
-
-/*º¯Êı*/
+/*º¯ÊıÉùÃ÷*/
 void sign_up();
 void log_in();
 void log_out();
