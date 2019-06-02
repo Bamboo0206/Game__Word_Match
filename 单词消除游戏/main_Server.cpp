@@ -21,6 +21,9 @@ unsigned __stdcall newClient(void* pArguments);
 
 int main()
 {
+	/*在题目二的基础上，将游戏由本地单机，扩展为服务器多人游戏平台，
+	使用客户端 /服务器的方式 ，同一时间可以多人登录系统 。
+	将所有闯关者 、出题者信息保存在服务器。*/
 
 	WORD socketVersion = MAKEWORD(2, 2);
 	WSADATA wsaData;
@@ -30,7 +33,7 @@ int main()
 	}
 
 	//创建套接字
-	SOCKET sListen = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	SOCKET sListen = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP); //使用面向连接的TCP
 	if (sListen == INVALID_SOCKET)
 	{
 		cout << "socket error!" << endl;
@@ -86,7 +89,7 @@ int main()
 		SKT_INFO *sktInfo = new SKT_INFO;
 		sktInfo->skt = sClient;
 		sktInfo->addr = clientaddr;
-		HANDLE hThread=(HANDLE*)_beginthreadex(NULL, 0, newClient, sktInfo, 0, NULL);//开新线程
+		HANDLE hThread=(HANDLE*)_beginthreadex(NULL, 0, newClient, sktInfo, 0, NULL);//开新线程        //服务器有处理并发的能力
 		CloseHandle(hThread);
 	}
 
@@ -94,6 +97,7 @@ int main()
 }
 
 
+/*每有一个客户端连接服务器，开启一个新线程*/
 unsigned __stdcall newClient(void* pArguments)
 {
 	SKT_INFO *sktInfo = (SKT_INFO *)pArguments;
@@ -111,8 +115,6 @@ unsigned __stdcall newClient(void* pArguments)
 	
 
 	/*发送*/
-	//char sendData[BUF_SIZE] = "Welcome to Word Match Game.\nInput anything to continue...\n\0";
-
 	vector<sysInfo>::iterator it_sysInfo;
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != sktInfo->addr->sin_port; it_sysInfo++);
 	it_sysInfo->oss << "Welcome to Word Match Game.\nInput anything to continue...\n";

@@ -83,7 +83,7 @@ bool one_round(string name, unsigned short int port)//一关，闯关成功返回true
 	word_passed = 0;
 	while (word_passed < word_num_to_pass && error_chance >= 0)
 	{
-		/*计算单词下标*/
+		/*将单词难度分为5级，根据难度在区间内随机取单词*/
 		loc = rand() % (wordlib_size / 5);
 		switch (difficulty)
 		{
