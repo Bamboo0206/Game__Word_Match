@@ -5,7 +5,7 @@
 /*游戏每一关，程序会根据该关卡难度，显示一个单词，一定时间后单词消失。
 闯关者需要在相应地方输入刚刚显示并消失的单词，如果闯关者输入正确则为通过。*/
 
-bool one_round(int round_current);//一关，闯关成功返回true//传入pass_count+1
+bool one_round(int round_current);//一关，闯关成功返回true
 
 void start_game()
 {
@@ -62,6 +62,11 @@ void print_test_maker()
 bool one_round(int round_current)//一关，闯关成功返回true
 {
 	/*计算单词长度（5级），单词个数，显示时间*/
+	/*
+	1、单词难度递增（即长度加长）
+	2、进行轮数增多 ；
+	3、单词显示时间 缩短 （随着关卡的增加显示时间越来越短） 
+	*/
 	int difficulty = 1, word_num_to_pass = 0, display_time = 0, error_chance = 0;
 	difficulty = round_current / 3;//随关卡增加单词难度增加
 	difficulty = difficulty < 5 ? difficulty : 5;//上限5级
@@ -85,7 +90,7 @@ bool one_round(int round_current)//一关，闯关成功返回true
 	word_passed = 0;
 	while (word_passed < word_num_to_pass && error_chance >= 0)
 	{
-		/*计算单词下标*/
+		/*将单词难度分为5级，根据难度在区间内随机取单词*/
 		loc = rand() % (wordlib_size / 5);
 		switch (difficulty)
 		{
