@@ -49,11 +49,11 @@ participant & participant::operator=(const participant & p1)
 void participant::update_level()
 {
 	/*等级是EXP的上凸函数，等级越高升级所需增加的经验越多*/
-	/*暂时是开根号*/
 	/*level=f(EXP)=EXP^(1/2)*/
-	level = sqrt(EXP / 100);//会被截断为整数的
-	//为什么/100呢，去看宏定义EXP_BASIC_MAKER
+	level = sqrt(EXP / 100);//会被截断为整数
 }
+
+/**********************子类************************/
 
 /****************闯关者*****************/
 player::player()

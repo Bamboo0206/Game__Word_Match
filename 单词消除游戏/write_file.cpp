@@ -1,6 +1,6 @@
 #include"header.h"
 #include"variable.h"
-
+/*写文件*/
 void write_participants()
 {
 	/*写player*/

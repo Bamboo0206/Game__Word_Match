@@ -8,7 +8,7 @@ vector<test_maker> v_test_maker;//所有test_maker
 vector<player>::iterator it_user_player;//当前系统用户
 vector<test_maker>::iterator it_user_test_maker;
 vector<string> word_set;//单词集合
-string username_player, username_test_maker;
+string username_player, username_test_maker;//当前用户的用户名
 
 
 
@@ -18,7 +18,7 @@ int main()
 	read_wordlib();
 	read_player();
 	read_test_maker();
-	it_user_player = v_player.end();//??
+	it_user_player = v_player.end();
 	it_user_test_maker = v_test_maker.end();
 
 	/*运行*/
