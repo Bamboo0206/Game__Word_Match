@@ -16,7 +16,7 @@ public:
 	~participant();
 
 	bool operator==( participant const &A);
-	bool operator<(const participant &p1);//按名字字典序比大小//???
+	bool operator<(const participant &p1);//按名字字典序比大小
 	participant & operator=(const participant &p1);//赋值运算符重载
 
 	string show_name()const { return name; }
@@ -24,13 +24,7 @@ public:
 	long show_EXP() const{ return EXP; }
 	void update_level();
 
-	//void set_name(string n){  name=n; }
-	//void set_level(int n) { level=n; }
-	//void set_EXP(long n) {  EXP=n; }
-
-	//virtual void sign_up() = 0;//注册 //????
-	//void log_in();//登陆
-	//friend bool equal_name(participant &A, string &name);
+	
 protected://为了能被派生类成员函数访问到
 	string name;
 	int level;
@@ -48,15 +42,13 @@ public:
 	player(string n,int l,long e,int r);
 	~player();
 
-	bool operator<(const player &p1);//按名字字典序比大小//???
+	bool operator<(const player &p1);//按名字字典序比大小
 	player & operator=(const player &p1);//赋值运算符重载
 
 
-	//virtual void sign_up() override;//注册
-	//friend bool equal_name(player &A, player &B);
 	void inc_pass_count(){ ++pass_count; }
-	int update_EXP(int difficulty);//务必先加EXP再算等级！
-	int update_EXP(double time_consume,int round);//耗时和关卡序号
+	int update_EXP(int difficulty);					//重载 计算经验值基于难度
+	int update_EXP(double time_consume,int round);	//重载 计算经验值基于耗时和关卡序号
 	int show_pass_count()const { return pass_count; }
 private:
 	int pass_count;//已闯关数量
@@ -72,10 +64,9 @@ public:
 	test_maker(string n, int l, long e, int w);
 	~test_maker();
 
-	bool operator<(const test_maker &p1);//按名字字典序比大小//???
+	bool operator<(const test_maker &p1);//按名字字典序比大小
 	test_maker & operator=(const test_maker &p1);//赋值运算符重载
 
-	//friend bool equal_name(test_maker &A, test_maker &B);
 	void inc_word_num();
 	int update_EXP(string word);//务必先加EXP再算等级！
 
@@ -98,7 +89,7 @@ public:
 
 	string name;
 	bool kind;//0闯关者，1出题者
-	stringstream oss, iss;
+	stringstream oss, iss;//将标准输入输出流绑定到stringstream上
 	SOCKET *sClient;
 	SOCKADDR_IN *ClientAddr;
 	char sendData[BUF_SIZE];
@@ -122,7 +113,7 @@ public:
 	double timeA, timeB;//耗时
 	int winA, winB;//AB各自赢的次数
 	char resultA, resultB;//结果正确或错误
-	int word_num_to_pass/*, error_chance*/;
+	int word_num_to_pass;
 	string word;
 	int display_time;
 	int people_num;

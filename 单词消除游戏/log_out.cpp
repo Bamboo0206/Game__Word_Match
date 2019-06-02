@@ -30,7 +30,6 @@ void log_out(string &username_player, string &username_test_maker, unsigned shor
 	else if (type == "test_maker")
 	{
 		/*检测是否登陆*/
-		//if (it_user_test_maker == v_test_maker.end())//？？？？
 		if(username_test_maker.empty())
 		{
 			for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
@@ -41,12 +40,10 @@ void log_out(string &username_player, string &username_test_maker, unsigned shor
 		username_test_maker.resize(0);
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 		it_sysInfo->oss << "已登出" << endl;
-		//it_user_test_maker = v_test_maker.end();
 	}
 	else
 	{
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 		it_sysInfo->oss << "不正确的类型\n";
 	}
-	//getchar();
 }

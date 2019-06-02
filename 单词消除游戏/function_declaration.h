@@ -1,5 +1,5 @@
+/*函数定义*/
 
-/*函数*/
 void sign_up(unsigned short int port);
 void log_in(string &username_player, string &username_test_maker,unsigned short int port);
 void log_out(string &username_player, string &username_test_maker, unsigned short int port);
@@ -29,10 +29,9 @@ void print_player(string &username_player, unsigned short int port);//打印当前登
 void print_test_maker(string &username_test_maker, unsigned short int port);//打印当前登陆的test_maker的用户信息
 void locate_player(string name, vector<player>::iterator &it_user_player);//使迭代器指向name的player
 void locate_test_maker(string name, vector<test_maker>::iterator &it_user_test_maker);
-bool cin_error_and_repair();
-void mySend(char flag/*0为client继续接收*/, unsigned short int port);//flag0为client继续接收，1为client发送
-void mySend(unsigned short int port);
-void myRecv(unsigned short int port);
+bool cin_error_and_repair();//输入正确性检验
+void mySend(unsigned short int port);/*通过将cout重定向到stringstream，从stringstream中读取内容发送*/
+void myRecv(unsigned short int port);/*通过将cin重定向到stringstream，从stringstream中读取内容到变量*/
 
 /* MultiplayerGame.cpp */
 void newRoom(string &username_player, int roomNumber, unsigned short int portA);

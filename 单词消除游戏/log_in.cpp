@@ -14,21 +14,16 @@ void log_in(string &username_player,string &username_test_maker ,unsigned short 
 	myRecv(port);
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 	it_sysInfo->iss >> type;
-	//getchar();//吞回车
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 	it_sysInfo->oss << "请输入用户名：\n";
 	mySend(port);
 	myRecv(port);
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 	it_sysInfo->iss >> name;
-	//getline(cin, name);
 	
 	if (type == "player")
 	{
-		//vector<sysInfo>::iterator it;
-		//for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->sClient != ; it++);//定位到
-		//it->kind = 0;
-		vector<player>::iterator temp_it/* = v_player.begin()*/;
+		vector<player>::iterator temp_it;
 		locate_player(name, temp_it);
 		if (temp_it == v_player.end())
 		{
@@ -48,7 +43,7 @@ void log_in(string &username_player,string &username_test_maker ,unsigned short 
 	}
 	else if (type == "test_maker")
 	{
-		vector<test_maker>::iterator temp_it /*= v_test_maker.begin()*/;
+		vector<test_maker>::iterator temp_it ;
 		locate_test_maker(name, temp_it);
 		if (temp_it == v_test_maker.end())
 		{

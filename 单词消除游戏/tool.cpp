@@ -1,7 +1,8 @@
 #include"header.h"
 #include"variable.h"
 
-void locate_player(string name, vector<player>::iterator &it_user_player)//使迭代器指向name的player
+//使迭代器指向name的player
+void locate_player(string name, vector<player>::iterator &it_user_player)
 {
 	for (vector<player>::iterator it = v_player.begin(); it != v_player.end(); it++)
 	{
@@ -27,6 +28,7 @@ void locate_test_maker(string name, vector<test_maker>::iterator& it_user_test_m
 	it_user_test_maker = v_test_maker.end();
 }
 
+/*打印用户信息*/
 void print_player(string &username_player, unsigned short int port)
 {
 	vector<player>::iterator it_user_player;
@@ -66,25 +68,15 @@ bool cin_error_and_repair()
 		return false;
 }
 
-/*发送*/
-/*数据包第0位为flag*/
-//void mySend(char flag/*0为client继续接收*/, unsigned short int port)
-//{
-//	vector<sysInfo>::iterator it;
-//	for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->ClientAddr->sin_port != port; it++);//通过port找到该全局变量
-//	it->oss.getline(it->sendData + 1, BUF_SIZE - 1, '\0');//将oss流里的数据拷贝到sendData数组里，以\0结尾（数据包里没有\0
-//	it->sendData[0] = flag;//0为client继续接收，1为client发送
-//	send(*(it->sClient), it->sendData, strlen(it->sendData), 0);//发送数据
-//}
 
+/*通过将cin和cout重定向到stringstream，从stringstream中读取内容发送*/
 void mySend(unsigned short int port)
 {
 	vector<sysInfo>::iterator it;
 	for (it = v_sysInfo.begin(); it != v_sysInfo.end() && it->ClientAddr->sin_port != port; it++);//通过port找到该全局变量
-	it->oss.getline(it->sendData, BUF_SIZE, '\0');//将oss流里的数据拷贝到sendData数组里，以\0结尾（数据包里没有\0
-	//it->oss >> it->sendData;
+	it->oss.getline(it->sendData, BUF_SIZE, '\0');//将oss流里的数据拷贝到sendData数组里，以\0结尾
 	send(*(it->sClient), it->sendData, strlen(it->sendData), 0);//发送数据
-	it->oss.str("");//清空流（getline似乎并没有把东西取走？
+	it->oss.str("");//清空流
 	it->oss.clear();
 }
 void myRecv(unsigned short int port)
@@ -108,12 +100,11 @@ void myRecv(unsigned short int port)
 		shutdown(*(it->sClient), SD_SEND);
 		closesocket(*(it->sClient));//正常关闭会返回0
 	}
-	else if (ret < 0)/*不正常关闭*///??????待改
+	else if (ret < 0)/*不正常关闭*/
 	{
 		cerr << "Disconected:" << inet_ntoa(it->ClientAddr->sin_addr) << ":"
 			<< ntohs(it->ClientAddr->sin_port) << endl;
 	}
 	it->iss.str(it->recData);//放入输入流
-	it->iss.clear();//????
-	//cin.clear();
+	it->iss.clear();
 }

@@ -35,11 +35,10 @@ void read_player()
 		getline(ss, name, ',');
 		ss >> level;
 		getline(ss, buf, ',');
-		//inFile >> ch;
 		ss >> EXP;
 		getline(ss, buf, ',');
 		ss >> pass_count;
-		getline(ss, buf);//最后是回车
+		getline(ss, buf);
 
 		player temp(name, level, EXP, pass_count);
 		v_player.push_back(temp);
@@ -68,7 +67,7 @@ void read_test_maker()
 		ss >> EXP;
 		getline(ss, buf, ',');
 		ss >> word_num;
-		getline(ss, buf);//最后是回车
+		getline(ss, buf);
 
 		test_maker temp(name, level, EXP, word_num);
 		v_test_maker.push_back(temp);

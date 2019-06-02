@@ -39,13 +39,6 @@ void start_game(string &username_player, unsigned short int port)
 		myRecv(port);
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 		it_sysInfo->iss >> finish;
-		//if (!cin)//输入正确性检验
-		//{
-		//	cerr << "input error!\n";
-		//	cin.clear();
-		//	cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
-		//	continue;
-		//}
 	}
 	/*输出用户信息*/
 	print_player(username_player, port);
@@ -112,7 +105,7 @@ bool one_round(string name, unsigned short int port)//一关，闯关成功返回true
 			break;
 		}
 
-		/*发送单词和显示时间*/
+		/*服务器发送单词和该单词显示的时间，客户端发回用户是否答对和答题耗时*/
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 		it_sysInfo->oss << display_time << "\n"<< word_set.at(loc);
 		mySend(port);

@@ -122,13 +122,7 @@ int main()
 		/*读输入*/
 		cout << "Send>>>";
 		cin.getline(data, BUF_SIZE, '\n');
-		////输入正确性检验
-		//while (! && data[0] != '\0'))
-		//{
-		//	memset(data, 0, sizeof(data));
-		//	cin.clear();
-		//	cin.ignore(100, '\n');
-		//}
+		
 		/*发送*/
 		send(sclient, data, strlen(data), 0);
 		if (strcmp(data, "quit") == 0)
@@ -179,18 +173,11 @@ void game(SOCKET sclient)
 		string input_word;
 		/*待改：计时器*/
 		clock_t start = clock();//启动计时器
-		//cin >> input_word;
 		getline(cin, input_word);
 		clock_t finish = clock();//关闭计时器
 		double duration = (double)(finish - start) / CLOCKS_PER_SEC;//算时间
 		cout << "用时" << (double)(finish - start) / CLOCKS_PER_SEC << "秒" << endl;
-		/*输入正确性检验*/
-		//if (!cin)
-		//{
-		//	cerr << "input error!\n";
-		//	cin.clear();
-		//	cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
-		//}
+		
 
 		char data[BUF_SIZE];
 		if (input_word == word)//正确
@@ -221,7 +208,7 @@ void Multiplayer(SOCKET sclient)
 	int display_time, word_num_to_pass;
 	char recData[BUF_SIZE], word[100];
 
-	/*接收头*******/
+	/*接收：****第x关****/
 	int ret = recv(sclient, recData, BUF_SIZE, 0);
 	recData[ret] = '\0';
 	cout << recData;
@@ -258,18 +245,11 @@ void Multiplayer(SOCKET sclient)
 		string input_word;
 		/*计时器*/
 		clock_t start = clock();//启动计时器
-		//cin >> input_word;
 		getline(cin, input_word);
 		clock_t finish = clock();//关闭计时器
 		double duration = (double)(finish - start) / CLOCKS_PER_SEC;//算时间
 		cout << "用时" << (double)(finish - start) / CLOCKS_PER_SEC << "秒" << endl;
-		/*输入正确性检验*/
-		//if (!cin)
-		//{
-		//	cerr << "input error!\n";
-		//	cin.clear();
-		//	cin.ignore(99999, '\n');//放弃包含换行符的输入流中的所有内容
-		//}
+	
 
 		char data[BUF_SIZE];
 		if (input_word == word)//正确
@@ -282,7 +262,6 @@ void Multiplayer(SOCKET sclient)
 			sprintf(data, "0\n%f", duration);//回传结果
 
 			cout << "输入单词错误\t刚才显示的单词是：" << word << endl;
-			//Sleep(2000);
 		}
 		send(sclient, data, strlen(data), 0);
 		word_passed++;

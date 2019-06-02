@@ -12,7 +12,6 @@ void sign_up(unsigned short int port)
 	myRecv(port);
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 	it_sysInfo->iss >> type;
-	//getchar();//吞回车
 
 	//请选择要注册的类型：闯关者/出题者
 	if (type == "player")
@@ -23,7 +22,7 @@ void sign_up(unsigned short int port)
 		myRecv(port);
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 		it_sysInfo->iss >> name;
-		//getline(cin, name);
+
 		/*检测重名*/
 		bool user_exist = false;
 		for (auto val : v_player)
@@ -63,7 +62,7 @@ void sign_up(unsigned short int port)
 		myRecv(port);
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != port; it_sysInfo++);
 		it_sysInfo->iss >> name;
-		//getline(cin, name);
+		
 		/*检测重名*/
 		bool user_exist = false;
 		for (auto val : v_test_maker)

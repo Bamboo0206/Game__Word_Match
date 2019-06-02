@@ -2,6 +2,7 @@
 #include"variable.h"
 #include"function_declaration.h"
 
+/*向文件和容器中添加单词*/
 void add_word(string &username_test_maker, unsigned short int port)
 {
 	bool finish = false;
@@ -48,5 +49,4 @@ void add_word(string &username_test_maker, unsigned short int port)
 		it_sysInfo->iss >> finish;
 	}
 	print_test_maker(username_test_maker, port);
-	//getchar();//吞回车????????????
 }

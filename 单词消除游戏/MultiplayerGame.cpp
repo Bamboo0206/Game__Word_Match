@@ -60,8 +60,6 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 	it_room->word_num_to_pass = sqrt(round_current);
 	it_room->display_time = -round_current * 2000 / 15 + 3000;
 	it_room->display_time = it_room->display_time > 1000 ? it_room->display_time : 1000;//下限1000
-	//it_room->error_chance = -round_current * 2 / 15 + 3;
-	//it_room->error_chance = it_room->error_chance > 1 ? it_room->error_chance : 1;//下限1
 		/*输出*/
 	for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
 	it_sysInfo->oss << "*******************************************************************************************\n"
@@ -136,10 +134,6 @@ void newRoom(string &username_player,int roomNumber,  unsigned short int portA)
 		for (it_sysInfo = v_sysInfo.begin(); it_sysInfo != v_sysInfo.end() && it_sysInfo->ClientAddr->sin_port != portA; it_sysInfo++);
 		it_sysInfo->iss >> it_room->resultB >> it_room->timeB;
 
-		//it_room->timeA += tempDA;//算时间;
-		//it_room->timeB += tempDB;
-		//it_room->resultA = resultA;
-		//it_room->resultB = resultB;
 
 		/*判断*/
 		if (it_room->resultA=='1'&&it_room->resultB == '1')//AB都对比时间
